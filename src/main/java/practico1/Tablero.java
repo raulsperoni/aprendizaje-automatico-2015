@@ -5,17 +5,18 @@ package practico1;
  */
 public class Tablero {
 
-    public enum Marca {
-        X, O, N
-    }
-
     public final int SIZE;
     public final Marca[][] grilla;
+    public int cantLineasInutilesParaX = 0;
+    public int cantLineasInutilesParaO = 0;
+    public int cantMinimaRestanteParaGanarX = 0;
+    public int cantMinimaRestanteParaGanarO = 0;
     public int cantFichasX = 0;
     public int cantFichasO = 0;
 
     /**
-     * Inicializo con el tamaño N que quiera.
+     * Inicializo con el tamaï¿½o N que quiera.
+     *
      * @param size
      */
     public Tablero(int size) {
@@ -24,20 +25,20 @@ public class Tablero {
 
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
-                 this.grilla[i][j] = Marca.N;
+                this.grilla[i][j] = Marca.N;
             }
 
 
     }
 
     /**
-     * Sólo permito marcar si no hay X o O en esa posición.
+     * Sï¿½lo permito marcar si no hay X o O en esa posiciï¿½n.
      * @param i
      * @param j
      * @param m
      * @return
      */
-    public boolean setMarca(int i, int j, Marca m) throws Exception {
+    public boolean setMarca(int i, int j, Marca m, boolean esDeMentira) throws Exception {
         /**
          * Jugadas prohibidas.
          */
@@ -55,9 +56,20 @@ public class Tablero {
             cantFichasX++;
         else cantFichasO++;
 
+        //Actualizo los atributos aca
+        for (int k = 0; k < SIZE; k++) {
+            int cantFilasX = 0;
+            int cantFilasO = 0;
+            for (int l = 0; l < SIZE; k++) {
+
+
+            }
+
+        }
+
         /**
-         * Verifico si alguien ganó.
-         * La nueva ficha está en (i,j)
+         * Verifico si alguien ganï¿½.
+         * La nueva ficha estï¿½ en (i,j)
          */
         boolean winHorizontal = true;
         boolean winVertical = true;
@@ -68,7 +80,7 @@ public class Tablero {
                winHorizontal = false;
            if (this.grilla[i][k] != m)
                winVertical = false;
-           if (this.grilla[i+k % SIZE][j+k % SIZE] != m)
+            if (i == j && this.grilla[i + k % SIZE][j + k % SIZE] != m) //TODO: ojo con las diagonales prohibis
                winDiagonal = false;
 
            //Ya no hay chance.
@@ -76,9 +88,9 @@ public class Tablero {
 
         }
 
-        //Ganó M!
+        //Ganï¿½ M!
         if (winDiagonal || winHorizontal || winVertical) return true;
-        //No ganó.
+        //No ganï¿½.
         else return false;
 
 
@@ -89,10 +101,14 @@ public class Tablero {
     }
 
     /**
-     * Aproximación a la función objetivo.
+     * Aproximaciï¿½n a la funciï¿½n objetivo.
      * @return
      */
-    public int getAproximacionVOP() {
+    public double getAproximacionVOP(Marca marcaJugador, Coeficientes coeficientes) {
              return 0;
+    }
+
+    public enum Marca {
+        X, O, N
     }
 }

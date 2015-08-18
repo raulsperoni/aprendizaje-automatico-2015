@@ -24,5 +24,14 @@ public class Coeficientes {
         this.w5 = r.nextFloat();
     }
 
+    public void actualizarCoeficientes(Tablero t, double mu, int VEnt, double VOp) {
+        this.w0 += mu * (VEnt - VOp) * t.cantLineasInutilesParaO;
+        this.w1 += mu * (VEnt - VOp) * t.cantLineasInutilesParaX;
+        this.w2 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarO;
+        this.w3 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarX;
+        this.w4 += mu * (VEnt - VOp) * t.cantFichasO;
+        this.w5 += mu * (VEnt - VOp) * t.cantFichasX;
+    }
+
 
 }

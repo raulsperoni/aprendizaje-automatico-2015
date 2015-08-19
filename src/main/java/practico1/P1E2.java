@@ -1,20 +1,18 @@
 package practico1;
 
 import java.util.Random;
-import java.util.logging.Logger;
 
 /**
  * Created by RSperoni on 17/08/2015.
- * L�gica para TA-TE-TI
+ * Logica para TA-TE-TI
  */
 public class P1E2 {
 
     static float MIN_MU = 0.1f;
     static int MAX_IT = 500;
-    static int SIZE = 5;
     static float STEP_MU = 0.0001f;  //TODO: ver esto
 
-    public void run() {
+    public void run(final int SIZE) throws Exception {
 
         //declaro wi's
         Coeficientes coeficientes = new Coeficientes();
@@ -50,22 +48,18 @@ public class P1E2 {
 
                 //2- Calcular posicion para movida probando.
                 for (int i = 0; i < tablero.SIZE; i++) {
-                    for (int j = 0; j < tablero.SIZE; i++) {
-
+                    for (int j = 0; j < tablero.SIZE; j++) {
                         try {
-                            EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, jugador, true, coeficientes); //TODO:RAUL
+                            EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, jugador, true, coeficientes);
                             if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
                                 mejorVop = estadoTableroPrueba.VOp;
                                 mejori = i;
                                 mejorj = j;
                             }
-                        } catch (Exception e) {
-                            Logger.getAnonymousLogger().severe(e.getMessage());
-                        }
+                        } catch (Exception jugadaProhibidaIgnored) {}
                     }
-                }
 
-                try {
+
                     //3- Mover
                     EstadoTablero estadoTablero = tablero.setMarca(mejori, mejorj, jugador, false, coeficientes);
 
@@ -75,28 +69,34 @@ public class P1E2 {
                     //Gano jugador?
                     juegoFinalizado = estadoTablero.finalizado;
                     VOp = estadoTablero.VOp;
-                    VEnt = tablero.getVEnt();  //TODO:
+                    if (juegoFinalizado) {
+                        if (jugador == Tablero.Marca.X) {
+                            //TODO: asignar VEnt segun estado del tablero...
+                            //VEnt = tablero.getVEnt();  //TODO:
+                        } else {
+                            //TODO: asignar VEnt segun estado del tablero...
+                        }
+                    }
 
                     //cambiarJugador
                     if (jugador == Tablero.Marca.X) jugador = Tablero.Marca.O;
                     else jugador = Tablero.Marca.X;
 
-                } catch (Exception e) {
-                    Logger.getAnonymousLogger().severe(e.getMessage());
+
                 }
+                cantIteraciones++;
 
+                //actualizo wi's con minimos cuadrados
+                coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOp);
+
+                //imprimo datos de partida.
+                coeficientes.imprimir();
+
+                //Actualizar MU
+                mu -= STEP_MU;
             }
-            cantIteraciones++;
 
-            //actualizo wi's con minimos cuadrados
-            coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOp);
-
-            //imprimo datos de partida.
-            coeficientes.imprimir(); //TODO:
-
-            //Actualizar MU
-            mu -= STEP_MU;
         }
-
     }
+
 }

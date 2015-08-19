@@ -9,9 +9,20 @@ public class Main {
 
     public static void main(String [ ] args){
 
-        Logger.getAnonymousLogger().info("MAA 2015");
+        System.out.println("MAA 2015");
         P1E2 p1E2 = new P1E2();
-        p1E2.run();
+
+        if (args.length > 0){
+            int size = Integer.valueOf(args[0]);
+            System.out.println("Comienzo TA-TE-TI, N=" + size);
+            try {
+                p1E2.run(size);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else System.out.println("Debe pasar como parámetro el tamaño del tablero");
+
+
 
     }
 

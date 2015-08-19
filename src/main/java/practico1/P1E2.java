@@ -1,6 +1,7 @@
 package practico1;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created by RSperoni on 17/08/2015.
@@ -11,6 +12,7 @@ public class P1E2 {
     static float MIN_MU = 0.1f;
     static int MAX_IT = 500;
     static int SIZE = 5;
+    static float STEP_MU = 0.0001f;  //TODO: ver esto
 
     public void run() {
 
@@ -41,38 +43,47 @@ public class P1E2 {
             double VOp = 0.0;
             while (!juegoFinalizado) {
 
-
-                //Jugador que le toca
-                //2- Calcular posicion para movida probando.
-
                 //Mejor pos.
                 double mejorVop = -1;
                 int mejori = -1;
                 int mejorj = -1;
 
+                //2- Calcular posicion para movida probando.
                 for (int i = 0; i < tablero.SIZE; i++) {
                     for (int j = 0; j < tablero.SIZE; i++) {
 
-                        double vop = tablero.setMarca(i, j, jugador, true, coeficientes); //TODO:RAUL
-                        if (mejorVop == -1 || vop > mejorVop) {
-                            mejorVop = vop;
-                            mejori = i;
-                            mejorj = j;
+                        try {
+                            EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, jugador, true, coeficientes); //TODO:RAUL
+                            if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
+                                mejorVop = estadoTableroPrueba.VOp;
+                                mejori = i;
+                                mejorj = j;
+                            }
+                        } catch (Exception e) {
+                            Logger.getAnonymousLogger().severe(e.getMessage());
                         }
                     }
                 }
-                //3- Mover
-                VOp = tablero.setMarca(mejori, mejorj, jugador, false, coeficientes);
-                //imprimir ta-te-ti
-                tablero.imprimir();
 
-                //Gano jugador?
-                juegoFinalizado = tablero.isFinalizado();
-                VEnt = tablero.getVEnt();
+                try {
+                    //3- Mover
+                    EstadoTablero estadoTablero = tablero.setMarca(mejori, mejorj, jugador, false, coeficientes);
 
-                //cambiarJugador
-                if (jugador == Tablero.Marca.X) jugador = Tablero.Marca.O;
-                else jugador = Tablero.Marca.X;
+                    //imprimir ta-te-ti
+                    tablero.imprimir();
+
+                    //Gano jugador?
+                    juegoFinalizado = estadoTablero.finalizado;
+                    VOp = estadoTablero.VOp;
+                    VEnt = tablero.getVEnt();  //TODO:
+
+                    //cambiarJugador
+                    if (jugador == Tablero.Marca.X) jugador = Tablero.Marca.O;
+                    else jugador = Tablero.Marca.X;
+
+                } catch (Exception e) {
+                    Logger.getAnonymousLogger().severe(e.getMessage());
+                }
 
             }
             cantIteraciones++;
@@ -81,10 +92,10 @@ public class P1E2 {
             coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOp);
 
             //imprimo datos de partida.
-            coeficientes.imprimir();
+            coeficientes.imprimir(); //TODO:
 
             //Actualizar MU
-            mu -= 0.0001; //TODO: ver esto
+            mu -= STEP_MU;
         }
 
     }

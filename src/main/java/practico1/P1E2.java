@@ -1,7 +1,5 @@
 package practico1;
 
-import java.util.Random;
-
 /**
  * Created by RSperoni on 17/08/2015.
  * Logica para TA-TE-TI
@@ -26,30 +24,40 @@ public class P1E2 {
             Tablero tablero = new Tablero(SIZE);
 
             //variable jugador;
-            Tablero.Marca jugador;
+            Tablero.Marca jugador = Tablero.Marca.X;
             //variable oponente
-            Tablero.Marca oponente;
-
-            //Sortear quien empieza,
-            Random r = new Random();
-            if (r.nextBoolean()) {
-                jugador = Tablero.Marca.X;
-            } else jugador = Tablero.Marca.O;
-
+            Tablero.Marca oponente = Tablero.Marca.O;
 
             //Movimientos
             boolean juegoFinalizado = false;
-            int VEnt = 0;
+            double VEnt = 0.0;
             double VOp = 0.0;
+            double VOpUltimoTurno = -1;
             while (!juegoFinalizado) {
+
+                //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
+                if (jugador == Tablero.Marca.X && VOpUltimoTurno != -1) {
+                    VEnt = tablero.getEstadoTablero(Tablero.Marca.X, coeficientes).VOp;
+
+                    //actualizo wi's con minimos cuadrados
+                    coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
+
+                    //imprimo datos de jugada.
+                    coeficientes.imprimir();
+
+                    //Actualizar MU
+                    mu -= STEP_MU;
+
+                }
+
 
                 //Mejor pos.
                 double mejorVop = -1;
                 int mejori = -1;
                 int mejorj = -1;
-                
+
                 //Peor pos(mejor posición del oponente)
-                double menorVop = 101;
+                //double menorVop = 101;
 
                 //2- Calcular posicion para movida probando.
                 for (int i = 0; i < tablero.SIZE; i++) {
@@ -61,67 +69,65 @@ public class P1E2 {
                                 mejori = i;
                                 mejorj = j;
                             }
-                        } catch (Exception jugadaProhibidaIgnored) {}
-                    }
-
-
-                    //3- Mover
-                    EstadoTablero estadoTablero = tablero.setMarca(mejori, mejorj, jugador, false, coeficientes);
-
-                    //imprimir ta-te-ti
-                    tablero.imprimir();
-
-                    //Gano jugador?
-                    juegoFinalizado = estadoTablero.finalizado;
-                    VOp = estadoTablero.VOp;
-                    if (juegoFinalizado) {
-                        if (jugador == Tablero.Marca.X) {
-                            //TODO: asignar VEnt segun estado del tablero...
-                            //VEnt = tablero.getVEnt();  //TODO:
-                        } else {
-                            //TODO: asignar VEnt segun estado del tablero...	
+                        } catch (Exception jugadaProhibidaIgnored) {
                         }
                     }
-                    else
-                    {//Calcular Vent como Vop(miproximoturno)
-					//Vent=Calcular jugada oponente
-					
-					//Obtengo oponente
-					if (jugador == Tablero.Marca.X) oponente = Tablero.Marca.O;
-					else oponente = Tablero.Marca.X;
-					
-					//Busco el minimo Vop(mejor jugada del oponente)
-					for (int i = 0; i < tablero.SIZE; i++) {
-						for (int j = 0; j < tablero.SIZE; j++) {
-							try {
-								EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, oponente, true, coeficientes);
-								if (menorVop == 101 || estadoTableroPrueba.VOp < menorVop) {
-									menorVop = estadoTableroPrueba.VOp;
-								}
-							} catch (Exception jugadaProhibidaIgnored) {}
-						}
-					}
-					VEnt = menorVop;
-					//actualizo wi's con minimos cuadrados		
-					coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOp);
-
-					//imprimo datos de jugada.
-					coeficientes.imprimir();
-
-					//Actualizar MU
-					mu -= STEP_MU;
-					}
-					
-                    //cambiarJugador
-                    if (jugador == Tablero.Marca.X) jugador = Tablero.Marca.O;
-                    else jugador = Tablero.Marca.X;
-
-
                 }
-                cantIteraciones++;
+
+                //3- Mover
+                EstadoTablero estadoTablero = tablero.setMarca(mejori, mejorj, jugador, false, coeficientes);
+
+                //Si soy X actualizo VopUltimoTurno
+                if (jugador == Tablero.Marca.X) VOpUltimoTurno = estadoTablero.VOp;
+
+                //imprimir ta-te-ti
+                System.out.println("TURNO DE: " + jugador.name());
+                tablero.imprimir();
+
+                //Gano jugador?
+                juegoFinalizado = estadoTablero.finalizado;
+                VOp = estadoTablero.VOp;
+                if (juegoFinalizado) {
+                    if (jugador == Tablero.Marca.X) {
+
+                        VEnt = 100;
+
+                        //actualizo wi's con minimos cuadrados
+                        coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
+
+                        //imprimo datos de jugada.
+                        coeficientes.imprimir();
+
+                        //Actualizar MU
+                        mu -= STEP_MU;
+
+                    } else {
+
+                        VEnt = -100;
+
+                        //actualizo wi's con minimos cuadrados
+                        coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
+
+                        //imprimo datos de jugada.
+                        coeficientes.imprimir();
+
+                        //Actualizar MU
+                        mu -= STEP_MU;
+
+                    }
+                }
+
+
+                //cambiarJugador
+                if (jugador == Tablero.Marca.X) jugador = Tablero.Marca.O;
+                else jugador = Tablero.Marca.X;
+
 
             }
+            cantIteraciones++;
 
         }
+
     }
 }
+

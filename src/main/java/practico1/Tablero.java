@@ -1,6 +1,8 @@
 package practico1;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by RSperoni on 17/08/2015.
@@ -260,13 +262,27 @@ public class Tablero {
         boolean JugadorGano = (m == Marca.X) ? cantMinimaRestanteParaGanarX == 0 : cantMinimaRestanteParaGanarO == 0;
 
 
-        //Seteo los resultados
-        return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaO +
-                coeficientes.w1 * cantLineasInutilesParaX +
-                coeficientes.w2 * cantMinimaRestanteParaGanarO +
-                coeficientes.w3 * cantMinimaRestanteParaGanarX +
-                coeficientes.w4 * cantFichasO +
-                coeficientes.w5 * cantFichasX, JugadorGano);
+        if (m == Marca.X) {
+
+            //Seteo los resultados
+            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaO +
+                    coeficientes.w1 * cantLineasInutilesParaX +
+                    coeficientes.w2 * cantMinimaRestanteParaGanarO +
+                    coeficientes.w3 * cantMinimaRestanteParaGanarX +
+                    coeficientes.w4 * cantFichasO +
+                    coeficientes.w5 * cantFichasX + coeficientes.indep, JugadorGano);
+
+        } else {
+
+            //Seteo los resultados
+            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaX +
+                    coeficientes.w1 * cantLineasInutilesParaO +
+                    coeficientes.w2 * cantMinimaRestanteParaGanarX +
+                    coeficientes.w3 * cantMinimaRestanteParaGanarO +
+                    coeficientes.w4 * cantFichasX +
+                    coeficientes.w5 * cantFichasO + coeficientes.indep, JugadorGano);
+
+        }
 
 
     }
@@ -281,6 +297,39 @@ public class Tablero {
                 System.out.print(String.format("%20s", this.grilla[i][j].name()));
             }
             System.out.println("");
+        }
+    }
+
+    /**
+     * m es pto de vista.
+     *
+     * @param m
+     * @return
+     */
+    public EstadoTablero getEstadoTablero(Marca m, Coeficientes coeficientes) {
+        boolean JugadorGano = (m == Marca.X) ? cantMinimaRestanteParaGanarX == 0 : cantMinimaRestanteParaGanarO == 0;
+
+
+        if (m == Marca.X) {
+
+            //Seteo los resultados
+            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaO +
+                    coeficientes.w1 * cantLineasInutilesParaX +
+                    coeficientes.w2 * cantMinimaRestanteParaGanarO +
+                    coeficientes.w3 * cantMinimaRestanteParaGanarX +
+                    coeficientes.w4 * cantFichasO +
+                    coeficientes.w5 * cantFichasX + coeficientes.indep, JugadorGano);
+
+        } else {
+
+            //Seteo los resultados
+            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaX +
+                    coeficientes.w1 * cantLineasInutilesParaO +
+                    coeficientes.w2 * cantMinimaRestanteParaGanarX +
+                    coeficientes.w3 * cantMinimaRestanteParaGanarO +
+                    coeficientes.w4 * cantFichasX +
+                    coeficientes.w5 * cantFichasO + coeficientes.indep, JugadorGano);
+
         }
     }
 

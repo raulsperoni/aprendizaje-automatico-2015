@@ -1,7 +1,5 @@
 import practico1.P1E2;
 
-import java.util.logging.Logger;
-
 /**
  * Created by RSperoni on 17/08/2015.
  */
@@ -20,7 +18,7 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else System.out.println("Debe pasar como parámetro el tamaño del tablero");
+        } else System.out.println("Debe pasar como parametro el tamano del tablero");
 
 
 

@@ -6,9 +6,9 @@ package practico1;
  */
 public class P1E2 {
 
-    static float MIN_MU = 0.1f;
-    static int MAX_IT = 500;
-    static float STEP_MU = 0.0001f;  //TODO: ver esto
+    static float MIN_MU = 0.001f;
+    static int MAX_IT = 200;
+    static float STEP_MU = 0.01f;  //TODO: ver esto
 
     public void run(final int SIZE) throws Exception {
 
@@ -16,9 +16,9 @@ public class P1E2 {
         Coeficientes coeficientes = new Coeficientes();
 
         //Partidas
-        float mu = 0.0f;
+        float mu = 0.5f;
         int cantIteraciones = 0;
-        while (mu < MIN_MU || cantIteraciones > MAX_IT) {
+        while (cantIteraciones < MAX_IT) {
 
             //Inicializo
             Tablero tablero = new Tablero(SIZE);
@@ -90,7 +90,7 @@ public class P1E2 {
                 if (juegoFinalizado) {
                     if (jugador == Tablero.Marca.X) {
 
-                        VEnt = 100;
+                        VEnt = 1;
 
                         //actualizo wi's con minimos cuadrados
                         coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
@@ -103,7 +103,7 @@ public class P1E2 {
 
                     } else {
 
-                        VEnt = -100;
+                        VEnt = -1;
 
                         //actualizo wi's con minimos cuadrados
                         coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
@@ -115,6 +115,7 @@ public class P1E2 {
                         mu -= STEP_MU;
 
                     }
+                    //TODO: EMPATE??????
                 }
 
 

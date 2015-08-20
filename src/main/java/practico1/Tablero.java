@@ -63,27 +63,28 @@ public class Tablero {
 
         //Actualizo los atributos aca
 
+        //Variables Para Evaluar X
+        boolean esPosibleGanarFilaX = true;
+        boolean esPosibleGanarColumnaX = true;
+        boolean esPosibleGanarDiagonalX1 = true;
+        boolean esPosibleGanarDiagonalX2 = true;
+        int cantRestanteParaGanarFilaX = SIZE;
+        int cantRestanteParaGanarColumnaX = SIZE;
+        int cantRestanteParaGanarDiagonalX1 = SIZE;
+        int cantRestanteParaGanarDiagonalX2 = SIZE;
+
+        //Variables Para Evaluar O
+        boolean esPosibleGanarFilaO = true;
+        boolean esPosibleGanarColumnaO = true;
+        boolean esPosibleGanarDiagonalO1 = true;
+        boolean esPosibleGanarDiagonalO2 = true;
+        int cantRestanteParaGanarFilaO = SIZE;
+        int cantRestanteParaGanarColumnaO = SIZE;
+        int cantRestanteParaGanarDiagonalO1 = SIZE;
+        int cantRestanteParaGanarDiagonalO2 = SIZE;
+
         for (int k = 0; k < SIZE; k++) {
 
-            //Variables Para Evaluar X
-            boolean esPosibleGanarFilaX = true;
-            boolean esPosibleGanarColumnaX = true;
-            boolean esPosibleGanarDiagonalX1 = true;
-            boolean esPosibleGanarDiagonalX2 = true;
-            int cantRestanteParaGanarFilaX = SIZE;
-            int cantRestanteParaGanarColumnaX = SIZE;
-            int cantRestanteParaGanarDiagonalX1 = SIZE;
-            int cantRestanteParaGanarDiagonalX2 = SIZE;
-
-            //Variables Para Evaluar O
-            boolean esPosibleGanarFilaO = true;
-            boolean esPosibleGanarColumnaO = true;
-            boolean esPosibleGanarDiagonalO1 = true;
-            boolean esPosibleGanarDiagonalO2 = true;
-            int cantRestanteParaGanarFilaO = SIZE;
-            int cantRestanteParaGanarColumnaO = SIZE;
-            int cantRestanteParaGanarDiagonalO1 = SIZE;
-            int cantRestanteParaGanarDiagonalO2 = SIZE;
 
             for (int l = 0; l < SIZE; l++) {
 
@@ -99,7 +100,7 @@ public class Tablero {
                     Marca marcaEnPos = this.grilla[fila][columna];
                     if (marcaEnPos == marcaDelContrario) {
                         esPosibleGanarFilaX = false;
-                    } else {
+                    } else if (marcaEnPos != Marca.N) {
                         cantRestanteParaGanarFilaX -= 1;
                     }
                 }
@@ -112,7 +113,7 @@ public class Tablero {
                     Marca marcaEnPos = this.grilla[fila][columna];
                     if (marcaEnPos == marcaDelContrario) {
                         esPosibleGanarColumnaX = false;
-                    } else {
+                    } else if (marcaEnPos != Marca.N) {
                         cantRestanteParaGanarColumnaX -= 1;
                     }
                 }
@@ -127,7 +128,7 @@ public class Tablero {
                         Marca marcaEnPos = this.grilla[fila][columna];
                         if (marcaEnPos == marcaDelContrario) {
                             esPosibleGanarDiagonalX1 = false;
-                        } else {
+                        } else if (marcaEnPos != Marca.N) {
                             cantRestanteParaGanarDiagonalX1 -= 1;
                         }
                     }
@@ -136,14 +137,14 @@ public class Tablero {
                 //MIRO LA Diagonal Der a Izq
                 if (esPosibleGanarDiagonalX2) {
                     int fila = l;
-                    int columna = SIZE - k -1;
-                    //Solo miro la diagonal posta.
-                    if (fila == columna) {
+                    int columna = k;
+                    //Solo miro la diagonal otra.
+                    if (fila + columna == SIZE - 1) {
                         Marca marcaDelContrario = Marca.O;
                         Marca marcaEnPos = this.grilla[fila][columna];
                         if (marcaEnPos == marcaDelContrario) {
                             esPosibleGanarDiagonalX2 = false;
-                        } else {
+                        } else if (marcaEnPos != Marca.N) {
                             cantRestanteParaGanarDiagonalX2 -= 1;
                         }
                     }
@@ -161,7 +162,7 @@ public class Tablero {
                     Marca marcaEnPos = this.grilla[fila][columna];
                     if (marcaEnPos == marcaDelContrario) {
                         esPosibleGanarFilaO = false;
-                    } else {
+                    } else if (marcaEnPos != Marca.N) {
                         cantRestanteParaGanarFilaO -= 1;
                     }
                 }
@@ -174,7 +175,7 @@ public class Tablero {
                     Marca marcaEnPos = this.grilla[fila][columna];
                     if (marcaEnPos == marcaDelContrario) {
                         esPosibleGanarColumnaO = false;
-                    } else {
+                    } else if (marcaEnPos != Marca.N) {
                         cantRestanteParaGanarColumnaO -= 1;
                     }
                 }
@@ -189,7 +190,7 @@ public class Tablero {
                         Marca marcaEnPos = this.grilla[fila][columna];
                         if (marcaEnPos == marcaDelContrario) {
                             esPosibleGanarDiagonalO1 = false;
-                        } else {
+                        } else if (marcaEnPos != Marca.N) {
                             cantRestanteParaGanarDiagonalO1 -= 1;
                         }
                     }
@@ -205,7 +206,7 @@ public class Tablero {
                         Marca marcaEnPos = this.grilla[fila][columna];
                         if (marcaEnPos == marcaDelContrario) {
                             esPosibleGanarDiagonalO2 = false;
-                        } else {
+                        } else if (marcaEnPos != Marca.N) {
                             cantRestanteParaGanarDiagonalO2 -= 1;
                         }
                     }
@@ -218,44 +219,46 @@ public class Tablero {
 
             }
 
-            //Si es marca posta, actualizo atributos.
-            if (!esDeMentira) {
 
-                /**
-                 * Actualizo cantFichas
-                 */
-                if (m == Marca.X)
-                    cantFichasX++;
-                else cantFichasO++;
 
-                /**
-                 * Actualizo canMinimaRestanteParaGanar
-                 */
-                if (esPosibleGanarFilaX || esPosibleGanarColumnaX || esPosibleGanarDiagonalX1 || esPosibleGanarDiagonalX2) {
-                    List<Integer> s = Arrays.asList(cantRestanteParaGanarColumnaX, cantRestanteParaGanarFilaX, cantRestanteParaGanarDiagonalX1,cantRestanteParaGanarDiagonalX2, cantMinimaRestanteParaGanarX);
-                    this.cantMinimaRestanteParaGanarX = Collections.min(s);
-                }
+        }
 
-                if (esPosibleGanarFilaO || esPosibleGanarColumnaO || esPosibleGanarDiagonalO1 || esPosibleGanarDiagonalO2) {
-                    List<Integer> s = Arrays.asList(cantRestanteParaGanarColumnaO, cantRestanteParaGanarFilaO, cantRestanteParaGanarDiagonalO1,cantRestanteParaGanarDiagonalO2, cantMinimaRestanteParaGanarO);
-                    this.cantMinimaRestanteParaGanarO = Collections.min(s);
-                }
+        //Si es marca posta, actualizo atributos.
+        if (!esDeMentira) {
 
-                /**
-                 * Actualizo CantLineasInutiles
-                 */
-                //TODO: Hacer esto arriba y actualizar acá-
+            /**
+             * Actualizo cantFichas
+             */
+            if (m == Marca.X)
+                cantFichasX++;
+            else cantFichasO++;
 
-            }
-            //Si no es marca posta, si solo esta "probando" saco la marca.
-            else {
-
-                /**
-                 * Vuelvo atrás X o O
-                 */
-                grilla[i][j] = Marca.N;
+            /**
+             * Actualizo canMinimaRestanteParaGanar
+             */
+            if (esPosibleGanarFilaX || esPosibleGanarColumnaX || esPosibleGanarDiagonalX1 || esPosibleGanarDiagonalX2) {
+                List<Integer> s = Arrays.asList(cantRestanteParaGanarColumnaX, cantRestanteParaGanarFilaX, cantRestanteParaGanarDiagonalX1, cantRestanteParaGanarDiagonalX2, cantMinimaRestanteParaGanarX);
+                this.cantMinimaRestanteParaGanarX = Collections.min(s);
             }
 
+            if (esPosibleGanarFilaO || esPosibleGanarColumnaO || esPosibleGanarDiagonalO1 || esPosibleGanarDiagonalO2) {
+                List<Integer> s = Arrays.asList(cantRestanteParaGanarColumnaO, cantRestanteParaGanarFilaO, cantRestanteParaGanarDiagonalO1, cantRestanteParaGanarDiagonalO2, cantMinimaRestanteParaGanarO);
+                this.cantMinimaRestanteParaGanarO = Collections.min(s);
+            }
+
+            /**
+             * Actualizo CantLineasInutiles
+             */
+            //TODO: Hacer esto arriba y actualizar acá-
+
+        }
+        //Si no es marca posta, si solo esta "probando" saco la marca.
+        else {
+
+            /**
+             * Vuelvo atrás X o O
+             */
+            grilla[i][j] = Marca.N;
         }
 
         //TODO: revisar esta condicion de ganar.

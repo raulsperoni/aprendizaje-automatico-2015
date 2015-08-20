@@ -27,6 +27,8 @@ public class P1E2 {
 
             //variable jugador;
             Tablero.Marca jugador;
+            //variable oponente
+            Tablero.Marca oponente;
 
             //Sortear quien empieza,
             Random r = new Random();
@@ -45,6 +47,9 @@ public class P1E2 {
                 double mejorVop = -1;
                 int mejori = -1;
                 int mejorj = -1;
+                
+                //Peor pos(mejor posición del oponente)
+                double menorVop = 101;
 
                 //2- Calcular posicion para movida probando.
                 for (int i = 0; i < tablero.SIZE; i++) {
@@ -74,10 +79,39 @@ public class P1E2 {
                             //TODO: asignar VEnt segun estado del tablero...
                             //VEnt = tablero.getVEnt();  //TODO:
                         } else {
-                            //TODO: asignar VEnt segun estado del tablero...
+                            //TODO: asignar VEnt segun estado del tablero...	
                         }
                     }
+                    else
+                    {//Calcular Vent como Vop(miproximoturno)
+					//Vent=Calcular jugada oponente
+					
+					//Obtengo oponente
+					if (jugador == Tablero.Marca.X) oponente = Tablero.Marca.O;
+					else oponente = Tablero.Marca.X;
+					
+					//Busco el minimo Vop(mejor jugada del oponente)
+					for (int i = 0; i < tablero.SIZE; i++) {
+						for (int j = 0; j < tablero.SIZE; j++) {
+							try {
+								EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, oponente, true, coeficientes);
+								if (menorVop == 101 || estadoTableroPrueba.VOp < menorVop) {
+									menorVop = estadoTableroPrueba.VOp;
+								}
+							} catch (Exception jugadaProhibidaIgnored) {}
+						}
+					}
+					VEnt = menorVop;
+					//actualizo wi's con minimos cuadrados		
+					coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOp);
 
+					//imprimo datos de jugada.
+					coeficientes.imprimir();
+
+					//Actualizar MU
+					mu -= STEP_MU;
+					}
+					
                     //cambiarJugador
                     if (jugador == Tablero.Marca.X) jugador = Tablero.Marca.O;
                     else jugador = Tablero.Marca.X;
@@ -86,17 +120,8 @@ public class P1E2 {
                 }
                 cantIteraciones++;
 
-                //actualizo wi's con minimos cuadrados
-                coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOp);
-
-                //imprimo datos de partida.
-                coeficientes.imprimir();
-
-                //Actualizar MU
-                mu -= STEP_MU;
             }
 
         }
     }
-
 }

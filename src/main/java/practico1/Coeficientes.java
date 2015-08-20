@@ -34,7 +34,6 @@ public class Coeficientes {
         this.w5 += mu * (VEnt - VOp) * t.cantFichasX;
     }
 
-
     public void imprimir() {
         Logger.getAnonymousLogger().info("W0: "+this.w0+" W1: "+this.w1+" W2: "+this.w2+" W3: "+this.w3+" W4: "+this.w4+" W5: "+this.w5);
     }

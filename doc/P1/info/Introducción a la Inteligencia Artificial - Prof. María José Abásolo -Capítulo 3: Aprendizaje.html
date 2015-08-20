@@ -1,0 +1,2502 @@
+<html><head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+   <meta name="GENERATOR" content="Mozilla/4.01 [es] (Win95; I) [Netscape]">
+   <meta name="Author" content="María José Abásolo">
+   <title>Introducción a la Inteligencia Artificial - Prof. María José Abásolo -Capítulo 3: Aprendizaje</title>
+</head>
+<body link="#3333FF" text="#000099" vlink="#33CCFF" alink="#FF9900" bgcolor="#FFFF99">
+<font color="#000099">&nbsp;</font>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr valign="TOP">
+<td width="24%" align="CENTER">
+<center><font color="#000099"><font size="+4">Introducción a la Inteligencia
+Artificial</font></font></center>
+</td>
+</tr>
+</tbody></table>
+
+<center><font color="#000099">&nbsp;</font></center>
+
+<hr width="100%">
+<center><i><font color="#000099"><font size="+3">3- APRENDIZAJE</font></font></i></center>
+
+<hr width="100%">
+<br><font color="#000099">&nbsp;</font>
+<br><b><font color="#000099"><a href="#3.1.">3.1. Introducción</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.2.">3.2. Aprendizaje memorístico</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.3.">3.3. Aprendizaje a través
+de consejos</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.4.">3.4. Aprendizaje mediante
+experiencia en la resolución de problemas</a></font></b>
+<ul><b><font color="#CC0000"><a href="#3.4.1.">&nbsp;3.4.1. Aprendizaje
+por medio del ajuste de parámetros</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.4.2.">&nbsp;3.4.2. Aprendizaje
+con macro-operadores</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.4.3.">&nbsp;3.4.3. Aprendizaje
+mediante troceado</a></font></b></ul>
+<b><font color="#CC0000"><a href="#3.5.">3.5. Aprendizaje a partir de ejemplos
+o Inducción</a></font></b>
+<ul><b><font color="#CC0000"><a href="#3.5.1.">3.5.1. Programa de aprendizaje
+de Winston</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.5.2.">3.5.2. Espacios de versiones</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.5.3.">3.5.3. Árboles de
+decisión</a></font></b></ul>
+<b><font color="#CC0000"><a href="#3.6.">3.6. Aprendizaje basado en explicaciones</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.7.">3.7. Descubrimiento</a></font></b>
+<ul><b><font color="#CC0000"><a href="#3.7.1.">3.7.1. Descubrimiento conducido
+por teorías</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.7.2.">3.7.2. Descubrimiento conducido
+por datos</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.7.3.">3.7.3. Clustering</a></font></b></ul>
+<b><font color="#CC0000"><a href="#3.8.">3.8. Analogía</a></font></b>
+<ul><b><font color="#CC0000"><a href="#3.8.1.">3.8.1. Analogía transformacional</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.8.2.">3.8.2. Analogía derivacional</a></font></b></ul>
+<b><font color="#CC0000"><a href="#3.9.">3.9. Aprendizaje con Redes Neuronales</a></font></b>
+<ul><b><font color="#CC0000"><a href="#3.9.1.">3.9.1. Redes neuronales
+de alimentación positiva</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.9.2.">3.9.2. Perceptrones</a></font></b>
+<br><b><font color="#CC0000"><a href="#3.9.3.">3.9.3. Redes de interpolación
+y de aproximación</a></font></b></ul>
+
+<hr width="100%">
+<br><a name="3.1."></a><i><font color="#000099"><font size="+3">3.1. Introducción</font></font></i>&nbsp;
+<hr width="100%">
+<br><b><font color="#000099">¿Las máquinas pueden aprender?</font></b>
+
+<p><font color="#000099">Ada Augusta, filósofa de la computación
+(1961) dijo que la máquina analítica no pretende crear nada,
+puede hacer lo que sea si se le ha indicado la forma de hacerlo.</font>
+
+</p><p><b><font color="#000099">¿Qué es el aprendizaje?</font></b>
+
+</p><p><font color="#000099">Simon (1983), define el aprendizaje como cambios
+en el sistema que se adaptan de manera que permiten llevar a cabo la misma
+tarea de un modo más eficiente y eficaz.</font>
+
+</p><p><font color="#000099">En la práctica, el aprendizaje se usa para
+resolver problemas y puede representar la diferencia entre la resolución
+rápida y la imposibilidad de resolverlo. La idea de poder aprender
+de la propia experiencia en la resolución de problemas nos lleva
+a esperar obtener mejores soluciones en un futuro.</font>
+
+</p><p><font color="#000099">El aprendizaje esta relacionado con el conocimiento.
+Puede definirse como el proceso mediante el cual un ente adquiere conocimiento.
+Este conocimiento puede ser suministrado por otro ente denominado profesor
+o puede adquirirse sin la ayuda del mismo.</font>
+
+</p><p><font color="#000099">Hay distintas formas de aprendizaje, entre las
+cuales se verán:</font>
+<br>&nbsp;
+</p><ul>
+<li>
+<font color="#000099">Aprendizaje memorístico</font></li>
+
+<li>
+<font color="#000099">Aprendizaje a través de consejos</font></li>
+
+<li>
+<font color="#000099">Aprendizaje mediante experiencia en la resolución
+de problemas</font></li>
+
+<li>
+<font color="#000099">Aprendizaje a partir de ejemplos o Inducción</font></li>
+
+<li>
+<font color="#000099">Aprendizaje basado en explicaciones</font></li>
+
+<li>
+<font color="#000099">Descubrimiento</font></li>
+
+<li>
+<font color="#000099">Analogía</font></li>
+
+<li>
+<font color="#000099">Redes Neuronales</font></li>
+</ul>
+
+<hr width="100%">
+<br><a name="3.2."></a><i><font color="#000099"><font size="+3">3.2. Aprendizaje
+memorístico</font></font></i>&nbsp;
+<hr width="100%">
+
+<p>El <b>aprendizaje memorístico</b> es la actividad de aprendizaje
+más básica y rudimentaria. Consiste en el simple almacenamiento
+de la información computada.
+
+</p><p>Este proceso al cual muchos no llamarían aprendizaje, puede considerarse
+como tal desde el punto de vista que puede mejorar el rendimiento de un
+programa existente. Produce un ahorro cuando el efectuar un cálculo
+nuevamente resulta más caro que reutilizar su resultado conocido.
+
+</p><p>Samuel (1963), en su juego de damas, utiliza una combinación
+de aprendizaje memorístico y aprendizaje mediante el ajuste de parámetros
+<a href="#3.4.1">(sección 3.4.1).</a> Utiliza el algoritmo Minimax,
+memorizando el valor de evaluación de un tablero raíz. Si
+en un futuro se llega a una situación similar, se reutiliza la evaluación
+memorizada en lugar de aplicar la búsqueda nuevamente.
+
+</p><p>Surgen dos cuestiones importantes a considerar:
+</p><ul>
+<li>
+Almacenamiento organizado de la información: para que resulte conveniente
+reutilizar un valor almacenado debe resultar más rápido buscarlo
+que recalcularlo, y por lo tanto el almacenamiento debe ser organizado
+de acuerdo a algún criterio. Ej. En el programa de Samuel, se ordenaba
+en índices las posiciones del tablero por medio de alguna de las
+características importantes.</li>
+</ul>
+
+<ul>
+<li>
+Generalización de la información: para mantener en un nivel
+manejable el número de objetos almacenados se necesita hacer alguna
+especie de generalización de la información. Ej. detectar
+situaciones simétricas en el tablero.</li>
+</ul>
+
+<hr width="100%">
+<br><a name="3.3."></a><i><font color="#000099"><font size="+3">3.3. Aprendizaje
+a través de consejos</font></font></i>&nbsp;
+<hr width="100%">
+
+<p>Otra forma de <b>aprendizaje</b> es <b>a través de consejos</b>.
+Estos son suministrados por una persona en un lenguaje de alto nivel, por
+ej. lucha por controlar el centro del tablero de ajedrez. El programa es
+capaz de traducir el consejo en un lenguaje más operativo y usarlo
+para modificar su comportamiento, por ej., ajuste de la función
+de evaluación para introducir factor basado en el número
+de cuadros del centro ocupados por piezas de un color.
+
+</p><p>Mostow (1983), define <b>FOO</b>, un programa que juega con naipes a
+corazones.
+
+</p><p><b>Ejemplo de consejo:</b> evitar hacer puntos,
+
+</p><p>que puede darse en una notación más conveniente tipo LISP:
+
+</p><p>( evitar
+</p><ul>(hacerme_puntos (baza) )</ul>
+)
+
+<p>Después de un proceso de reemplazos, el programa traduce el consejo
+a
+<br>( llevar_a_cabo
+</p><ul>( &gt;=
+<ul>(AND
+<ul>( mismo_palo (carta_mia)
+<br>&nbsp; posible ( baza_tiene_puntos)
+<br>)</ul>
+)
+<br>(carta_baja (carta_mia))</ul>
+)</ul>
+)
+
+<p>El programa ha convertido un consejo en una heurística específica
+que puede utilizar al jugar, y que lo capacita para jugar mejor.
+
+</p><p>Una persona podría observar cómo juega el programa, detectar
+nuevos fallos, y corregirlos mediante nuevos consejos.
+
+</p><p>
+</p><hr width="100%">
+<br><a name="3.4."></a><i><font size="+3"><font color="#000099">3.4. Aprendizaje
+</font>mediante experiencia en la</font></i>
+<br><i><font size="+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; resolución
+de problemas</font></i>
+<br>
+<hr width="100%">
+
+<p>En la sección anterior se explica cómo un resolutor de
+problemas puede mejorar a través de los consejos de un profesor.
+En esta sección se explica cómo un programa puede mejorar
+sin ayuda externa sino mediante la generalización de sus propias
+experiencias.
+
+</p><p><a name="3.4.1."></a><i><font size="+2"><font color="#000099">3.4.1. </font>Aprendizaje
+por medio del ajuste de parámetros</font></i>
+
+</p><p>Este procedimiento consiste en usar una función de evaluación
+f que combina la información recibida de diferentes fuentes p1...pn
+, para formar un único resumen estadístico.
+
+</p><p>En los juegos, usar una función de evaluación que combina
+muchos factores importantes dando lugar a un único valor que refleje
+el deseo de ocupar una posición particular del tablero. Por ej.,
+Samuel (1963) en su juego de damas usa una función de evaluación
+
+</p><p>f = c1 * p1 + ... + c16 * p16
+
+</p><p>con 16 características que contribuyen a la evaluación.
+
+</p><p>El problema principal es saber asignar a priori los coeficientes, pesos
+o ponderaciones c1...cn. El problema de asignar el peso adecuado a cada
+característica se denomina <b>problema de asignación de crédito</b>,
+y su solución no resulta trivial. Una forma de hacerlo es comenzar
+con alguna estimación de los valores correctos, y entonces, permitir
+que el programa los modifique en base a su propia experiencia.
+
+</p><p>Existen dos cuestiones importantes al diseñar un programa de
+aprendizaje basado en el ajuste de parámetros:
+</p><ul>
+<li>
+Cuándo debe aumentar o disminuir el valor un coeficiente</li>
+
+<li>
+Cuánto debe cambiar el valor</li>
+</ul>
+Aquellas características que parezcan adecuadas deberán aumentar
+su peso, y aquellas que no lo hagan, los disminuirán. Es decir,
+los coeficientes de los términos que ayuden a predecir el final
+deben aumentar mientras que deben disminuir los coeficientes que sean poco
+predictivos. En aquellos dominios donde se tenga retroalimentación
+resulta fácil, por ej. un programa de clasificación de patrones
+utiliza su función de evaluación para clasificar una entrada
+y obtener la respuesta adecuada, entonces los términos que hayan
+contribuido a alcanzar ese objetivo deben aumentar su peso.
+
+<p>En otros dominios, como los juegos, el programa no obtiene ninguna retroalimentación
+de los movimientos individuales, y por lo tanto no es posible saber si
+se ha ganado hasta el final del juego. El programa de Samuel, si bien usa
+una técnica imperfecta, resolvía este problema. Inicialmente
+se comenzaba con una función lo suficientemente buena, y a continuación
+ésta se usaba para proporcionar una retroalimentación a sí
+misma. Las secuencias de movimientos que llevan a posiciones con valores
+más altos se pueden considerar como buenas, y los términos
+en la función que afectan deben reforzarse. Cuando el programa se
+encontraba en modo aprendizaje, jugaba contra una copia modificada de sí
+mismo que alteraba su función durante el juego. Si la copia modificada
+ganaba, la función se tomaba como válida. En caso contrario,
+se retenía la antigua. Si ésta última situación
+se repetía varias veces, se trataba de dar un cambio drástico
+a la función. Periódicamente se eliminaba uno de los 16 términos
+de la función, y se cambiaba por otro elegido entre 38 características,
+produciendo un cambio súbito en la función.
+
+</p><p>Las mayores limitaciones de este proceso de aprendizaje son debidas
+a que no se usa ningún conocimiento acerca de la estructura del
+problema y las relaciones lógicas entre componentes del mismo. Dado
+que este proceso puede verse como una variante de la escalada, experimenta
+las mismas dificultades. Resulta una técnica útil combinada
+con el uso de conocimiento adicional.
+<br>&nbsp;
+
+</p><p><a name="3.4.2."></a><i><font size="+2"><font color="#000099">3.4.2. </font>Aprendizaje
+con macro-operadores</font></i>
+
+</p><p>Al igual que en el proceso de memorización, el uso de<b> </b>macro-operadores
+trata de evitar el volver a realizar cálculos que ocupen mucho tiempo.
+
+</p><p>Se denomina <b>macro-operador </b>a una secuencia de acciones que se
+pueden tratar en conjunto.
+
+</p><p>El programa <b>STRIPS</b> (Fikes &amp; Nilsson, 1971), es un sistema
+de resolución de problemas mediante robot. Existen un brazo mecánico,
+con el que se intenta resolver problemas en el dominio del mundo de los
+bloques.
+
+</p><p>Inicialmente los operadores disponibles son:
+</p><ul>APILAR (A,B),
+<br>DESAPILAR (A,B),
+<br>AGARRAR(A),
+<br>BAJAR(A).</ul>
+Un problema se describe mediante una precondición y una postcondición.
+Por ejemplo, el siguiente problema:
+
+<p>SOBRE (C,B) AND SOBRE (A,MESA) =&gt;SOBRE(A,B) AND SOBRE (C,MESA)
+
+</p><p>Este problema se soluciona con la siguiente secuencia de operadores:
+
+</p><p>DESAPILAR (C,B), BAJAR (C), AGARRAR(A), APILAR (A,B)
+
+</p><p>Después de cada resolución, el componente de aprendizaje
+toma el plan computado y lo almacena en un macro-operador con las precondiciones
+y postcondiciones correspondientes. En el futuro, este es un nuevo operador
+que puede utilizarse para solucionar un subproblema con las mismas pre
+y postcondiciones.
+
+</p><p>Si se generalizan los macro-operadores antes de almacenarlos, el programa
+será capaz de hacer uso de él en situaciones no idénticas
+sino similares. Por ej., la generalización del macro-operador del
+ejemplo anterior es:
+
+</p><p>DESAPILAR (x3,x2), BAJAR (x3), AGARRAR(x1), APILAR (x1,x2)
+
+</p><p>El cual tiene las siguientes pre y postcondiciones:
+
+</p><p>SOBRE (x3,x2) AND SOBRE (x1,MESA)&nbsp; =&gt; SOBRE(x1,x2) AND SOBRE (x3,MESA)
+<br>&nbsp;
+
+</p><p><a name="3.4.3."></a><i><font size="+2"><font color="#000099">3.4.3. </font>Aprendizaje
+mediante troceado</font></i>
+
+</p><p>Esta técnica denominada <b>troceado </b>o <b>chunking</b> es
+un proceso similar al de los macro-operadores.
+
+</p><p>El programa <b>SOAR</b> (Laid, 1987) es una arquitectura general para
+construir sistemas inteligentes que usa la técnica de chunking de
+modo que su rendimiento puede aumentar con la experiencia. Se basa en un
+conjunto de hipótesis específicas cognoscitivas y motivadas
+similares a la estructura de resolución de problemas de los hombres.
+
+</p><p>El sistema cuenta de diferentes partes:
+</p><ul>
+<ul>
+<li>
+Memoria de largo plazo: contiene reglas u operadores a aplicar</li>
+
+<li>
+Memoria de corto plazo: almacena hechos deducidos de la aplicación
+de reglas.</li>
+
+<li>
+Actividades resolutoras: incluyen razonamiento de qué estados se
+deben explorar y qué reglas se deben aplicar. En lugar de emplear
+una estrategia fija, la elección de una regla depende de la utilidad
+que ésta presente frente una situación dada.</li>
+</ul>
+</ul>
+Cuando el sistema detecta una secuencia de reglas útiles para resolver
+un subproblema dado, estos resultados intermedios son almacenados o troceados
+para referencia futura.
+
+<p>Dado que la resolución de problemas es uniforme, el troceado
+puede usarse para aprender conocimiento de control de búsqueda general,
+además de secuencia de operadores. Por ej., si SOAR prueba con varias
+reglas diferentes pero sólo una le conduce por un camino adecuado
+en el espacio de búsqueda, entonces SOAR puede construir nuevas
+reglas que le ayuden a elegir a su vez los operadores de un modo más
+acertado en el futuro.
+
+</p><p>A diferencia de los macro-operadores, el troceado casi siempre se aplica
+en dirección a cualquier estado objetivo en lugar de planearse para
+alcanzar un estado objetivo o postcondición especial.
+
+</p><p>El principal problema consiste en que las reglas ocupan demasiado espacio,
+y por lo tanto el tiempo de análisis de aplicación de reglas
+es grande. PRODIGY (Minton, 1989) identifica el problema de la utilidad
+en los sistemas de aprendizajes. Mantiene una medida de utilidad asociada
+a cada regla, la cual toma en cuenta la frecuencia de aplicación
+de la misma, así como el tiempo y memoria consumidos. Si una regla
+dada tiene una utilidad negativa, se la ignora, por lo tanto se mejoran
+los tiempos de búsqueda y acceso.
+<br>&nbsp;
+
+</p><p>
+</p><hr width="100%">
+<br><a name="3.5."></a><i><font color="#000099"><font size="+3">3.5. Aprendizaje
+a partir de ejemplos o Inducción</font></font></i>&nbsp;
+<hr width="100%">
+<br>La <b>clasificación </b>es el proceso de asignarle a una cierta
+entras concreta el nombre de una clase a la que pertenece. Se emplea en
+tareas de reconocimiento como por ej. reconocimiento de caracteres, de
+piezas defectuosas, etc.
+
+<p>En primer lugar se deben definir las clases que utilizará la
+clasificación. Las clases pueden describirse usando:
+</p><ul>
+<li>
+<b>Modelo estadístico: </b>cada clase está definida por una
+función F que incluye las características ci relevantes del
+dominio específico ponderadas por un peso pi</li>
+
+
+<p>F = c1 * p1 + ... + cn * pn</p></ul>
+
+<ul>
+<li>
+<b>Modelo estructural:</b> cada clase está definida por una estructura
+compuesta por las características relevantes del dominio específico.
+Ej. si la tarea es definir clases de animales, el cuerpo puede verse como
+una estructura de color, cantidad de patas, longitud, manchas, etc.</li>
+</ul>
+Dado que la tarea de construir manualmente las clases resulta un proceso
+difícil, se pretende que el programa de clasificación incluya
+las definiciones de sus propias clases.
+
+<p>El proceso de construir definiciones de clases se denomina aprendizaje
+de conceptos o inducción. Si las clases se definen con un modelo
+estadístico, el aprendizaje de conceptos se puede hacer utilizando
+una técnica conocida como ajuste de parámetros (<a href="#3.4.1.">sección
+3.4.1.</a>). En esta sección se verán tres técnicas
+de aprendizaje de conceptos para clases definidas de un modo estructural:
+</p><ul>
+<li>
+Programa de aprendizaje de Winston</li>
+
+<li>
+Espacios de versiones</li>
+
+<li>
+Árboles de decisión</li>
+</ul>
+Estas técnicas tienen en común que comienzan el proceso de
+aprendizaje a partir de una serie de ejemplos de entrenamiento de los que
+se conoce su clasificación.
+
+<p><a name="3.5.1."></a><i><font size="+2"><font color="#000099">3.5.1. Pr</font>ograma
+de aprendizaje de Winston</font></i>
+<br>&nbsp;
+<br>Winston (1975) describe uno de los primeros programas de aprendizaje
+de conceptos estructurales. Su objetivo consistía en construir representaciones
+de las definiciones de conceptos del dominio del mundo de los bloques,
+por ej. los conceptos: casa, arco, etc. construidos a partir de la estructuración
+de otros conceptos más simples como: ladrillo, cilindro, etc.
+
+</p><p>El algoritmo tiene tres pasos:
+</p><ul>1- Comenzar analizando una instancia conocida del concepto y construir
+su descripción estructural.
+
+<p>2- Estudiar descripciones de otras instancias conocidas del concepto
+para generalizar la definición hecha en el paso1. De esta manera,
+todas las instancias están incluidas en la nueva descripción.
+
+</p><p>3- Examinar descripciones de <b>semejantes</b> u objetos que no son
+instancias del concepto, para restringir la definición hecha en
+el paso 2.&nbsp; De esta manera, todos los semejantes están excluidos
+en la nueva descripción.</p></ul>
+<b>Ejemplo:</b> se quiere inducir el concepto <b>arco</b>. La figura 1
+muestra dos instancias de arcos A1 y A2, y una instancia de semejante S1
+no considerado arco.
+<br>&nbsp;
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura1.JPG" height="145" width="601" border="2"></center>
+
+
+<p>En el paso 1 se comienza analizando la instancia A1, cuya descripción
+podría ser:
+
+</p><p>tiene_parte (A1,B1) AND tiene_parte (A1,C1) AND tiene_parte (A1,D1)
+AND apoya (C1,B1) AND apoya (C1,D1) AND es_un (B1, ladrillo) AND es_un(C1,ladrillo)
+AND es_un (D1, ladrillo) AND no_union (B1,D1)
+
+</p><p>En el paso 2 se analiza la otra instancia A2, cuya descripción
+podría ser:
+
+</p><p>tiene_parte (A2,B2) AND tiene_parte (A2,C2) AND tiene_parte (A2,D2)
+AND apoya (C2,B2) AND apoya (C2,D2) AND es_un (B2, ladrillo) AND es_un(C2,cilindro)
+AND es_un (D2, ladrillo) AND no_union (B2,D2)
+
+</p><p>Luego, la descripción se generaliza para incluir a ambas instancias:
+
+</p><p>tiene_parte (A,B) AND tiene_parte (A,C) AND tiene_parte (A,D) AND apoya(C,B)
+AND apoya (C,D) AND es_un(B, ladrillo) AND es_un(C2,objeto) AND es_un(D,ladrillo)
+AND no_union (B,D)
+
+</p><p>donde se consideró que tanto ladrillo como cilindro eran instancias
+de una clase superior objeto.
+
+</p><p>En el paso 3 se considera la instancia del semejante S1:
+
+</p><p>tiene_parte (S1, T1) AND tiene_parte (S1, U1) AND tiene_parte (S1,V1)
+AND apoya(U1,T1) AND apoya (U1,V1) AND es_un(T1, ladrillo) AND es_un(U1,ladrillo)
+AND es_un(V1,ladrillo)
+
+</p><p>La definición del concepto debe ahora modificarse para que explícitamente
+el semejante sea excluido de la misma. La relación no_union es la
+única diferencia con las instancias del concepto. Dado que ésta
+puede haberse establecido por casualidad debido al número pequeño
+de instancias consideradas, la definición debe excluir de manera
+explícita al semejante fortaleciendo la relación con “no_debe_union”:
+Por lo tanto, la descripción queda de la siguiente manera:
+
+</p><p>tiene_parte (A,B) AND tiene_parte (A,C) AND tiene_parte (A,D) AND apoya(C,B)
+AND apoya (C,D) AND es_un(B, ladrillo) AND es_un(C2,objeto) AND es_un(D,ladrillo)
+AND no_debe_union (B,D)
+<br>&nbsp;
+
+</p><p>Uno de los problemas de este enfoque de aprendizaje es que debe existir
+un profesor que conduzca el programa mediante una serie de ejemplos escogidos
+y ordenados cuidadosamente.
+<br>&nbsp;
+
+</p><p><a name="3.5.2."></a><i><font size="+2"><font color="#000099">3.5.2. </font>Espacios
+de versiones</font></i>
+
+</p><p>Mitchell (1977) describe el aprendizaje llamado <b>espacios de versiones
+<i>(version spaces)</i>.</b>
+
+</p><p>El objetivo es el mismo que en el esquema anterior, es decir, producir
+una descripción de un concepto a partir de un entrenamiento con
+ejemplos positivos y negativos.
+
+</p><p>Difiere del esquema anterior en que no se ve afectado por el orden en
+que se presentan los ejemplos. Además, en lugar de describir un
+único concepto este esquema mantiene un conjunto de descripciones
+posibles hasta arribar a la definición del mismo.
+
+</p><p>Para representar un concepto se usa un lenguaje de representación
+basado en marcos. Por ejemplo, el concepto&nbsp; <b>coche</b> se representa:
+<br>&nbsp;
+</p><ul>origen = x1
+<br>marca = x2
+<br>color = x3
+<br>década = x4
+<br>tipo = x5</ul>
+donde
+<ul>x1 pertenece a {Japón, EEUU, UK, Italia,...}
+<br>x2 pertenece a {Honda, Toyota, Chrysler, Fiat,...}
+<br>x3 pertenece a {azul, blanco, amarillo, verde,...}
+<br>x4 pertenece a {1950,1960,1970,1980,1990,2000,...}
+<br>x5 pertenece a {económico, lujo, deportivo,...}</ul>
+Un ejemplo o instancia del concepto coche en particular:
+<ul>origen = Japón
+<br>marca = Honda
+<br>color = azul
+<br>década = 1970
+<br>tipo = económico</ul>
+La descripción de conceptos se puede poner en términos de
+ranuras y valores. Por ejemplo, el concepto <b>coche económico japonés</b>
+<ul>origen = Japón
+<br>marca = x2
+<br>color = x3
+<br>década = x4
+<br>tipo = económico</ul>
+El objetivo es producir una descripción como la anterior que sea
+consistente con todos los ejemplos de entrenamiento positivos y que no
+lo sea con los ejemplos de entrenamiento negativos.
+
+<p>Dado que existen descripciones más generales que otras se puede
+establecer un orden parcial entre ellas. La ordenación parcial completa
+se denomina espacio de conceptos. La parte superior del espacio de conceptos
+se denomina G y constituye la descripción nula que consta sólo
+de variables (ej. concepto coche). La parte inferior denominada S la constituyen
+todas las posibles instancias de entrenamiento que no contienen variables.
+El concepto destino se encuentra en algún lugar del espacio de conceptos
+intermedio entre los extremos G y S.
+
+</p><p>A medida que se procesan los ejemplos de entrenamiento se va refinando
+la noción de dónde se encuentra el concepto destino. Existe
+un subconjunto del espacio de conceptos llamado espacio de versiones constituida
+por todas las descripciones por las que se va pasando a medida que se procesan
+los ejemplos.
+
+</p><p>El algoritmo de eliminación de candidatos reduce el espacio de
+versiones a medida que procesa los ejemplos, y se describe a continuación:
+<br>&nbsp;
+</p><ul>1- Inicializar G con la descripción nula.
+
+<p>2- Inicializar S con el primer ejemplo positivo.
+
+</p><p>3- Aceptar un nuevo elemento de entrenamiento.
+</p><ul>
+<ul>
+<li>
+Si es ejemplo positivo, eliminar de G cualquier descripción que
+no lo cubra. Actualizar S generalizándolo lo menos posible de manera
+que cubra el ejemplo.</li>
+</ul>
+&nbsp;
+<ul>
+<li>
+Si es ejemplo negativo, eliminar de S cualquier descripción que
+lo cubra. Actualizar G especificándolo lo menos posible de manera
+que no cubra el ejemplo.</li>
+</ul>
+</ul>
+4- Si S y G con unitarios e iguales el concepto destino se alcanzó.
+Si en cambio son unitarios y diferentes, los ejemplos de entrenamiento
+son inconsistentes. En otro caso, repetir paso 3.</ul>
+<b>Ejemplo:</b> inducir el concepto <b>coche económico japonés</b>
+
+<p>Se inicializa G con:
+
+</p><p>G = { (x1,x2,x3,x4,x5)}
+
+</p><p>- El primer ejemplo positivo:
+
+</p><p>origen = Japón
+<br>marca = Honda
+<br>color = azul
+<br>década = 1970
+<br>tipo = económico
+
+</p><p>sirve para inicializar S con:
+
+</p><p>S = { (Japón,Honda,azul,1970,económico)}
+
+</p><p>- El segundo ejemplo es negativo:
+
+</p><p>origen = Japón
+<br>marca = Toyota
+<br>color = verde
+<br>década = 1970
+<br>tipo = deportivo
+
+</p><p>y por lo tanto se especifica G para no incluirlo:
+
+</p><p>G = { (x1,Honda,x3,x4,x5), (x1,x2,azul,x4,x5), (x1,x2,x3,x4,económico)}
+
+</p><p>En este caso no se elimina ningún elemento de S pues este ejemplo
+no está incluido.
+
+</p><p>- El tercer ejemplo es positivo:
+
+</p><p>origen = Japón
+<br>marca = Toyota
+<br>color = azul
+<br>década = 1990
+<br>tipo = económico
+
+</p><p>y por lo tanto se eliminan de G las descripciones inconsistentes para
+incluirlo:
+
+</p><p>G = {(x1,x2,azul,x4,x5), (x1,x2,x3,x4,económico)}
+
+</p><p>y generalizo S lo mínimo posible para incluir este ejemplo:
+
+</p><p>S = { (Japón,x2,azul,x4,económico)}
+
+</p><p>- El cuarto ejemplo es negativo:
+
+</p><p>origen = EEUU
+<br>marca = Chrysler
+<br>color = azul
+<br>década = 1980
+<br>tipo = económico
+
+</p><p>y por lo tanto se especifica G para no incluirlo:
+
+</p><p>G = { (Japón,x2,azul,x4,x5), (Japón,x2,x3,x4,económico)}
+
+</p><p>En este caso no se elimina ningún elemento de S pues este ejemplo
+no está incluido.
+
+</p><p>- El quinto ejemplo es positivo:
+
+</p><p>origen = Japón
+<br>marca = Honda
+<br>color = blanco
+<br>década = 1980
+<br>tipo = económico
+
+</p><p>y por lo tanto se eliminan de G las descripciones inconsistentes para
+incluirlo:
+
+</p><p>G = {(Japón,x2,x3,x4,económico)}
+
+</p><p>y generalizo S lo mínimo posible para incluir este ejemplo:
+
+</p><p>S = { (Japón,x2,x3,x4,económico)}
+
+</p><p>Dado que G y S convergen en un conjunto unitario se llegó a la
+descripción del concepto buscada.
+
+</p><p>Los ejemplos negativos deberían ser lo más parecido a
+los positivos anteriores (especifico G y elimino de S rápido), y
+los positivos lo más diferentes posible (elimino de G y generalizo
+S rápido), para que la convergencia se produzca más rápido.
+
+</p><p>Uno de los problemas de este esquema de aprendizaje es el ruido, es
+decir, un error en el etiquetado de un ejemplo, puede causar que se pode
+del espacio de versiones el concepto destino. Por ejemplo, si el coche
+ejemplo 3 se etiqueta como negativo por error, no se llega al concepto
+de coche económico japonés. Una forma de solucionar este
+problema (Mitchell, 1978) consiste en mantener varios conjuntos G y S.
+Un conjunto G es consistente con todas las instancias de entrenamiento,
+otro lo será con todas menos una, otro con todas menos dos, etc.
+(idem para S). Cuando se presenta una inconsistencia, el algoritmo cambia
+de conjuntos de entrenamiento. Sin embargo, mantener múltiples espacios
+de versiones puede resultar muy costoso.
+<br>&nbsp;
+
+</p><p><a name="3.5.3."></a><i><font size="+2"><font color="#000099">3.5.3. </font>Árboles
+de decisión</font></i>
+
+</p><p>Un tercer enfoque para el aprendizaje de conceptos a partir de ejemplos
+de entrenamiento lo constituyen los árboles de decisión (decision
+trees).
+
+</p><p>El programa <b>ID3</b> (Quinlan, 1986) utiliza una representación
+de árbol para los conceptos. Para clasificar una entrada particular,
+se empieza por la parte superior del árbol y se responden pregunta
+hasta llegar a una hoja en donde se guarda la clasificación. Por
+ejemplo, la figura 2 muestra la especificación con un árbol
+de decisión del concepto<b> coche económico japonés</b>.
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura2.JPG" height="283" width="582" border="2"></center>
+
+
+<p>El programa ID3 construye automáticamente un árbol de
+decisión dadas diferentes instancias positivas y negativas del concepto
+destino. Es básicamente un algoritmo iterativo, que comienza eligiendo
+un subconjunto aleatorio de ejemplos de entrenamiento llamado ventana.
+El algoritmo construye un árbol que clasifica todos los ejemplos
+de la ventana, y prueba con ejemplos de entrenamiento fuera de la ventana.
+Si todos los ejemplos son correctamente clasificados, el algoritmo finaliza.
+En caso contrario, se añaden a la ventana un número de ejemplos
+y el proceso se repite. Los árboles se construyen creando nodos
+a partir de atributos que proporcionan más información que
+otros. Por ejemplo, probar con el atributo color es menos útil que
+el origen, pues el primero no ayuda a la hora de clasificar correctamente.
+Cuando se llega a atributos que dividen perfectamente las instancias de
+entrenamiento en subconjuntos cuyos miembros participan con una etiqueta
+común (positivo o negativo) la ramificación ha terminado
+y los nodos hoja están etiquetados.
+
+</p><p>
+</p><hr width="100%">
+<br><a name="3.6."></a><i><font size="+3"><font color="#000099">3.6. </font>Aprendizaje
+basado en explicaciones</font></i>&nbsp;
+<hr width="100%">
+
+<p>En la <a href="#3.5.">sección 3.5.</a> se explicó un aprendizaje
+basado en la inducción de la descripción de un concepto a
+partir de una serie de ejemplos de entrenamiento positivos y negativos.
+El problema de este enfoque es que se necesita un número elevado
+de ejemplos para inducir conceptos complejos.
+
+</p><p>A veces se aprende mejor a partir de una única experiencia en
+lugar de miles de ejemplos positivos y negativos. El uso de conocimiento
+específico permite identificar los aspectos críticos del
+ejemplo de entrenamiento. Este enfoque se denomina aprendizaje basado en
+explicaciones (<b><i>explanation-based learning EBL</i></b>).
+
+</p><p>Tanto Mitchell (1986) como DeJong y Mooney (1986) describen algoritmos
+de trabajo <b>EBL </b>que aceptan como entrada:
+</p><ul>
+<li>
+Una descripción de un ejemplo de entrenamiento</li>
+
+<li>
+Una descripción de alto nivel del concepto objetivo que debe aprender
+el programa</li>
+
+<li>
+Un criterio de operatividad o descripción de qué conceptos
+son aprovechables</li>
+
+<li>
+Una teoría del dominio o conjunto de reglas específicas del
+dominio.</li>
+</ul>
+El algoritmo realiza dos pasos:
+<br>&nbsp;
+<ul>1- Explicación: realiza una explicación del por qué
+el ejemplo de entrenamiento es una instancia del concepto objetivo. Usa
+el conocimiento de la teoría del dominio y poda los aspectos del
+ejemplo de entrenamiento que no son importantes respecto al concepto objetivo.
+
+<p>2- Generalización: realiza una generalización de la explicación
+del paso 1 para describir el concepto objetivo.</p></ul>
+<b>Ejemplo:</b> se quiere dar una explicación del concepto <b>copa</b>.
+
+<p>A diferencia de la inducción a partir de ejemplos del concepto
+arco (<a href="#3.5.1.">sección 3.5.1</a>.), se realizará
+la explicación del concepto copa a partir de un único ejemplo
+de entrenamiento junto con el conocimiento que se tiene del dominio específico
+de objetos.
+
+</p><p>Se tiene como entrada:
+<br>&nbsp;
+</p><ul>
+<li>
+Una descripción de un ejemplo de entrenamiento objeto1:</li>
+
+
+<p>tiene_parte (objeto1,fondo1) AND es(fondo1, plano) AND tiene_parte(objeto1,asa1)
+AND tiene_parte (objeto1,concavidad1) AND es(objeto1,ligero) AND propietario(objeto1,Pepe)
+AND color (objeto1, cristalino) AND es(concavidad1, hacia_arriba) AND .
+. .</p></ul>
+
+<ul>
+<li>
+Una descripción de alto nivel del concepto objetivo que debe aprender
+el programa</li>
+
+
+<p>COPA (x) &lt;=&gt; se_puede_agarrar(x) AND estable (x) AND recipiente_abierto(X)
+<br>&nbsp;
+</p><li>
+Un criterio de operatividad o descripción de qué conceptos
+son aprovechables</li>
+
+
+<p>El concepto debe expresarse en términos puramente estructurales
+(ej. características como ligero, plano, etc. en lugar de otras
+como posesión, color, etc.).
+<br>&nbsp;
+</p><li>
+Una teoría del dominio o conjunto de reglas específicas del
+dominio.</li>
+
+
+<p>- es (x,ligero) AND tiene_parte (x,y) AND es_un (y,asa) =&gt; se_puede_agarrar(x)
+<br>- tiene_parte(x,y) AND es_un(y,fondo) AND es(y,plano) =&gt; estable(x)
+<br>- tiene_parte(x,y) AND es_un(y,concavidad) AND es (y, hacia_arriba)
+=&gt; recipiente_abierto(x)
+<br>- etc.</p></ul>
+En el paso 1 se trata de realizar la explicación de por qué
+el ejemplo de entrenamiento objeto1 es una instancia del concepto destino
+COPA(x). Para ello se realiza un proceso de demostración de teoremas
+usando la descripción del objeto1 junto con el conocimiento del
+dominio. Se llega a afirmaciones como las siguientes:
+<br>es (objeto1,ligero) AND tiene_parte (objeto1,asa1) AND es (asa1,asa)
+=&gt; se_puede_agarrar(objeto1)
+<br>AND
+<br>tiene_parte(objeto1,fondo1) AND es_un(fondo1,fondo) AND es (fondo1,plano)
+=&gt; estable(objeto1)
+<br>AND
+<br>tiene_parte(objeto1,concavidad1) AND es_un(concavidad1,concavidad)
+AND es (concavidad1, hacia_arriba) =&gt; recipiente_abierto(objeto1)
+
+<p>por lo tanto
+
+</p><p>COPA(objeto1)
+
+</p><p>En esta demostración se observa que no aparecen los predicados
+propietario y color, y que por lo tanto la prueba aísla las características
+relevantes del ejemplo de entrenamiento.
+
+</p><p>En el paso 2, se sustituyen las constantes por variables generalizando
+la demostración para obtener la siguiente descripción de
+una copa:
+
+</p><p>COPA(x) &lt;=&gt; es (x,ligero) AND tiene_parte (x,y) AND es (y,asa) AND
+tiene_parte(x,z) AND es_un(z,fondo) AND es (z,plano) AND tiene_parte(x,w)
+AND es_un(w,concavidad) AND es(w,hacia_arriba)
+
+</p><p>A diferencia que el método de inducción que extrae todo
+el conocimiento de los ejemplos, en este enfoque se centra todo el conocimiento
+en la teoría del dominio. El EBL podría aplicarse sin tener
+en cuenta un ejemplo de entrenamiento, ya que la teoría del dominio
+tiene toda la información requerida. Esto caracterizaría
+el rango completo de objetos que satisfacen el concepto objetivo, incluso
+aquellos que no existen en el mundo real. Para centrar el aprendizaje en
+las operacionalizaciones importantes, se usa la descripción del
+ejemplo de entrenamiento la cual acota y guía hacia el concepto
+objetivo deseado.
+<br>&nbsp;
+
+</p><p>
+</p><hr width="100%">
+<br><a name="3.7."></a><i><font size="+3"><font color="#000099">3.7. </font>Descubrimiento</font></i>
+<br>
+<hr width="100%">
+
+<p>Según se definió en la introducción, el aprendizaje
+es un proceso por medio del cual una entidad adquiere conocimiento. Normalmente,
+otras entidades poseen ese conocimiento y sirven de profesores. A veces,
+no existen entidades que posean el conocimiento que se busca. El descubrimiento
+es una forma de aprendizaje en la que una entidad adquiere conocimiento
+sin la ayuda de un profesor.
+
+</p><p>En esta sección se verán tres tipos de sistemas automáticos
+de descubrimiento:
+</p><ul>
+<li>
+Descubrimiento conducido por teorías</li>
+
+<li>
+Descubrimiento conducido por datos</li>
+
+<li>
+<i>Clustering</i></li>
+</ul>
+<a name="3.7.1."></a><i><font size="+2"><font color="#000099">3.7.1.</font>Descubrimiento
+conducido por teorías</font></i>
+
+<p>Lenat (1977;1982) realizó el programa<b> AM </b>el cual realiza
+el descubrimiento de una gran cantidad de cosas sobre la teoría
+de números a partir de pocos conceptos básicos de la teoría
+de conjuntos.
+
+</p><p>AM utiliza una búsqueda heurística con 250 reglas, las
+cuales son indicaciones acerca de las actividades que probablemente servirán
+de guías para alcanzar el descubrimiento. Por ej.
+
+</p><p>- Si f es función de A en B, y B está ordenado =&gt;crear
+un nuevo concepto que surge de considerar los elementos de A que se corresponden
+con los extremos de B
+<br>- Si algunos ejemplos del concepto X también son ejemplos de
+otro concepto Y =&gt; crear un nuevo concepto que represente la intersección
+entre X e Y
+<br>- Si hay muy pocos ejemplos de un concepto X =&gt; añadir a la
+lista de tareas la de encontrar una generalización de X
+<br>- etc.
+
+</p><p>El programa utiliza generación y prueba para formar hipótesis
+basadas en número pequeño de ejemplos, y luego prueba la
+hipótesis con un conjunto mayor para comprobarla.
+
+</p><p>AM tiene una agenda de tareas sugeridas por las heurísticas de
+mayor interés, y en cada paso se elige realizar la tarea más
+prometedora.
+
+</p><p><b>Ejemplo: </b>AM llega a descubrir el concepto de números primos
+
+</p><p>1- AM exploró las operaciones de +, *, - y / de los números
+naturales.
+<br>2- AM creo el concepto de divisibilidad
+<br>3- AM encuentra que algunos números tienen pocos divisores
+<br>4- AM sigue la heurística de explorar extremos, y encuentra
+que:
+<br>&nbsp;- el conjunto de números que no tienen divisores esta
+vacío
+<br>&nbsp;- el conjunto de números que tienen 1 divisor es {1}
+<br>&nbsp;- el conjunto de números que tienen 2 divisores: crea
+nuevo concepto <b>primos</b>
+<br>&nbsp;- el conjunto de números que tienen 3 divisores: encuentra
+el 49
+<br>5- AM trata de relacionar la propiedad descubierta del 49 con otras
+propiedades como la de ser impar y ser cuadrado perfecto.
+<br>6- AM genera otros números impares y cuadrados perfectos para
+verificar la hipótesis.
+<br>7- Con los últimos descubrimientos, AM eleva el interés
+del concepto de divisor. AM investiga maneras en que un número puede
+descomponerse en factores o componentes multiplicativos. AM descubre que
+hay sólo una manera de descomponer un número en factores
+primos (Teorema de la factorización única).
+<br>8- AM decide explorar lo mismo con componentes aditivos. Ademas de
+descubrir cosas con poco interés (ej. un número se descompone
+como suma de números 1), también descubre fenómenos
+como el de que muchos números pueden expresarse como suma de dos
+primos. A base de listar casos descubre que todos los números &gt;=
+2 tienen esa propiedad (Conjetura de Goldbach).
+
+</p><p>Una de las primeras preguntas sobre AM fue si era capaz de descubrir
+nuevos hechos desconocidos por los matemáticos. La respuesta es
+negativa debido a que la limitación de AM son las heurísticas
+fijas. Se propuso como solución a este problema el considerar a
+las heurísticas como el propio dominio del problema del que se quieren
+realizar nuevos descubrimientos. Siguiendo esta idea, AM debería
+ser capaz de descubrir nuevas heurísticas. Lamentablemente, debido
+a que los conceptos son más grandes y complejos que en la teoría
+de números, estos experimentos no tuvieron el éxito esperado.
+<br>&nbsp;
+
+</p><p><a name="3.7.2."></a><i><font size="+2">3.7.2. Descubrimiento conducido
+por datos</font></i>
+
+</p><p>A diferencia&nbsp; del descubrimiento en un encuadre teórico
+visto en la <a href="#3.7.1.">sección 3.7.1.</a>, Langley (1981)
+realiza un modelo de descubrimiento científico conducido por datos
+llamado <b>BACON.</b> Al igual que un científico empírico,
+BACON diseña y ejecuta experimentos con datos para validar hipótesis.
+Tiene heurísticas que le ayudan en el proceso, como por ejemplo
+buscar relaciones lineales entre variables.
+
+</p><p>Ejemplo: estudio del comportamiento de los gases
+
+</p><p>1- BACON comienza con un conjunto de variables
+<br>&nbsp;P: presión del gas
+<br>&nbsp;V: volumen del gas
+<br>&nbsp;T: temperatura del gas
+<br>&nbsp;N: cantidad de gas
+<br>2- BACON considera como constantes las variables N y T, y realiza experimentos
+variando P. Se da cuenta de que si aumenta P, la variable V disminuye.
+Descubre que P * V = constante.
+<br>Continúa el proceso variando T, y encuentra que existe relación
+lineal entre P*V y T.
+<br>Finalmente varía n y encuentra que existe relación lineal
+entre N y P*V/T, descubriendo la ley de los gases ideales: P * V / N *
+T = 8.32
+<br>&nbsp;
+
+</p><p><a name="3.7.3."></a><i><font size="+2">3.7.3. Clustering</font></i>
+
+</p><p>Al igual que en el proceso de aprendizaje por inducción, se cuenta
+con ejemplos de entrenamiento pero a diferencia de éste no existe
+un profesor que proporcione la clasificación de los mismos.
+
+</p><p>El descubrimiento por medio de agrupamiento o clustering se basa en
+descubrir las clases naturales que existen en los ejemplos de entrenamiento,
+sin la ayuda de un profesor.
+
+</p><p><b>AUTOCLASS </b>(Cheeseman, 1988) es un programa que acepta un número
+de casos de entrenamiento y obtiene un conjunto de clases. Ante la presencia
+de un nuevo caso para el cual el programa no fue entrenado, éste
+proporciona un conjunto de probabilidades que predicen en qué clase
+irá incluido.
+
+</p><p>AUTOCLASS realiza el clustering utilizando el razonamiento Bayesiano
+estadístico.
+
+</p><p>Resulta interesante saber que AUTOCLASS fue probado con datos del espectro
+infrarrojo de las estrellas y encontró tan sólo 9 clases,
+dato aún desconocido para los astrónomos.
+
+</p><p>
+</p><hr width="100%">
+<br><a name="3.8."></a><i><font size="+3"><font color="#000099">3.8. </font>Analogía</font></i>
+<br>
+<hr width="100%">
+
+<p>La <b>analogía</b> es una correspondencia entre conceptos aparentemente
+diferentes. Es una herramienta de inferencia utilizada naturalmente en
+nuestro lenguaje y razonamiento.
+
+</p><p>Por ejemplo, si tomamos la frase: el mes pasado la bolsa era como una
+montaña rusa. Por analogía podemos entender que la bolsa
+sufrió grandes fluctuaciones. Para entender la frase debemos:
+
+</p><p>1- Escoger una propiedad clave de la montaña rusa, por ejemplo,
+que baja y sube muy rápido.
+<br>2- Darse cuenta de que el viaje físico es una analogía
+para la fluctuación numérica de la bolsa.
+
+</p><p>Este proceso no es tan fácil, pues el espacio de analogías
+es muy amplio y no debe caerse en conclusiones erróneas como: la
+bolsa es como una montaña rusa porque está hecha de metal.
+
+</p><p>Los hombres resuelven problemas haciendo analogías con cosas
+que ya conocen. Este proceso es más complejo que el resolver problemas
+mediante macro-operadores (<a href="#3.4.1.">sección 3.4.1</a>.),
+dado&nbsp; que el nuevo problema resulta muy diferente al problema primitivo
+ya resuelto.
+
+</p><p>Existen dos métodos de resolución de problemas por analogía:
+</p><ul>
+<li>
+Analogía transformacional</li>
+
+<li>
+Analogía derivacional</li>
+</ul>
+<a name="3.8.1."></a><i><font size="+2">3.8.1. Analogía transformacional</font></i>
+
+<p>La idea de la analogía transformacional es transformar una solución
+de un problema previo en la solución del nuevo problema a resolver
+(figura 3)
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura3.JPG" height="185" width="340" border="2"></center>
+
+
+<p><b>Ejemplo:</b> Anderson y Kline (1979) crearon un programa de resolución
+de problemas de geometría plana. El programa ha visto demostraciones
+acerca de puntos y segmentos lineales, y puede por ejemplo probar un teorema
+sobre ángulos.
+<br>&nbsp;
+<br>&nbsp;
+<table cols="2" width="100%">
+<tbody><tr>
+<td>Problema viejo:&nbsp;
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-pv.JPG" height="155" width="187" border="2"></center>
+</td>
+
+<td>&nbsp;Problema nuevo:&nbsp;
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-pn.JPG" height="151" width="196" border="2"></center>
+</td>
+</tr>
+
+<tr>
+<td>Solución al problema viejo:&nbsp;
+
+<p>A partir de&nbsp;
+<br>RO = NY&nbsp;
+
+</p><p>Realiza la demostración de RN = OY:&nbsp;
+
+</p><p>RO = NY&nbsp;
+<br>ON = ON&nbsp;
+<br>RO + ON = ON + NY&nbsp;
+<br>RN = OY&nbsp;
+<br>&nbsp;</p></td>
+
+<td>Solución al problema nuevo:&nbsp;
+
+<p>Sustituye la noción de punto por la de línea, y la de
+segmento por la de ángulo: R por AE, O por AD, N por AC, Y por AB&nbsp;
+
+</p><p>EAD = CAB&nbsp;
+<br>DAC = DAC&nbsp;
+<br>EAD + DAC = DAC + CAB&nbsp;
+<br>EAC = DAB&nbsp;
+<br>&nbsp;</p></td>
+</tr>
+</tbody></table>
+&nbsp;
+
+</p><p><a name="3.8.2."></a><i><font size="+2">3.8.2. Analogía derivacional</font></i>
+
+</p><p>A menudo las peculiaridades involucradas en la resolución de
+un problema antiguo son relevantes para resolver el nuevo. Al razonamiento
+por analogía que toma en cuenta el historial detallado del episodio
+de resolución se le llama analogía derivacional (figura 4).
+Este enfoque resulta un área extensa de investigación en
+la actualidad (Hall, 1989).
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura4.JPG" height="184" width="517" border="2"></center>
+
+
+<p><b>Ejemplo:</b> se ha codificado en C++ una rutina de clasificación,
+y se pide recodificar la misma rutina en LISP.
+
+</p><p>Una traducción línea por línea del programa no
+resulta adecuada, sino que se deberían reutilizar el análisis,
+las principales decisiones estructurales y de control que se tomaron al
+construir el programa en C++.
+
+</p><p>Una manera de modelar este comportamiento es tener un resolutor de problemas
+que repita la derivación previa y que la modifique cuando sea necesario.
+<br>&nbsp;
+
+</p><p>
+</p><hr width="100%">
+<br><a name="3.9."></a><i><font size="+3"><font color="#000099">3.9. </font>Aprendizaje
+con Redes Neuronales</font></i>
+<br>
+<hr width="100%">
+
+<p>Los primeros esfuerzos en el aprendizaje de máquinas intentaron
+imitar el aprendizaje animal a nivel neuronal. Las redes neuronales han
+visto su resurgimiento en los años recientes, como resultado del
+descubrimiento de nuevos y poderosos algoritmo de aprendizaje.
+
+</p><p>Dadas las amplias características que se pueden encontrar en
+las neuronas, la gente que intenta entender y duplicar su comportamiento
+se centra en tan sólo unas cuantas características notables
+de las mismas. En esta sección se verán diferentes tipos
+de redes neuronales:
+<br>&nbsp;
+</p><ul>
+<li>
+Redes neuronales de alimentación positiva</li>
+
+<li>
+Perceptrones</li>
+
+<li>
+Redes de interpolación y de aproximación</li>
+</ul>
+<a name="3.9.1."></a><i><font size="+2">3.9.1. Redes neuronales de alimentación
+positiva</font></i>
+
+<p>Una neurona consta de las siguientes partes (figura 5):
+</p><ul>
+<li>
+Un cuerpo;</li>
+
+<li>
+Muchas dendritas: protuberancias que facilitan la conexión con los
+axones de otras neuronas;</li>
+
+<li>
+Un axón: protuberancia que transporta la salida de la neurona hasta
+las conexiones de otras neuronas.</li>
+</ul>
+Una neurona es un dispositivo de todo o nada. La neurona no hace nada a
+menos que la influencia colectiva de todas sus entradas (sinapsis) alcance
+un nivel de umbral. En ese caso la neurona se dispara, es decir, produce
+una salida de potencia completa, que se manifiesta como un pulso estrecho
+que se desplaza del cuerpo por el axón, hasta las ramas de este.
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura5.JPG" height="254" width="449" border="2"></center>
+
+
+<p>Considerando estas características se puede realizar el modelo
+de neurona indicado en la figura 6.
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura6.JPG" height="133" width="281" border="2"></center>
+
+
+<p>Los pesos<b> wi</b> modelan las propiedades de las sinapsis; la sumatoria
+de la función de activación modela la capacidad de combinar
+la influencia de todas las dendritas; la función de umbral que da
+como resultado 1 ó 0 modela la característica de todo o nada
+de los mecanismos del cuerpo de la célula.
+<br>&nbsp;
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura7.JPG" height="254" width="479" border="2"></center>
+
+
+<p>Se puede realizar una red neuronal organizada por columnas según
+se muestra en la figura 7. La primera columna de la red es la que recibe
+la alimentación inicial. Cada neurona de una columna produce una
+salida que alimenta a las neuronas de la siguiente columna. Finalmente
+la ultima capa de neuronas es la única que produce una salida visible,
+y por esto el resto de las neuronas se denominan nodos ocultos.
+
+</p><p><b>Ejemplo:</b>&nbsp; la figura 8 muestra una red neuronal que, a partir
+de dos entradas activadas entre los elementos A1,A2,A3, B1,B2,B3 (los tres
+primeros de la clase A y los tres últimos de la clase B), reconoce
+si éstos son de igual o distinta clase.
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura8.JPG" height="263" width="471" border="2"></center>
+
+
+<p>Para solucionar este problema se realiza la red neuronal mostrada en
+la figura anterior, que consta de una capa de nodos ocultos y una capa
+de nodos de salida que emiten las conclusiones. Se muestran los pesos asignados
+a las entradas además de los umbrales de cada nodo.
+
+</p><p>Si por ejemplo, sólo se activan las entradas A1 y A3:
+</p><ul>
+<ul>
+<li>
+&nbsp;el nodo11 computa 1*A1+1*A2+1*A3 = 1*1+1*0+1*1 = 2, y como 2 &gt;0.5
+su salida S11=1</li>
+
+<li>
+&nbsp;el nodo12 computa 1*B1+1*B2+1*B3 = 1*0+1*0+1*0 = 0, y como 0 &lt;=
+0.5 su salida s12= 0</li>
+
+<li>
+&nbsp;el nodo21 computa 1*S11+1*S12 = 1*1+1*0 = 1, y como 1 &lt;= 1.5 su
+salida S21=0.</li>
+
+<li>
+&nbsp;el nodo22 computa (-1)*S11+(-1)*S12 = (-1)*1+(-1)*0 = -1, y como
+–1&gt;(-1.5) su salida S22=1.</li>
+</ul>
+</ul>
+La interpretación de las salidas nos indica que las entradas A1
+y A3 son de igual clase. Queda como ejercicio pendiente el probar con entradas
+de distinta clase, por ejemplo A1 y B1.
+<br>&nbsp;
+
+<p><b>Entrenamiento de redes neuronales</b>
+
+</p><p>Luego de un primer ejemplo con redes neuronales se puede concluir que
+la tarea más difícil es la asignación de los pesos
+wi y los umbrales para que la red se comporte de la manera deseada.
+
+</p><p>En la práctica, las redes neuronales se entrenan con una serie
+de muestras de entrenamiento de manera que realizan el aprendizaje automático
+de los pesos y umbrales. Se consideran ejemplos de entrada de los que se
+conoce la salida deseada. A continuación se realiza el entrenamiento
+iterativo de la red con estos ejemplos. En cada paso se realizan pequeños
+ajustes a los valores de pesos y umbrales para acercarlos a los valores
+que proporcionarán el comportamiento deseado de la red. El entrenamiento
+finaliza cuando la salida obtenida sea la deseada.
+
+</p><p>El algoritmo de entrenamiento usa una medida de calidad que indica la
+calidad de la red actual, es decir, cómo se comporta la red con
+los ejemplos de entrenamiento. La medida de calidad estará dada
+en función de los pesos y umbrales, y por lo tanto puede considerarse
+una función en el campo vectorial de los pesos y umbrales. En particular
+puede usarse la siguiente medida de calidad P:
+
+</p><p><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-formulap.JPG" height="40" width="139" border="2">
+
+</p><p>donde
+</p><ul>s: índice para las muestras de entrenamiento
+<br>z: índice para las salidas
+<br>e<font size="-2">sz</font> =d<font size="-2">sz</font> - o<font size="-2">sz</font>,
+es el error entre la salida z-ésima deseada dsz y la salida z-ésima
+obtenida osz para la muestra s-ésima.</ul>
+El objetivo del algoritmo de entrenamiento es obtener en cada paso, los
+cambios de los valores de pesos y umbrales que proporcionen la máxima
+mejora de la medida de calidad. Esto es lo que se denomina ascenso del
+gradiente (el gradiente de una función indica la dirección
+en la que se encuentra la máxima variante de la función).
+
+<p>Antes de seguir con el algoritmo de entrenamiento,&nbsp; se consideran
+dos cuestiones:
+<br>&nbsp;
+</p><ul>
+<li>
+Es conveniente tratar a pesos y umbrales de manera similar, por esto se
+unifica dicho tratamiento. En lugar de considerar una función de
+activación</li>
+
+<ul>
+<ul>
+<li>
+1 si F &gt; umbral</li>
+
+<li>
+0 si F &lt;= umbral</li>
+</ul>
+</ul>
+se considera una nueva F’
+<ul>
+<ul>
+<li>
+1 si F’=F – umbral &gt; 0</li>
+
+<li>
+0 si F’=F – umbral &lt;= 0</li>
+</ul>
+</ul>
+De esta manera, el umbral es tratado como un peso de una entrada extra
+que siempre está en –1.</ul>
+
+<ul>
+<li>
+Dado que la función de activación contiene un salto (figura
+9.a) para tratarla matemáticamente en el algoritmo a explicar, se
+transforma en una función suave de derivada continua (figura 9.b).</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-f.JPG" height="144" width="458" border="2"></center>
+
+
+<p>La derivada de la función umbral F con respecto a su argumento
+se puede expresar como:
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec1.JPG" height="101" width="146" border="2"></center>
+
+
+<p>Recordemos el objetivo: se tienen una serie de pesos que se desean mejorar
+y se tiene un conjunto de muestras de entrada junto con la salida deseada
+de cada una.
+
+</p><p>La idea de <b>ascenso del gradiente</b> consiste en ascender la calidad
+o mejora de la función P más rápidamente, mediante
+la alteración de todos los pesos en proporción a la derivada
+parcial correspondiente. El cambio a cada peso en particular se realiza
+en la medida que este conduzca a reducir el error observado en la salida.
+En otras palabras, en cada paso, la variación de cada peso w<font size="-2">i-&gt;j</font>
+(correspondiente a la conexión de un nodo de la columna i con otro
+de la columna j) será proporcional a la derivada parcial de la medida
+de calidad P con respecto al peso:
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec2.JPG" height="98" width="136" border="2"></center>
+
+
+<p>La medida de calidad P está dado como una suma sobre todas las
+muestras de entrada. A continuación se enfoca la atención
+a una muestra de entrada en particular para reducir los subíndices,
+sabiendo que luego se realizará la suma de los ajustes derivados
+de cada muestra.
+<br>&nbsp;
+</p><ul>
+<li>
+Para realizar la derivada parcial de P con respecto a wi-&gt;j de manera eficiente,
+se expresa usando la regla de la cadena, mediante la variable intermedia
+o j&nbsp; (la salida del nodo de la columna j):</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec3.JPG" height="105" width="161" border="2"></center>
+
+<ul>
+<li>
+Dado que la salida de un nodo de la columna j, oj, es calculada en base
+a las entradas (salidas de los nodos de la columna anterior i), mediante
+la función umbral, se expresa como:</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec4.JPG" height="81" width="202" border="2"></center>
+
+
+<p>Luego se expresa la derivada parcial de la salida o<font size="-2">j</font>
+con respecto a w<font size="-2">i-&gt;j</font> usando la regla de la cadena,
+mediante la variable intermedia deltai:
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec5.JPG" height="98" width="301" border="2"></center>
+&nbsp;
+<ul>
+<li>
+Como el efecto de oj sobre P se efectúa a través de las salidas
+de los nodos de la capa siguiente, las ok, se puede aplicar la regla de
+la cadena para calcular la derivada parcial de P con respecto a oj :</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec6.JPG" height="97" width="188" border="2"></center>
+
+
+<p>Cada salida ok se determina mediante la suma de todas las entradas al
+nodo k, pasando el resultado a través de la función umbral
+F:
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec7.JPG" height="75" width="210" border="2"></center>
+
+
+<p>Se puede expresar entonces la derivada parcial de ok con respecto a
+oj usando la regla de la cadena mediante la variable intermedia deltak
+como:
+<br>&nbsp;
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec8.JPG" height="97" width="305" border="2"></center>
+
+<ul>
+<li>
+Finalmente, la derivada de P con respecto a oj se expresa como:</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec9a.JPG" height="94" width="286" border="2"></center>
+
+
+<p>Se debe determinar la derivada parcial de P con respecto a la salida
+de la última capa oz:
+<br>&nbsp;
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec9b.JPG" height="101" width="292" border="2"></center>
+&nbsp;
+<ul>
+<li>
+Si se sustituyen estos cálculos en la ecuación 3 de la derivada
+parcial de P con respecto a wi-&gt;j y se multiplica por un factor de rapidez
+r, se obtiene:</li>
+</ul>
+
+<center>&nbsp;<img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec10.JPG" height="104" width="220" border="2"></center>
+
+
+<p>En primer lugar, de la ecuación 10 se concluye que la derivada
+parcial de la medida de calidad con respecto a un peso depende de la derivada
+parcial de la medida de calidad con respecto a la salida. En segundo lugar,
+de la ecuación 9.a se concluye que la derivada parcial de la medida
+de calidad con respecto a una salida depende de la derivada parcial de
+la medida de calidad con respecto a las salidas de la capa siguiente. Por
+lo tanto, la derivada parcial de la medida de calidad con respecto a variables
+de una capa dada, se da en términos de los cálculos que ya
+se necesitaron dos capas a la derecha.
+
+</p><p><b>Algoritmo de retropropagación</b>
+<br>&nbsp;
+</p><ul>1.- Tomar parámetro de rapidez r
+
+<p>2.- Inicializar los pesos
+
+</p><p>3.- Hasta que la medida de calidad P sea satisfactoria,
+</p><ul>
+<li>
+por cada muestra de entrada:</li>
+
+<br>a.- Calcular la salida resultante
+<br>b.- Para los nodos de la capa de salida, calcular ecuación 9.a
+<br>c.- Para los demás nodos ocultos, calcular ecuación 9.b
+<br>d.- Calcular los cambios en los pesos con la ecuación 10
+<br>e.- Acumular los cambios de los pesos
+<li>
+Cambiar los pesos con los cambios acumulados para todas las muestras</li>
+</ul>
+</ul>
+Los cambios en los pesos son proporcionales a los errores de salida, y
+las salidas tenderán a 1 y 0, en consecuencia la medida de calidad
+normalmente se considera satisfactoria cuando, todas las salidas cuyo valor
+deseado es:
+<br>- 1, muestran valores &gt; 0.9
+<br>- 0, muestran valores &lt; 0.1
+
+<p>A continuación se señalan algunas características
+del entrenamiento de redes neuronales:
+</p><ul>
+<li>
+El entrenamiento puede requerir un número de pasos grande.</li>
+
+<li>
+Los pesos iniciales pueden ser puestos al azar, o siguiendo algún
+patrón regular con la condición de que sean diferentes entre
+sí.</li>
+
+<li>
+Si el parámetro de rapidez r es muy alto, los pesos se ajustan más
+rápido pero puede producirse<b> inestabilidad </b>en la red</li>
+
+<li>
+El entrenamiento de una red con muchas salidas puede hacerse:</li>
+
+<ul>
+<li>
+<b>en etapas</b>: primero se entrena para una salida, luego se agrega otra
+y se entrena comenzando con los pesos ya entrenados para la primera, a
+continuación se entrena agregando una tercera salida, etc.</li>
+
+<li>
+<b>simultáneamente:</b> la red se entrena para todas las salidas
+a la vez.</li>
+</ul>
+
+<li>
+Las redes neuronales se vuelven erráticas y poco confiables si tienen
+muchos pesos, situación denominada <b>sobreentrenamiento</b>. La
+siguiente heurística se usa para evitarlo: número de pesos
+&lt; número de muestras de entrenamiento</li>
+
+<li>
+Una red neuronal entrenada puede usarse para predecir la salida de un elemento
+de entrada para el cual no fue entrenada.</li>
+</ul>
+El diseño de redes neuronales es más considerado arte que
+exactitud. Se pueden enumerar diferentes consideraciones a la hora de diseñar
+una red neuronal:
+<ul>
+<li>
+Representar la información y el problema a resolver mediante una
+red neuronal. Es decir, expresar los datos conocidos como entradas de la
+red, e interpretar las salidas de la red para determinar la solución
+del problema.</li>
+
+<li>
+Número nodos, capas ocultas, entradas, salidas, pesos, debe tener
+la red neuronal: si es muy pequeña tal vez no aprenda, pero si es
+muy grande es lenta de entrenar y se puede producir sobreentrenamiento.</li>
+
+<li>
+Parámetro de rapidez r: si muy es pequeño el entrenamiento
+es muy lento, pero si es muy grande se puede producir inestabilidad.</li>
+
+<li>
+Entrenamiento en etapas o simultáneo.</li>
+
+<li>
+Muestras de entrenamiento.</li>
+</ul>
+&nbsp;
+<br><a name="3.9.2."></a><i><font size="+2">3.9.2. Perceptrones</font></i>
+
+<p>El perceptrón (figura 10) es la red neuronal más simple
+posible. Consta de:
+</p><ul>
+<li>
+1 neurona</li>
+</ul>
+
+<ul>
+<li>
+una o más entradas binarias 1/0.</li>
+</ul>
+
+<ul>
+<li>
+cajas lógicas que pueden interponerse entre las entradas y el perceptrón.
+Cada caja lógica actúa de acuerdo a una tabla de verdad que
+produce una salida 1/0 para cada combinación posible de las entradas.</li>
+</ul>
+
+<ul>
+<li>
+una salida igual a 1/0 producida por la función umbral de la suma
+ponderada de las salidas de las cajas lógicas.</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura10.JPG" height="143" width="385" border="2"></center>
+&nbsp;
+
+<p>Si hay m entradas, existen 2<sup>m</sup> combinaciones posibles de las
+mismas. Por lo tanto, si este número es muy grande no puede ser
+atendido por una sola caja lógica. Puede hacerse la siguiente clasificación
+de perceptrones:
+<br>&nbsp;
+</p><ul>
+<li>
+Perceptrón limitado por el orden n: cada caja lógica atiende
+n o menos entradas.</li>
+</ul>
+
+<ul>
+<li>
+Perceptrón limitado por el diámetro d: si las entradas se
+disponen bidimensionalmente (denominadas retina), cada caja lógica
+atiende entradas que están dentro de un círculo de diámetro
+d.</li>
+</ul>
+
+<ul>
+<li>
+Perceptrón directo: cada caja lógica atiende una entrada
+igual a la salida (equivale a perceptrón sin cajas lógicas).</li>
+</ul>
+Existe un procedimiento simple para encontrar el conjunto de pesos. La
+idea consiste en ajustar los pesos cada vez que el perceptrón produce
+una respuesta errónea con una muestra, de manera que el error sea
+menos probable. Se incrementa o decrementa en 1 cada peso wi cuya salida
+de la cada lógica li correspondiente sea 1, dado que sólo
+estos pueden modificar la salida del perceptrón. Esto es equivalente
+a sumar o restar los vectores <b>w</b> y <b>l</b>.
+
+<p>Al igual que en el entrenamiento de redes neuronales, el umbral es tratado
+como un peso agregando una entrada virtual siempre en 1 ponderada por (-umbral).
+
+</p><p>El algoritmo de entrenamiento de perceptrón es el siguiente:
+<br>&nbsp;
+</p><ul>1- Inicializar el vector de pesos con (0,0,...,0)
+
+<p>2.- Hasta que el perceptrón produzca el resultado correcto con
+cada muestra de entrenamiento, por cada muestra:
+<br>&nbsp;
+</p><ul>
+<li>
+Si produce un 0 cuando debe producir 1: <b>w</b> = <b>w</b> + <b>l</b></li>
+
+<li>
+Si produce un 1 cuando debe producir 0: <b>w</b> = <b>w</b> - <b>l</b></li>
+
+<li>
+Si no se equivoca con la muestra no hacer nada.</li>
+</ul>
+</ul>
+Este algoritmo converge siempre y cuando la solución exista para
+el conjunto de muestras de entrenamiento. Existen algunas tareas incluso
+superficialmente fáciles para las cuales el perceptrón no
+encuentra solución, por ejemplo, no puede reconocer conectividad
+en una imagen.
+
+<p><b>Ejemplo:</b> entrenar un perceptrón para que realice la operación
+lógica OR entre dos entradas.
+
+</p><p>En este caso se utiliza un perceptrón directo, en el cual las
+entradas x coinciden con las salidas de las cajas lógicas l (figura
+11).
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura11.JPG" height="138" width="282" border="2"></center>
+
+
+<p>Se utiliza una tercera entrada siempre en 1 para modelar el umbral igual
+a (-w3). Las muestras de entrada son las siguientes:
+<br>&nbsp;
+<br>&nbsp;
+<table cols="5" width="100%" border="">
+<tbody><tr>
+<td>
+<center><b>Muestras</b></center>
+</td>
+
+<td>
+<center>&nbsp;x1=l1</center>
+</td>
+
+<td>
+<center>&nbsp;x2=l2</center>
+</td>
+
+<td>
+<center>&nbsp;x3=l3</center>
+</td>
+
+<td>
+<center><b>&nbsp;Salida deseada</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>2</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>3</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>4</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+</tr>
+</tbody></table>
+&nbsp;
+
+</p><p>1- Inicializa el vector w = (0,0,0)
+
+</p><p>2- Cicla a través de las muestras hasta que la salida obtenida
+con cada una sea igual a la salida deseada.
+
+</p><p>- Muestra 1, salida = (0,0,1) (0,0,0) = 0, igual a la salida deseada.
+<br>- Muestra 2, salida = (0,1,1) (0,0,0) = 0, diferente a la salida deseada.
+Ajustar el vector w = (0,0,0) + (0,1,1) = (0,1,1)
+<br>- Muestra 3, salida = (1,0,1) (0,1,1) = 1, igual a la salida deseada.
+<br>- Muestra 4, salida = (1,1,1) (0,1,1) = 1, igual a la salida deseada.
+<br>- Muestra 1, salida = (0,0,1) (0,1,1) = 1, diferente a la salida deseada.
+Ajustar el vector w = (0,1,1) - (0,0,1) = (0,1,0)
+<br>- Muestra 2, salida = (0,1,1) (0,1,0) = 1, igual a la salida deseada.
+<br>- Muestra 3, salida = (1,0,1) (0,1,0) = 0, diferente a la salida deseada.
+Ajustar el vector w = (0,1,0) + (1,0,1) = (1,1,1)
+<br>- Muestra 4, salida = (1,1,1) (1,1,1) = 1, igual a la salida deseada.
+<br>- Muestra 1, salida = (0,0,1) (1,1,1) = 1, diferente a la salida deseada.
+Ajustar el vector w = (1,1,1) - (0,0,1) = (1,1,0)
+<br>- Muestra 2, salida = (0,1,1) (1,1,0) = 1, igual a la salida deseada.
+<br>- Muestra 3, salida = (1,0,1) (1,1,0) = 1, igual a la salida deseada.
+<br>- Muestra 4, salida = (1,1,1) (1,1,0) = 1, igual a la salida deseada.
+
+</p><p>El algoritmo converge encontrando el vector w = (1,1,0)
+
+</p><p><b>Ejemplo:</b> dado un sistema de dígitos en pantallas digitales
+(figura 12) que informa cuál de los 7 segmentos están encendidos,
+realizar un perceptrón que aprenda a identificar un dígito
+en concreto, por ej. el 0.
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura12.JPG" height="134" width="115" border="2"></center>
+
+
+<p>Existen 7 entradas x0..x6 correspondientes a los segmentos del número,
+además de otra entrada x7 en 1 correspondiente al umbral. Las muestras
+de entrada son las siguientes:
+<br>&nbsp;
+<br>&nbsp;
+<table cols="10" width="100%" border="">
+<tbody><tr>
+<td>
+<center><b>Dígito&nbsp;</b></center>
+</td>
+
+<td>
+<center>X0</center>
+</td>
+
+<td>
+<center>X1</center>
+</td>
+
+<td>
+<center>X2</center>
+</td>
+
+<td>
+<center>X3</center>
+</td>
+
+<td>
+<center>X4</center>
+</td>
+
+<td>
+<center>X5</center>
+</td>
+
+<td>
+<center>X6</center>
+</td>
+
+<td>
+<center>X7</center>
+</td>
+
+<td>
+<center><b>Salida deseada</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>9</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>8</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>7</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>6</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>5</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>4</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>3</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>2</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>0</center>
+</td>
+</tr>
+</tbody></table>
+1- Inicializa el vector w = (0,0,0,0,0,0,0,0)
+
+</p><p>2- Cicla a través de las muestras hasta que la salida obtenida
+con cada una sea igual a la salida deseada.
+
+</p><p>- Dígito 0, s0 = (0,1,1,1,1,1,1,1) (0,0,0,0,0,0,0,0) = 0, diferente
+a la salida deseada.
+<br>Ajustar el vector w = (0,0,0,0,0,0,0,0) + (0,1,1,1,1,1,1,1) = (0,1,1,1,1,1,1,1)
+
+</p><p>- Dígito 9, s9 = (1,1,1,1,1,1,0,1) (0,1,1,1,1,1,1,1) = 1, diferente
+a la salida deseada.
+<br>Ajustar el vector w = (0,1,1,1,1,1,1,1) - (1,1,1,1,1,1,0,1) = (-1,0,0,0,0,0,1,0)
+
+</p><p>- Dígito 8, s8 = (1,1,1,1,1,1,1,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 7, s7=(0,0,1,1,1,0,0,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 6, s6=(1,1,1,0,1,1,1,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 5, s5=(1,1,1,0,1,1,0,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 4, s4=(1,1,0,1,1,0,0,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 3, s3=(1,0,1,1,1,1,0,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 2, s2=(1,0,1,1,0,1,1,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 1, s1=(0,0,0,1,1,0,0,1) (-1,0,0,0,0,0,1,0) = 0, igual
+a la salida deseada.
+
+</p><p>- Dígito 0, s0=(0,1,1,1,1,1,1,1) (-1,0,0,0,0,0,1,0) = 1, igual
+a la salida deseada.
+
+</p><p>El algoritmo converge encontrando el vector w = (-1,0,0,0,0,0,1,0).
+<br>&nbsp;
+
+</p><p><a name="3.9.3."></a><i><font size="+2">3.9.3. Redes de interpolación
+y de aproximación</font></i>
+<br>&nbsp;
+<br><b>Redes de interpolación</b>
+
+</p><p>Una red de interpolación (figura 13) es una red neuronal especial
+con las siguientes características:
+</p><ul>
+<li>
+Tiene dos capas de neuronas</li>
+</ul>
+
+<ul>
+<li>
+Cada neurona de la primera capa responde a una entrada de muestra m en
+particular. Calcula la función Gaussiana de la distancia entre el
+vector de entrada actual x y el vector muestra asociada a la neurona m:</li>
+</ul>
+
+<center>g( | <b>x</b> - <b>m</b> | )</center>
+
+<ul>
+<li>
+Cada neurona de la segunda capa realiza la suma ponderada de sus entradas:</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-w.JPG" height="42" width="117" border="2"></center>
+
+<ul>
+<li>
+Los pesos entre las dos capas se ajustan de manera que cada salida de neurona
+de la segunda capa sea exactamente la salida deseada de cada entrada muestra
+m.</li>
+</ul>
+
+<center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura13.JPG" height="176" width="355" border="2"></center>
+
+
+<p>El entrenamiento de la red de interpolación es casi directo:
+</p><ul>1- Por cada muestra mi se crea un nodo centrado en la muestra.
+
+<p>2- Por cada entrada de muestra x se crea una ecuación de la forma
+siguiente:
+</p><ul>- Calcular la distancia entre la muestra x y los centros mi, |x - mi|
+<br>- Calcular la función gaussiana de cada distancia g(|x - mi|)
+<br>- Multiplicar cada función por el correspondiente peso wi, g(|x
+- mi|) wi
+<br>- Igualar la salida de la muestra x con la suma de las funciones gaussianas
+ponderadas de la distancia.
+<br>&nbsp;</ul>
+3- Resolver las ecuaciones para los pesos wi</ul>
+<b>Ejemplo:</b> construir una red de interpolación para calificar
+del 1 al 10 una tarta en base a la cantidad de porciones comidas de la
+misma.
+
+<p>Las muestras de entrada son las siguientes:
+<br>&nbsp;
+<br>&nbsp;
+<table cols="3" width="100%" border="">
+<tbody><tr>
+<td>
+<center><b>Muestras</b></center>
+</td>
+
+<td>
+<center>&nbsp;X=cantidad de porciones</center>
+</td>
+
+<td>
+<center><b>&nbsp;Calificación o salida</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>1</center>
+</td>
+
+<td>
+<center>4</center>
+</td>
+
+<td>
+<center>5</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>2</center>
+</td>
+
+<td>
+<center>7</center>
+</td>
+
+<td>
+<center>9</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>3</center>
+</td>
+
+<td>
+<center>9</center>
+</td>
+
+<td>
+<center>2</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>4</center>
+</td>
+
+<td>
+<center>12</center>
+</td>
+
+<td>
+<center>6</center>
+</td>
+</tr>
+</tbody></table>
+Para cada muestra de entrenamiento se construye una neurona de la primera
+capa con una función Gaussiana asociada (figura 14). Si el parámetro
+de desviación estandar de la función de Gauss es pequeño,
+la campana será estrecha y por lo tanto la influencia de la muestra
+será local; si en cambio, es grande, la campana será amplia
+y por lo tanto la influencia de la muestra será global.
+
+</p><p>La red tiene una sola entrada x que es la cantidad de porciones comidas.
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-figura14.JPG" height="189" width="368" border="2"></center>
+
+
+<p>Se calculan los valores para cada peso, de manera que se produzcan las
+salidas correctas para cada muestra. Para ello se plantean tantas ecuaciones
+como incógnitas o pesos, por lo tanto, la resolución es directa.
+
+</p><p>Para la muestra 1
+<br>5 = w1 g1(4-4) + w2 g2(4-7) + w3 g3(4-9) + w4 g4(4-12)
+
+</p><p>Para la muestra 2
+<br>9 = w1 g1(7-4) + w2 g2(7-7) + w3 g3(7-9) + w4 g4(7-12)
+
+</p><p>Para la muestra 3
+<br>2 = w1 g1(9-4) + w2 g2(9-7) + w3 g3(9-9) + w4 g4(9-12)
+
+</p><p>Para la muestra 4
+<br>6 = w1 g1(12-4) + w2 g2(12-7) + w3 g3(12-9) + w4 g4(12-12)
+
+</p><p><b>Redes de aproximación</b>
+
+</p><p>Si el número de muestras es muy grande, el número de nodos
+puede volverse irracionalmente grande. El planteamiento natural es tratar
+de aproximar la función desconocida con un número razonable
+de nodos representativos.
+
+</p><p>Si se tienen menos nodos que muestras, ninguna selección de pesos
+puede asegurar que la red produzca la salida correcta para todas.
+
+</p><p>Las<b> redes de aproximación</b> construyen aproximaciones razonables
+para un conjunto de muestras, considerando sólo un subconjunto pequeño
+de las mismas.
+
+</p><p>Una manera de buscar una buena aproximación es mediante la técnica
+de ascenso del gradiente (usada en la <a href="#3.9.1.">sección
+3.9.1</a>.) para buscar el valor máximo de una medida de calidad
+P de la red de aproximación
+
+</p><p><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-formulap.JPG" height="40" width="139" border="2">
+
+</p><p>donde
+<br>s: índice para las muestras de entrenamiento
+<br>z: índice para las salidas
+<br>e<font size="-2">sz</font> = y<font size="-2">sz</font> - d<font size="-2">sz</font>,
+es el error entre la salida z-ésima obtenida y<font size="-2">sz </font>y
+la salida z-ésima deseada d<font size="-2">sz</font> para la muestra
+s-ésima.
+
+</p><p>Los cambios de un peso wi se hacen proporcionalmente a la derivada parcial
+de la medida de calidad P con respecto al peso wi. Finalmente se llega
+a la siguiente fórmula para calcular los cambios de peso:
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec11.JPG" height="78" width="254" border="2"></center>
+
+
+<p>Para mejorar aún más la calidad de la red sobre los datos
+de muestra, se pueden ajustar no sólo los pesos sino también
+los puntos centrales o muestras con las que se crea la red de interpolación
+inicial.
+
+</p><p>Los cambios de una muestra o centro mi se hacen proporcionalmente a
+la derivada parcial de la medida de calidad P con respecto a la muestra
+mi. Finalmente se llega a la siguiente fórmula para ajustar la componente
+j de la i-ésima muestra:
+<br>&nbsp;
+</p><center><img src="Introducci%C3%B3n%20a%20la%20Inteligencia%20Artificial%20-%20Prof.%20Mar%C3%ADa%20Jos%C3%A9%20Ab%C3%A1solo%20-Cap%C3%ADtulo%203:%20Aprendizaje_files/3-ec12.JPG" height="82" width="352" border="2"></center>
+
+
+<p>Para crear y entrenar una red de aproximación se realiza lo siguiente:
+<br>&nbsp;
+</p><ul>1.- Crear una red de interpolación mediante un subconjunto de
+muestras o&nbsp; centros.
+
+<p>2.- Tomar parámetro de rapidez r
+
+</p><p>3.- Hasta que la medida de calidad P sea satisfactoria,
+<br>&nbsp;
+</p><ul>
+<li>
+por cada muestra de entrada del conjunto total:</li>
+
+<br>a.- Calcular la salida resultante
+<br>b.- Calcular los cambios en los pesos con la ecuación 11
+<br>c.- Acumular los cambios de los pesos
+<br>d.- Calcular los cambios en los centros o muestras con la ecuación
+12
+<br>e.- Acumular los cambios de los centros o muestras
+<br>&nbsp;
+<li>
+Cambiar los pesos y centros con los cambios acumulados</li>
+</ul>
+</ul>
+&nbsp;
+
+
+</body></html>

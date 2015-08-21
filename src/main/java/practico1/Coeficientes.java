@@ -37,13 +37,8 @@ public class Coeficientes {
             this.w4 += mu * (VEnt - VOp) * t.cantFichasO;
             this.w5 += mu * (VEnt - VOp) * t.cantFichasX;
         } else {
-            this.w0 += mu * (VEnt - VOp) * t.cantLineasInutilesParaX;
-            this.w1 += mu * (VEnt - VOp) * t.cantLineasInutilesParaO;
-            this.w2 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarX;
-            this.w3 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarO;
-            this.w4 += mu * (VEnt - VOp) * t.cantFichasX;
-            this.w5 += mu * (VEnt - VOp) * t.cantFichasO;
-            //throw new Exception("Solo debe aprender el jugador inicial");
+
+            throw new Exception("Solo debe aprender el jugador inicial");
         }
     }
 

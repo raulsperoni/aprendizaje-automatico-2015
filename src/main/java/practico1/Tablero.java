@@ -314,7 +314,8 @@ public class Tablero {
             }
 
             //Seteo los resultados
-            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaO +
+            return new EstadoTablero(
+                    coeficientes.w0 * cantLineasInutilesParaO +
                     coeficientes.w1 * cantLineasInutilesParaX +
                     coeficientes.w2 * cantMinimaRestanteParaGanarO +
                     coeficientes.w3 * cantMinimaRestanteParaGanarX +
@@ -329,7 +330,8 @@ public class Tablero {
             }
 
             //Seteo los resultados
-            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaX +
+            return new EstadoTablero(
+                    coeficientes.w0 * cantLineasInutilesParaX +
                     coeficientes.w1 * cantLineasInutilesParaO +
                     coeficientes.w2 * cantMinimaRestanteParaGanarX +
                     coeficientes.w3 * cantMinimaRestanteParaGanarO +

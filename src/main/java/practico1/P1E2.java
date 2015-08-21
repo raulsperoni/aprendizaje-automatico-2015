@@ -7,7 +7,7 @@ package practico1;
 public class P1E2 {
 
     static float MIN_MU = 0.01f;
-    static int MAX_IT = 50;
+    static int MAX_IT = 500;
     static float STEP_MU = 0.001f;  //TODO: ver esto
 
 
@@ -36,6 +36,7 @@ public class P1E2 {
             Tablero.Marca ultimoJugador = null;
 
             EstadoTablero estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, coeficientes);
+            EstadoTablero estadoTableroPrueba = null;
 
 
             //Movimientos
@@ -60,7 +61,7 @@ public class P1E2 {
                 for (int i = 0; i < tablero.SIZE; i++) {
                     for (int j = 0; j < tablero.SIZE; j++) {
                         try {
-                            EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, jugador, true, coeficientes);
+                            estadoTableroPrueba = tablero.setMarca(i, j, jugador, true, coeficientes);
                             if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
                                 mejorVop = estadoTableroPrueba.VOp;
                                 mejori = i;
@@ -100,7 +101,7 @@ public class P1E2 {
                     for (int i = 0; i < tablero.SIZE; i++) {
                         for (int j = 0; j < tablero.SIZE; j++) {
                             try {
-                                EstadoTablero estadoTableroPrueba = tablero.setMarca(i, j, oponente, true, coeficientes);
+                                estadoTableroPrueba = tablero.setMarca(i, j, oponente, true, coeficientes);
                                 if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
                                     mejorVop = estadoTableroPrueba.VOp;
                                     mejori = i;
@@ -125,53 +126,37 @@ public class P1E2 {
                     if (estadoTablero.ganador == Tablero.Marca.X) {
 
                         VEnt = 100;
-                        //actualizo wi's con minimos cuadrados
-                        coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
-                        //imprimo datos de jugada.
-                        coeficientes.imprimir();
-                        //Actualizar MU
-                        //mu -= STEP_MU;
-
                         countGanoX++;
 
                     } else {
 
                         VEnt = -100;
-                        //actualizo wi's con minimos cuadrados
-                        coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, oponente);
-                        //imprimo datos de jugada.
-                        coeficientes.imprimir();
-                        //Actualizar MU
-                        //mu -= STEP_MU;
-
                         countGanoO++;
                     }
+
                     System.out.println("GANO: " + estadoTablero.ganador);
+
                 } else if (estadoTablero.empate) {
 
                     VEnt = 0;
-                    //actualizo wi's con minimos cuadrados
-                    coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, ultimoJugador);
-                    //imprimo datos de jugada.
-                    coeficientes.imprimir();
-                    //Actualizar MU
-                    //mu -= STEP_MU;
                     countEmpate++;
                     System.out.println("EMPATE!!! ");
 
                 } else {
 
                     //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
-                    VEnt = tablero.getEstadoTablero(ultimoJugador, coeficientes).VOp;
-                    //actualizo wi's con minimos cuadrados
-                    coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, ultimoJugador);
-                    //imprimo datos de jugada.
-                    //coeficientes.imprimir();
-                    //Actualizar MU
-                    //mu -= STEP_MU;
+                    EstadoTablero trucho = tablero.getEstadoTablero(jugador, coeficientes);
+                    VEnt = trucho.VOp;
+
 
 
                 }
+                //actualizo wi's con minimos cuadrados
+                coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
+                //imprimo datos de jugada.
+                coeficientes.imprimir();
+                //Actualizar MU
+                //mu -= STEP_MU;
 
 
             }

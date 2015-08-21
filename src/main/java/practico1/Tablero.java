@@ -264,7 +264,7 @@ public class Tablero {
         }
 
         //TODO: revisar esta condicion de ganar.
-        boolean JugadorGano = (m == Marca.X) ? cantMinimaRestanteParaGanarX == 0 : cantMinimaRestanteParaGanarO == 0;
+        boolean JugadorGano = ((minimoParaGanarM == 0) || (minimoParaGanarR == 0) || (cantFichasM+cantFichasR == SIZE*SIZE));
 
         //Seteo los resultados
         return new EstadoTablero(coeficientes.w0 * cantLineasInutilesM +
@@ -295,7 +295,7 @@ public class Tablero {
      * @return
      */
     public EstadoTablero getEstadoTablero(Marca m, Coeficientes coeficientes) {
-        boolean JugadorGano = (m == Marca.X) ? cantMinimaRestanteParaGanarX == 0 : cantMinimaRestanteParaGanarO == 0;
+        boolean JugadorGano = ((cantMinimaRestanteParaGanarX == 0) || (cantMinimaRestanteParaGanarO == 0) || (cantFichasX+cantFichasO == SIZE*SIZE));
 
 
         if (m == Marca.X) {

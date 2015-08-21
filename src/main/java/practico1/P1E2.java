@@ -17,7 +17,6 @@ public class P1E2 {
         int countGanoX = 0;
         int countGanoO = 0;
         int countEmpate = 0;
-        boolean ultimaCosaEmpate = true;
 
         //declaro wi's
         Coeficientes coeficientes = new Coeficientes();
@@ -128,13 +127,11 @@ public class P1E2 {
 
                         VEnt = 100;
                         countGanoX++;
-                        ultimaCosaEmpate = false;
 
                     } else {
 
                         VEnt = -100;
                         countGanoO++;
-                        ultimaCosaEmpate = false;
                     }
 
                     System.out.println("GANO: " + estadoTablero.ganador);
@@ -143,7 +140,6 @@ public class P1E2 {
 
                     VEnt = 0;
                     countEmpate++;
-                    ultimaCosaEmpate = true;
                     System.out.println("EMPATE!!! ");
 
                 } else {
@@ -170,7 +166,8 @@ public class P1E2 {
         }
 
         System.out.println("########################");
-        System.out.println("Cantidad de juegos: " + MAX_IT);
+        int cant = countGanoO + countGanoX + countEmpate;
+        System.out.println("Cantidad de juegos: " + cant);
         System.out.println("X gano " + countGanoX + " veces.");
         System.out.println("O gano " + countGanoO + " veces.");
         System.out.println("Empate " + countEmpate + " veces.");

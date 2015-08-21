@@ -6,9 +6,9 @@ package practico1;
  */
 public class P1E2 {
 
-    static float MIN_MU = 0.001f;
-    static int MAX_IT = 200;
-    static float STEP_MU = 0.01f;  //TODO: ver esto
+    static float MIN_MU = 0.01f;
+    static int MAX_IT = 10;
+    static float STEP_MU = 0.001f;  //TODO: ver esto
 
     public void run(final int SIZE) throws Exception {
 
@@ -16,9 +16,9 @@ public class P1E2 {
         Coeficientes coeficientes = new Coeficientes();
 
         //Partidas
-        float mu = 0.5f;
+        float mu = 0.1f;
         int cantIteraciones = 0;
-        while (cantIteraciones < MAX_IT) {
+        while (mu > 0.0001f || cantIteraciones < MAX_IT) {
 
             //Inicializo
             Tablero tablero = new Tablero(SIZE);
@@ -43,10 +43,10 @@ public class P1E2 {
                     coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
 
                     //imprimo datos de jugada.
-                    coeficientes.imprimir();
+                    //coeficientes.imprimir();
 
                     //Actualizar MU
-                    mu -= STEP_MU;
+                    //mu -= STEP_MU;
 
                 }
 
@@ -56,8 +56,6 @@ public class P1E2 {
                 int mejori = -1;
                 int mejorj = -1;
 
-                //Peor pos(mejor posición del oponente)
-                //double menorVop = 101;
 
                 //2- Calcular posicion para movida probando.
                 for (int i = 0; i < tablero.SIZE; i++) {
@@ -87,10 +85,10 @@ public class P1E2 {
                 //Gano jugador?
                 juegoFinalizado = estadoTablero.finalizado;
                 VOp = estadoTablero.VOp;
-                if (juegoFinalizado) {
+                if (juegoFinalizado && !estadoTablero.empate) {
                     if (jugador == Tablero.Marca.X) {
 
-                        VEnt = 1;
+                        VEnt = 100;
 
                         //actualizo wi's con minimos cuadrados
                         coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
@@ -99,23 +97,42 @@ public class P1E2 {
                         coeficientes.imprimir();
 
                         //Actualizar MU
-                        mu -= STEP_MU;
+                        //mu -= STEP_MU;
+
+                        System.out.println("GANO: " + Tablero.Marca.X.name());
 
                     } else {
 
-                        VEnt = -1;
+                        VEnt = -100;
 
                         //actualizo wi's con minimos cuadrados
-                        coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
+                        coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, Tablero.Marca.X);
 
                         //imprimo datos de jugada.
                         coeficientes.imprimir();
 
                         //Actualizar MU
-                        mu -= STEP_MU;
+                        //mu -= STEP_MU;
+
+                        System.out.println("GANO: " + Tablero.Marca.O.name());
+
 
                     }
-                    //TODO: EMPATE??????
+                } else if (estadoTablero.empate) {
+
+                    VEnt = 0;
+
+                    //actualizo wi's con minimos cuadrados
+                    coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, Tablero.Marca.X);
+
+                    //imprimo datos de jugada.
+                    coeficientes.imprimir();
+
+                    //Actualizar MU
+                    //mu -= STEP_MU;
+
+                    System.out.println("EMPATE!!! ");
+
                 }
 
 

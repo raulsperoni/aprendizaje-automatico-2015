@@ -31,8 +31,8 @@ public class Coeficientes {
     //TODO: ojo con los pts de vista.
     public void actualizarCoeficientes(Tablero t, double mu, double VEnt, double VOp, Tablero.Marca m) throws Exception {
         if (m == Tablero.Marca.X) {
-            //this.w0 += mu * (VEnt - VOp) * t.cantLineasInutilesParaO;
-            //this.w1 += mu * (VEnt - VOp) * t.cantLineasInutilesParaX;
+            this.w0 += mu * (VEnt - VOp) * t.cantLineasInutilesParaO;
+            this.w1 += mu * (VEnt - VOp) * t.cantLineasInutilesParaX;
             this.w2 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarO;
             this.w3 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarX;
             this.w4 += mu * (VEnt - VOp) * t.cantFichasO;

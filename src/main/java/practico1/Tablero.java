@@ -1,9 +1,5 @@
 package practico1;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Created by RSperoni on 17/08/2015.
  */
@@ -264,7 +260,8 @@ public class Tablero {
         }
 
         //TODO: revisar esta condicion de ganar.
-        boolean JugadorGano = ((minimoParaGanarM == 0) || (minimoParaGanarR == 0) || (cantFichasM+cantFichasR == SIZE*SIZE));
+        boolean empate = (cantFichasM + cantFichasR == SIZE * SIZE);
+        boolean findejuego = ((minimoParaGanarM == 0) || (minimoParaGanarR == 0) || empate);
 
         //Seteo los resultados
         return new EstadoTablero(coeficientes.w0 * cantLineasInutilesM +
@@ -272,7 +269,7 @@ public class Tablero {
             coeficientes.w2 * minimoParaGanarM +
             coeficientes.w3 * minimoParaGanarR +
             coeficientes.w4 * cantFichasM +
-            coeficientes.w5 * cantFichasR + coeficientes.indep, JugadorGano);
+                coeficientes.w5 * cantFichasR + coeficientes.indep, findejuego, empate);
     }
 
     public Marca getMarca(int i, int j) {
@@ -280,12 +277,14 @@ public class Tablero {
     }
 
     public void imprimir() {
+        System.out.println("___________________________________________________");
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                System.out.print(String.format("%20s", this.grilla[i][j].name()));
+                System.out.print(String.format("%10s", this.grilla[i][j].name()));
             }
             System.out.println("");
         }
+        System.out.println("___________________________________________________");
     }
 
     /**
@@ -295,6 +294,7 @@ public class Tablero {
      * @return
      */
     public EstadoTablero getEstadoTablero(Marca m, Coeficientes coeficientes) {
+        boolean empate = (cantFichasX + cantFichasO == SIZE * SIZE);
         boolean JugadorGano = ((cantMinimaRestanteParaGanarX == 0) || (cantMinimaRestanteParaGanarO == 0) || (cantFichasX+cantFichasO == SIZE*SIZE));
 
 
@@ -306,7 +306,7 @@ public class Tablero {
                     coeficientes.w2 * cantMinimaRestanteParaGanarO +
                     coeficientes.w3 * cantMinimaRestanteParaGanarX +
                     coeficientes.w4 * cantFichasO +
-                    coeficientes.w5 * cantFichasX + coeficientes.indep, JugadorGano);
+                    coeficientes.w5 * cantFichasX + coeficientes.indep, JugadorGano, empate);
 
         } else {
 
@@ -316,7 +316,7 @@ public class Tablero {
                     coeficientes.w2 * cantMinimaRestanteParaGanarX +
                     coeficientes.w3 * cantMinimaRestanteParaGanarO +
                     coeficientes.w4 * cantFichasX +
-                    coeficientes.w5 * cantFichasO + coeficientes.indep, JugadorGano);
+                    coeficientes.w5 * cantFichasO + coeficientes.indep, JugadorGano, empate);
 
         }
     }

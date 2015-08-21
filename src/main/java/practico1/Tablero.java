@@ -59,198 +59,200 @@ public class Tablero {
          * Asigno X o O
          */
         grilla[i][j] = m;
+        
+        int cantLineasInutilesM = 0;
+        int minimoParaGanarM = SIZE;
+        int cantLineasInutilesR = 0;
+        int minimoParaGanarR = SIZE;
+        int cantFichasM = 0;
+        int cantFichasR = 0;
 
-
-        //Actualizo los atributos aca
-
-        //Variables Para Evaluar X
-        boolean esPosibleGanarFilaX = true;
-        boolean esPosibleGanarColumnaX = true;
-        boolean esPosibleGanarDiagonalX1 = true;
-        boolean esPosibleGanarDiagonalX2 = true;
-        int cantRestanteParaGanarFilaX = SIZE;
-        int cantRestanteParaGanarColumnaX = SIZE;
-        int cantRestanteParaGanarDiagonalX1 = SIZE;
-        int cantRestanteParaGanarDiagonalX2 = SIZE;
-
-        //Variables Para Evaluar O
-        boolean esPosibleGanarFilaO = true;
-        boolean esPosibleGanarColumnaO = true;
-        boolean esPosibleGanarDiagonalO1 = true;
-        boolean esPosibleGanarDiagonalO2 = true;
-        int cantRestanteParaGanarFilaO = SIZE;
-        int cantRestanteParaGanarColumnaO = SIZE;
-        int cantRestanteParaGanarDiagonalO1 = SIZE;
-        int cantRestanteParaGanarDiagonalO2 = SIZE;
-
-        for (int k = 0; k < SIZE; k++) {
-
-
-            for (int l = 0; l < SIZE; l++) {
-
-                /**
-                 * Evaluo X
-                 */
-
-                //MIRO LA FILA
-                if (esPosibleGanarFilaX) {
-                    int fila = k;
-                    int columna = l;
-                    Marca marcaDelContrario = Marca.O;
-                    Marca marcaEnPos = this.grilla[fila][columna];
-                    if (marcaEnPos == marcaDelContrario) {
-                        esPosibleGanarFilaX = false;
-                    } else if (marcaEnPos != Marca.N) {
-                        cantRestanteParaGanarFilaX -= 1;
+        //Analizo las filas para el jugador M
+        for (int k = 0; k<SIZE; k++){
+            boolean esPosibleGanar = true;
+            int cantRestantesParaGanar = SIZE;
+            for (int l = 0; l<SIZE; l++){
+                if(esPosibleGanar){
+                    if(this.grilla[k][l] == m){
+                        cantRestantesParaGanar -= 1;
+                    }
+                    else if(this.grilla[k][l] != Marca.N){
+                        cantLineasInutilesM += 1;
+                        esPosibleGanar = false;
                     }
                 }
-
-                //MIRO LA Columna
-                if (esPosibleGanarColumnaX) {
-                    int fila = l;
-                    int columna = k;
-                    Marca marcaDelContrario = Marca.O;
-                    Marca marcaEnPos = this.grilla[fila][columna];
-                    if (marcaEnPos == marcaDelContrario) {
-                        esPosibleGanarColumnaX = false;
-                    } else if (marcaEnPos != Marca.N) {
-                        cantRestanteParaGanarColumnaX -= 1;
-                    }
-                }
-
-                //MIRO LA Diagonal Izq a Der
-                if (esPosibleGanarDiagonalX1) {
-                    int fila = l;
-                    int columna = k;
-                    //Solo miro la diagonal posta.
-                    if (fila == columna) {
-                        Marca marcaDelContrario = Marca.O;
-                        Marca marcaEnPos = this.grilla[fila][columna];
-                        if (marcaEnPos == marcaDelContrario) {
-                            esPosibleGanarDiagonalX1 = false;
-                        } else if (marcaEnPos != Marca.N) {
-                            cantRestanteParaGanarDiagonalX1 -= 1;
-                        }
-                    }
-                }
-
-                //MIRO LA Diagonal Der a Izq
-                if (esPosibleGanarDiagonalX2) {
-                    int fila = l;
-                    int columna = k;
-                    //Solo miro la diagonal otra.
-                    if (fila + columna == SIZE - 1) {
-                        Marca marcaDelContrario = Marca.O;
-                        Marca marcaEnPos = this.grilla[fila][columna];
-                        if (marcaEnPos == marcaDelContrario) {
-                            esPosibleGanarDiagonalX2 = false;
-                        } else if (marcaEnPos != Marca.N) {
-                            cantRestanteParaGanarDiagonalX2 -= 1;
-                        }
-                    }
-                }
-
-                /**
-                 * Evaluo O
-                 */
-
-                //MIRO LA FILA
-                if (esPosibleGanarFilaO) {
-                    int fila = k;
-                    int columna = l;
-                    Marca marcaDelContrario = Marca.X;
-                    Marca marcaEnPos = this.grilla[fila][columna];
-                    if (marcaEnPos == marcaDelContrario) {
-                        esPosibleGanarFilaO = false;
-                    } else if (marcaEnPos != Marca.N) {
-                        cantRestanteParaGanarFilaO -= 1;
-                    }
-                }
-
-                //MIRO LA Columna
-                if (esPosibleGanarColumnaO) {
-                    int fila = l;
-                    int columna = k;
-                    Marca marcaDelContrario = Marca.X;
-                    Marca marcaEnPos = this.grilla[fila][columna];
-                    if (marcaEnPos == marcaDelContrario) {
-                        esPosibleGanarColumnaO = false;
-                    } else if (marcaEnPos != Marca.N) {
-                        cantRestanteParaGanarColumnaO -= 1;
-                    }
-                }
-
-                //MIRO LA Diagonal
-                if (esPosibleGanarDiagonalO1) {
-                    int fila = l;
-                    int columna = k;
-                    //Solo miro la diagonal posta.
-                    if (fila == columna) {
-                        Marca marcaDelContrario = Marca.X;
-                        Marca marcaEnPos = this.grilla[fila][columna];
-                        if (marcaEnPos == marcaDelContrario) {
-                            esPosibleGanarDiagonalO1 = false;
-                        } else if (marcaEnPos != Marca.N) {
-                            cantRestanteParaGanarDiagonalO1 -= 1;
-                        }
-                    }
-                }
-
-                //MIRO LA Diagonal
-                if (esPosibleGanarDiagonalO2) {
-                    int fila = l;
-                    int columna = k;
-                    //Solo miro la diagonal posta.
-                    if (fila == columna) {
-                        Marca marcaDelContrario = Marca.X;
-                        Marca marcaEnPos = this.grilla[fila][columna];
-                        if (marcaEnPos == marcaDelContrario) {
-                            esPosibleGanarDiagonalO2 = false;
-                        } else if (marcaEnPos != Marca.N) {
-                            cantRestanteParaGanarDiagonalO2 -= 1;
-                        }
-                    }
-                }
-
-
-                //No hay chance
-                if (!esPosibleGanarColumnaX && !esPosibleGanarFilaX && !esPosibleGanarDiagonalX1 && !esPosibleGanarDiagonalX2
-                        && !esPosibleGanarFilaO && !esPosibleGanarColumnaO && !esPosibleGanarDiagonalO1 && !esPosibleGanarDiagonalO2) break;
-
             }
-
-
-
+            if(minimoParaGanarM > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarM = cantRestantesParaGanar;
+            }
+        }
+        
+        //Analizo las filas para el jugador Rival
+        for (int k = 0; k<SIZE; k++){
+            boolean esPosibleGanar = true;
+            int cantRestantesParaGanar = SIZE;
+            for (int l = 0; l<SIZE; l++){
+                if(esPosibleGanar){
+                    if(this.grilla[k][l] == m){
+                        cantLineasInutilesR += 1;
+                        esPosibleGanar = false;
+                    }
+                    else if(this.grilla[k][l] != Marca.N){
+                        cantRestantesParaGanar -= 1;
+                    }
+                }
+            }
+            if(minimoParaGanarR > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarR = cantRestantesParaGanar;
+            }
+        }
+        
+        
+        //Analizo las columnas para el jugador M
+        for (int k = 0; k<SIZE; k++){
+            boolean esPosibleGanar = true;
+            int cantRestantesParaGanar = SIZE;
+            for (int l = 0; l<SIZE; l++){
+                if(esPosibleGanar){
+                    if(this.grilla[l][k] == m){
+                        cantRestantesParaGanar -= 1;
+                    }
+                    else if(this.grilla[l][k] != Marca.N){
+                        cantLineasInutilesM += 1;
+                        esPosibleGanar = false;
+                    }
+                }
+            }
+            if(minimoParaGanarM > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarM = cantRestantesParaGanar;
+            }
+        }
+        
+        //Analizo las columnas para el jugador Rival
+        for (int k = 0; k<SIZE; k++){
+            boolean esPosibleGanar = true;
+            int cantRestantesParaGanar = SIZE;
+            for (int l = 0; l<SIZE; l++){
+                if(esPosibleGanar){
+                    if(this.grilla[l][k] == m){
+                        cantLineasInutilesR += 1;
+                        esPosibleGanar = false;
+                    }
+                    else if(this.grilla[l][k] != Marca.N){
+                        cantRestantesParaGanar -= 1;
+                    }
+                }
+            }
+            if(minimoParaGanarR > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarR = cantRestantesParaGanar;
+            }
+        }
+        
+        //Analizo las diagonales para el jugador M
+        boolean esPosibleGanar = true;
+        int cantRestantesParaGanar = SIZE;
+        for (int k = 0; k<SIZE; k++){
+            if(esPosibleGanar){
+                if(this.grilla[k][k] == m){
+                       cantRestantesParaGanar -= 1; 
+                    }
+                    else if(this.grilla[k][k] != Marca.N){
+                        cantLineasInutilesM += 1;
+                        esPosibleGanar = false;
+                    }
+            }
+        }
+        if(minimoParaGanarM > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarM = cantRestantesParaGanar;
+        }
+        
+        esPosibleGanar = true;
+        cantRestantesParaGanar = SIZE;
+        for (int k = 0; k<SIZE; k++){
+            if(esPosibleGanar){
+                if(this.grilla[k][SIZE-k-1] == m){
+                       cantRestantesParaGanar -= 1; 
+                    }
+                    else if(this.grilla[k][k] != Marca.N){
+                        cantLineasInutilesM += 1;
+                        esPosibleGanar = false;
+                    }
+            }
+        }
+        if(minimoParaGanarM > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarM = cantRestantesParaGanar;
+        }
+        
+        
+        //Analizo las diagonales para el jugador Rival
+        esPosibleGanar = true;
+        cantRestantesParaGanar = SIZE;
+        for (int k = 0; k<SIZE; k++){
+            if(esPosibleGanar){
+                if(this.grilla[k][k] == m){
+                    cantLineasInutilesR += 1;
+                    esPosibleGanar = false;   
+                    
+                    }
+                    else if(this.grilla[k][k] != Marca.N){
+                        cantRestantesParaGanar -= 1; 
+                    }
+            }
+        }
+        if(minimoParaGanarR > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarR = cantRestantesParaGanar;
+        }
+        
+        esPosibleGanar = true;
+        cantRestantesParaGanar = SIZE;
+        for (int k = 0; k<SIZE; k++){
+            if(esPosibleGanar){
+                if(this.grilla[k][SIZE-k-1] == m){
+                    cantLineasInutilesR += 1;
+                    esPosibleGanar = false;   
+                    
+                    }
+                    else if(this.grilla[k][k] != Marca.N){
+                        cantRestantesParaGanar -= 1; 
+                    }
+            }
+        }
+        if(minimoParaGanarR > cantRestantesParaGanar && esPosibleGanar){
+                minimoParaGanarR = cantRestantesParaGanar;
+        }
+        
+        //Cuento la cantidad de fichas
+        for(int k = 0; k<SIZE; k++){
+            for(int l = 0; l<SIZE; l++){
+                if(this.grilla[k][l] == m){
+                    cantFichasM += 1;
+                }
+                else if(this.grilla[k][l] != Marca.N){
+                    cantFichasR += 1;
+                }
+            }
         }
 
         //Si es marca posta, actualizo atributos.
         if (!esDeMentira) {
 
             /**
-             * Actualizo cantFichas
+             * Actualizo todo
              */
-            if (m == Marca.X)
+            if (m == Marca.X){
                 cantFichasX++;
-            else cantFichasO++;
-
-            /**
-             * Actualizo canMinimaRestanteParaGanar
-             */
-            if (esPosibleGanarFilaX || esPosibleGanarColumnaX || esPosibleGanarDiagonalX1 || esPosibleGanarDiagonalX2) {
-                List<Integer> s = Arrays.asList(cantRestanteParaGanarColumnaX, cantRestanteParaGanarFilaX, cantRestanteParaGanarDiagonalX1, cantRestanteParaGanarDiagonalX2, cantMinimaRestanteParaGanarX);
-                this.cantMinimaRestanteParaGanarX = Collections.min(s);
+                this.cantMinimaRestanteParaGanarX = minimoParaGanarM;
+                this.cantMinimaRestanteParaGanarO = minimoParaGanarR;
+                this.cantLineasInutilesParaX = cantLineasInutilesM;
+                this.cantLineasInutilesParaO = cantLineasInutilesR;
+            }    
+            else {
+                cantFichasO++;
+                this.cantMinimaRestanteParaGanarO = minimoParaGanarM;
+                this.cantMinimaRestanteParaGanarX = minimoParaGanarR;
+                this.cantLineasInutilesParaO = cantLineasInutilesM;
+                this.cantLineasInutilesParaX = cantLineasInutilesR;
             }
-
-            if (esPosibleGanarFilaO || esPosibleGanarColumnaO || esPosibleGanarDiagonalO1 || esPosibleGanarDiagonalO2) {
-                List<Integer> s = Arrays.asList(cantRestanteParaGanarColumnaO, cantRestanteParaGanarFilaO, cantRestanteParaGanarDiagonalO1, cantRestanteParaGanarDiagonalO2, cantMinimaRestanteParaGanarO);
-                this.cantMinimaRestanteParaGanarO = Collections.min(s);
-            }
-
-            /**
-             * Actualizo CantLineasInutiles
-             */
-            //TODO: Hacer esto arriba y actualizar acá-
-
         }
         //Si no es marca posta, si solo esta "probando" saco la marca.
         else {
@@ -264,30 +266,13 @@ public class Tablero {
         //TODO: revisar esta condicion de ganar.
         boolean JugadorGano = (m == Marca.X) ? cantMinimaRestanteParaGanarX == 0 : cantMinimaRestanteParaGanarO == 0;
 
-
-        if (m == Marca.X) {
-
-            //Seteo los resultados
-            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaO +
-                    coeficientes.w1 * cantLineasInutilesParaX +
-                    coeficientes.w2 * cantMinimaRestanteParaGanarO +
-                    coeficientes.w3 * cantMinimaRestanteParaGanarX +
-                    coeficientes.w4 * cantFichasO +
-                    coeficientes.w5 * cantFichasX + coeficientes.indep, JugadorGano);
-
-        } else {
-
-            //Seteo los resultados
-            return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaX +
-                    coeficientes.w1 * cantLineasInutilesParaO +
-                    coeficientes.w2 * cantMinimaRestanteParaGanarX +
-                    coeficientes.w3 * cantMinimaRestanteParaGanarO +
-                    coeficientes.w4 * cantFichasX +
-                    coeficientes.w5 * cantFichasO + coeficientes.indep, JugadorGano);
-
-        }
-
-
+        //Seteo los resultados
+        return new EstadoTablero(coeficientes.w0 * cantLineasInutilesM +
+            coeficientes.w1 * cantLineasInutilesR +
+            coeficientes.w2 * minimoParaGanarM +
+            coeficientes.w3 * minimoParaGanarR +
+            coeficientes.w4 * cantFichasM +
+            coeficientes.w5 * cantFichasR + coeficientes.indep, JugadorGano);
     }
 
     public Marca getMarca(int i, int j) {

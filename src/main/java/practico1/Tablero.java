@@ -262,6 +262,13 @@ public class Tablero {
         //TODO: revisar esta condicion de ganar.
         boolean empate = (cantFichasM + cantFichasR == SIZE * SIZE);
         boolean findejuego = ((minimoParaGanarM == 0) || (minimoParaGanarR == 0) || empate);
+        Marca ganador = null;
+        if (findejuego && !empate) {
+            Marca jugador = m;
+            Marca oponente = (m == Marca.X) ? Marca.O : Marca.X;
+            if (minimoParaGanarM == 0) ganador = jugador;
+            if (minimoParaGanarR == 0) ganador = oponente;
+        }
 
         //Seteo los resultados
         return new EstadoTablero(coeficientes.w0 * cantLineasInutilesM +
@@ -269,7 +276,7 @@ public class Tablero {
             coeficientes.w2 * minimoParaGanarM +
             coeficientes.w3 * minimoParaGanarR +
             coeficientes.w4 * cantFichasM +
-                coeficientes.w5 * cantFichasR + coeficientes.indep, findejuego, empate);
+                coeficientes.w5 * cantFichasR + coeficientes.indep, findejuego, empate, ganador);
     }
 
     public Marca getMarca(int i, int j) {
@@ -295,10 +302,16 @@ public class Tablero {
      */
     public EstadoTablero getEstadoTablero(Marca m, Coeficientes coeficientes) {
         boolean empate = (cantFichasX + cantFichasO == SIZE * SIZE);
-        boolean JugadorGano = ((cantMinimaRestanteParaGanarX == 0) || (cantMinimaRestanteParaGanarO == 0) || (cantFichasX+cantFichasO == SIZE*SIZE));
+        boolean juegofin = ((cantMinimaRestanteParaGanarX == 0) || (cantMinimaRestanteParaGanarO == 0) || (cantFichasX + cantFichasO == SIZE * SIZE));
+
 
 
         if (m == Marca.X) {
+
+            Marca ganador = null;
+            if (juegofin && !empate) {
+                if (cantMinimaRestanteParaGanarX == 0) ganador = m;
+            }
 
             //Seteo los resultados
             return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaO +
@@ -306,9 +319,14 @@ public class Tablero {
                     coeficientes.w2 * cantMinimaRestanteParaGanarO +
                     coeficientes.w3 * cantMinimaRestanteParaGanarX +
                     coeficientes.w4 * cantFichasO +
-                    coeficientes.w5 * cantFichasX + coeficientes.indep, JugadorGano, empate);
+                    coeficientes.w5 * cantFichasX + coeficientes.indep, juegofin, empate, ganador);
 
         } else {
+
+            Marca ganador = null;
+            if (juegofin && !empate) {
+                if (cantMinimaRestanteParaGanarO == 0) ganador = m;
+            }
 
             //Seteo los resultados
             return new EstadoTablero(coeficientes.w0 * cantLineasInutilesParaX +
@@ -316,7 +334,7 @@ public class Tablero {
                     coeficientes.w2 * cantMinimaRestanteParaGanarX +
                     coeficientes.w3 * cantMinimaRestanteParaGanarO +
                     coeficientes.w4 * cantFichasX +
-                    coeficientes.w5 * cantFichasO + coeficientes.indep, JugadorGano, empate);
+                    coeficientes.w5 * cantFichasO + coeficientes.indep, juegofin, empate, ganador);
 
         }
     }

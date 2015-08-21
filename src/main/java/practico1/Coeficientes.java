@@ -1,7 +1,6 @@
 package practico1;
 
 import java.util.Random;
-import java.util.logging.Logger;
 
 /**
  * Created by raul on 18/08/15.
@@ -38,11 +37,17 @@ public class Coeficientes {
             this.w4 += mu * (VEnt - VOp) * t.cantFichasO;
             this.w5 += mu * (VEnt - VOp) * t.cantFichasX;
         } else {
-            throw new Exception("Solo debe aprender el jugador inicial");
+            this.w0 += mu * (VEnt - VOp) * t.cantLineasInutilesParaX;
+            this.w1 += mu * (VEnt - VOp) * t.cantLineasInutilesParaO;
+            this.w2 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarX;
+            this.w3 += mu * (VEnt - VOp) * t.cantMinimaRestanteParaGanarO;
+            this.w4 += mu * (VEnt - VOp) * t.cantFichasX;
+            this.w5 += mu * (VEnt - VOp) * t.cantFichasO;
+            //throw new Exception("Solo debe aprender el jugador inicial");
         }
     }
 
     public void imprimir() {
-        Logger.getAnonymousLogger().info("W0: " + this.w0 + " W1: " + this.w1 + " W2: " + this.w2 + " W3: " + this.w3 + " W4: " + this.w4 + " W5: " + this.w5 + " indep: " + this.indep);
+        System.out.println("W0: " + this.w0 + " W1: " + this.w1 + " W2: " + this.w2 + " W3: " + this.w3 + " W4: " + this.w4 + " W5: " + this.w5 + " indep: " + this.indep);
     }
 }

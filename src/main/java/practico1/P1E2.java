@@ -6,9 +6,9 @@ package practico1;
  */
 public class P1E2 {
 
-    static float MIN_MU = 0.01f;
+    static float MIN_MU = 0.0000001f;
     static int MAX_IT = 500;
-    static float STEP_MU = 0.001f;  //TODO: ver esto
+    static float STEP_MU = 0.00001f;  //TODO: ver esto
 
 
     public void run(final int SIZE) throws Exception {
@@ -17,6 +17,7 @@ public class P1E2 {
         int countGanoX = 0;
         int countGanoO = 0;
         int countEmpate = 0;
+        boolean ultimaCosaEmpate = true;
 
         //declaro wi's
         Coeficientes coeficientes = new Coeficientes();
@@ -24,7 +25,7 @@ public class P1E2 {
         //Partidas
         float mu = 0.01f;
         int cantIteraciones = 0;
-        while (mu > 0.0001f && cantIteraciones < MAX_IT) {
+        while (mu > MIN_MU && cantIteraciones < MAX_IT) {
 
             //Inicializo
             Tablero tablero = new Tablero(SIZE);
@@ -48,7 +49,7 @@ public class P1E2 {
                  * JUGADOR
                  */
                 ultimoJugador = jugador;
-                System.out.println("TURNO DE: " + jugador);
+                //System.out.println("TURNO DE: " + jugador);
 
 
                 //Mejor pos.
@@ -76,7 +77,7 @@ public class P1E2 {
                 estadoTablero = tablero.setMarca(mejori, mejorj, jugador, false, coeficientes);
 
                 //imprimir ta-te-ti
-                tablero.imprimir();
+                //tablero.imprimir();
 
                 //Si soy X actualizo VopUltimoTurno
                 double VOpUltimoTurno = estadoTablero.VOp;
@@ -88,7 +89,7 @@ public class P1E2 {
                      * OPONENTE
                      */
                     ultimoJugador = oponente;
-                    System.out.println("TURNO DE: " + oponente);
+                    //System.out.println("TURNO DE: " + oponente);
 
 
                     //Mejor pos.
@@ -116,7 +117,7 @@ public class P1E2 {
                     estadoTablero = tablero.setMarca(mejori, mejorj, oponente, false, coeficientes);
 
                     //imprimir ta-te-ti
-                    tablero.imprimir();
+                    //tablero.imprimir();
 
 
                 }
@@ -127,11 +128,13 @@ public class P1E2 {
 
                         VEnt = 100;
                         countGanoX++;
+                        ultimaCosaEmpate = false;
 
                     } else {
 
                         VEnt = -100;
                         countGanoO++;
+                        ultimaCosaEmpate = false;
                     }
 
                     System.out.println("GANO: " + estadoTablero.ganador);
@@ -140,6 +143,7 @@ public class P1E2 {
 
                     VEnt = 0;
                     countEmpate++;
+                    ultimaCosaEmpate = true;
                     System.out.println("EMPATE!!! ");
 
                 } else {
@@ -154,9 +158,9 @@ public class P1E2 {
                 //actualizo wi's con minimos cuadrados
                 coeficientes.actualizarCoeficientes(tablero, mu, VEnt, VOpUltimoTurno, jugador);
                 //imprimo datos de jugada.
-                coeficientes.imprimir();
+                //coeficientes.imprimir();
                 //Actualizar MU
-                //mu -= STEP_MU;
+                mu -= STEP_MU;
 
 
             }

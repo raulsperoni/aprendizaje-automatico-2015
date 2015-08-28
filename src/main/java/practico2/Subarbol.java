@@ -9,7 +9,7 @@ import java.util.List;
 public class Subarbol {
 
     public List<Subarbol> hijos = new ArrayList<>();
-    public Head nodo;
+    public Head nodo = null;
     public boolean hoja;
     public boolean poisonus;
 }

@@ -3,6 +3,9 @@ package practico2;
 import java.util.Collections;
 import java.util.List;
 
+import practico1.Ejemplo;
+import practico1.Subarbol;
+
 /**
  * Created by raul on 28/08/15.
  */
@@ -17,7 +20,8 @@ public class Main {
         int corte = (ejemplos.size() * 4) / 5;
 
         List<Ejemplo> entrenamiento = ejemplos.subList(0, corte);
-
-
-    }
+        
+        //// ID3 ////
+        
+     
 }

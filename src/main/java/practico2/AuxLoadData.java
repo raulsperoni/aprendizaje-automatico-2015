@@ -25,7 +25,7 @@ public class AuxLoadData {
                     String[] valores = line.split(",");
                     Ejemplo ejemplo = new Ejemplo();
                     ejemplo.poisonus = valores[0].equals("p");
-                    for (int i = 1; i < valores.length - 1; i++) {
+                    for (int i = 1; i < valores.length; i++) {
                         ejemplo.atributos.put(i, valores[i]);
 
                     }

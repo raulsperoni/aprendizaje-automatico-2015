@@ -72,6 +72,12 @@ public class ID3 {
 
     }
 
+    /**
+     * El mejor atributo de S
+     *
+     * @param S
+     * @return
+     */
     private static int buscarAtributoConMejorGanancia(List<Ejemplo> S) {
         int mejorAtributo = -1;
         double mejorGanancia = -1;
@@ -86,6 +92,11 @@ public class ID3 {
         return mejorAtributo;
     }
 
+    /**
+     * Entropia de S
+     * @param S
+     * @return
+     */
     private static double Entropy(List<Ejemplo> S) {
 
         if (S.size() == 0) return 0.0;
@@ -109,6 +120,12 @@ public class ID3 {
         return res1 + res2;
     }
 
+    /**
+     * Ganancia de S respecto de atributo A
+     * @param S
+     * @param A
+     * @return
+     */
     private static double Gain(List<Ejemplo> S, int A) {
 
         double term = 0;
@@ -123,6 +140,13 @@ public class ID3 {
 
     }
 
+    /**
+     * Devuelvo los ejemplos que para el atributo A tienen valor V
+     * @param S
+     * @param A
+     * @param V
+     * @return
+     */
     private static List<Ejemplo> Sv(List<Ejemplo> S, int A, String V) {
         List<Ejemplo> Sv = new ArrayList<>();
         for (Ejemplo e : S) {

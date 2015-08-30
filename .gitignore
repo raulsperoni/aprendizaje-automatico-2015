@@ -23,3 +23,8 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
+.metadata
+.settings
+RemoteSystemsTempFiles
+.classpath
+.project

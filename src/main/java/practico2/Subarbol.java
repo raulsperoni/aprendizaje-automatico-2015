@@ -8,8 +8,11 @@ import java.util.List;
  */
 public class Subarbol {
 
+    public String valorAtributoDelPadre;
+    public Integer atributoDecision;
     public List<Subarbol> hijos = new ArrayList<>();
-    public Head nodo = null;
-    public boolean hoja;
-    public boolean poisonus;
+    public Hoja hoja = null;
+    public int cantEjemplosPoisonus = 0;
+    public int cantEjemplosEdiable = 0;
+
 }

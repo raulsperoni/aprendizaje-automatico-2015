@@ -29,13 +29,17 @@ public class Main {
         for (int i = 0; i < 10; i++) {
 
             List<Ejemplo> prueba_validacion_cruzada = particiones.get(i);
-            List<Ejemplo> entrenamiento_validacion_cruzada = new ArrayList<>();
+            List<Ejemplo> entrenamiento_validacion_cruzada = new ArrayList<>(entrenamiento_total);
             //Hago una copia del conjunto de entrenamiento.
-            Collections.copy(entrenamiento_validacion_cruzada, entrenamiento_total);
+            //Collections.copy(entrenamiento_validacion_cruzada, entrenamiento_total);
             //Le saco el conjunto de prueba actual.
             entrenamiento_validacion_cruzada.removeAll(prueba_validacion_cruzada);
 
             //Llamo a ID3 con el conjunto de entrenamiento.
+            Set<Integer> attrs = atributos().keySet();
+            List<Integer> attrsList = new ArrayList<>();
+            attrsList.addAll(attrs);
+            Subarbol root = ID3.calcular(entrenamiento_validacion_cruzada, attrsList);
 
             //Evaluo el conj de prueba con el resultado de ID3
 

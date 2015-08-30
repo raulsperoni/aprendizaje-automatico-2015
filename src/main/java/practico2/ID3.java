@@ -14,38 +14,41 @@ public class ID3 {
         for (Ejemplo ej : entrenamiento) {
             poison = poison && ej.poisonus;
             edible = edible && !(ej.poisonus);
+            if (ej.poisonus) raiz.cantEjemplosPoisonus++;
+            else raiz.cantEjemplosEdiable++;
         }
         if (poison) {
-            raiz.hoja = true;
-            raiz.poisonus = true;
+            raiz.hoja = new Hoja();
+            raiz.hoja.poisonus = true;
+            raiz.atributoDecision = null;
         } else if (edible) {
-            raiz.hoja = true;
-            raiz.poisonus = false;
+            raiz.hoja = new Hoja();
+            raiz.hoja.poisonus = false;
+            raiz.atributoDecision = null;
         } else {
             // Si no me quedan atributos→ etiquetar con el valor más común
             if (atributos.isEmpty()) {
-                raiz.poisonus = raiz.nodo.cantPoisonous >= raiz.nodo.cantEdible;
-                raiz.hoja = true;
+                raiz.hoja = new Hoja();
+                raiz.hoja.poisonus = raiz.cantEjemplosPoisonus >= raiz.cantEjemplosEdiable;
+                raiz.atributoDecision = null;
             } else {
                 // En caso contrario:‣ La raíz pregunte por A, atributo que mejor
                 // clasifica los ejemplos‣
                 int A = buscarAtributoConMejorGanancia(entrenamiento);
                 //Asigno el atributo de decición a la raiz
-                raiz.nodo.atributo = A;
+                raiz.atributoDecision = A;
 
                 // Para cada valor vi de A ๏Genero una rama๏
                 List<String> valoresPosiblesAtributo = Main.atributos().get(A);
                 for (int i = 0; i < valoresPosiblesAtributo.size(); i++) {
 
                     Subarbol rama = new Subarbol();
-
                     raiz.hijos.add(rama);
 
-
-                    String vi = valoresPosiblesAtributo.get(i);
+                    rama.valorAtributoDelPadre = valoresPosiblesAtributo.get(i);
 
                     // Ejemplos vi ={ ejemplos en los cuales A= vi}๏
-                    List<Ejemplo> ejemplosConMismoVi = Sv(entrenamiento, A, vi);
+                    List<Ejemplo> ejemplosConMismoVi = Sv(entrenamiento, A, rama.valorAtributoDelPadre);
 
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
@@ -84,18 +87,26 @@ public class ID3 {
     }
 
     private static double Entropy(List<Ejemplo> S) {
-        int cantPoisonus = 0;
-        int cantEdiable = 0;
+
+        if (S.size() == 0) return 0.0;
+
+        double cantPoisonus = 0;
+        double cantEdiable = 0;
 
         for (Ejemplo e : S) {
             if (e.poisonus) cantPoisonus++;
             else cantEdiable++;
         }
 
-        double Ppoisonus = cantPoisonus / S.size();
-        double Pediable = cantEdiable / S.size();
+        double Ppoisonus = (cantPoisonus / S.size());
+        double Pediable = (cantEdiable / S.size());
 
-        return -Ppoisonus * Math.log(Ppoisonus) - Pediable * Math.log(Pediable);
+        double res1 = -Ppoisonus * Math.log(Ppoisonus);
+        if (Ppoisonus == 0.0) res1 = 0;
+        double res2 = -Pediable * Math.log(Pediable);
+        if (Pediable == 0.0) res2 = 0;
+
+        return res1 + res2;
     }
 
     private static double Gain(List<Ejemplo> S, int A) {
@@ -104,7 +115,8 @@ public class ID3 {
         List<String> valoresPosiblesAtributo = Main.atributos().get(A);
         for (String v : valoresPosiblesAtributo) {
             List<Ejemplo> Sv = Sv(S, A, v);
-            term += (Sv.size() / S.size()) * Entropy(Sv);
+            double x = ((double) Sv.size() / S.size()) * Entropy(Sv);
+            term += x;
         }
 
         return Entropy(S) - term;

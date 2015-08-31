@@ -43,7 +43,7 @@ public class ID3 {
                 for (int i = 0; i < valoresPosiblesAtributo.size(); i++) {
 
                     Subarbol rama = new Subarbol();
-                    raiz.hijos.add(rama);
+                    raiz.hijos.add(rama);//No pasa nada de hacer el add y despues modificarlo? se guarda un puntero a rama?
 
                     rama.valorAtributoDelPadre = valoresPosiblesAtributo.get(i);
 
@@ -53,7 +53,8 @@ public class ID3 {
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
                     if (ejemplosConMismoVi.isEmpty()) {
-
+                    	
+                    	
                     }
                     // En caso contrario→ ID3(Ejemplos vi , Atributos -{A})
                     else {

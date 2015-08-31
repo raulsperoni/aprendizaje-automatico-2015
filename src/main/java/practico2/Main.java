@@ -16,7 +16,8 @@ public class Main {
         int corte = (ejemplos.size() * 4) / 5;
 
         List<Ejemplo> entrenamiento_total = ejemplos.subList(0, corte);
-
+        Main.obtenerValorMasProbable();        
+        
         //VALIDACION CRUZADA
         ArrayList<List<Ejemplo>> particiones = new ArrayList<>();
         int ini_particion = 0;
@@ -120,5 +121,10 @@ public class Main {
         res.put(22, habitat);
 
         return res;
+    }
+    
+    public static void obtenerValorMasProbable()
+    {
+    	
     }
 }

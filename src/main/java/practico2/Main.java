@@ -120,9 +120,4 @@ public class Main {
 
         return res;
     }
-    
-    public static void obtenerValorMasProbable()
-    {
-    	
-    }
 }

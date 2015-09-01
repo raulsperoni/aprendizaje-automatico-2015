@@ -68,13 +68,10 @@ public class ID3 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = true;
 	                         rama.atributoDecision = null;
-<<<<<<< HEAD
 	                     } 
 	                   	 else 
-=======
                              printTree("HOJA: POISONUS = Sv Vacio", atributos.size());
                          } else
->>>>>>> c6478339ac9beda7ab3f4fcc1773ac4dcc1811c3
 	                   	 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = false;

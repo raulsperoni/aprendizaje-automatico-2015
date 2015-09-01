@@ -2,9 +2,7 @@ package practico2;
 
 import java.util.*;
 
-/**
- * Created by raul on 28/08/15.
- */
+
 public class Main {
 
 

@@ -3,9 +3,7 @@ package practico2;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by raul on 28/08/15.
- */
+
 public class Subarbol {
 
     public String valorAtributoDelPadre;

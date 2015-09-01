@@ -5,6 +5,8 @@ import java.util.List;
 
 public class ID3 {
 
+    private static boolean LOG = true;
+
     public static Subarbol calcular(List<Ejemplo> entrenamiento, List<Integer> atributos) {
         //Crear raiz
         Subarbol raiz = new Subarbol();
@@ -20,20 +22,20 @@ public class ID3 {
             raiz.hoja = new Hoja();
             raiz.hoja.poisonus = true;
             raiz.atributoDecision = null;
-            System.out.println("HOJA: POISONUS");
+            printTree("HOJA: POISONUS", atributos.size());
         } else if (edible) {
             raiz.hoja = new Hoja();
             raiz.hoja.poisonus = false;
             raiz.atributoDecision = null;
-            System.out.println("HOJA: EDIABLE");
+            printTree("HOJA: EDIABLE", atributos.size());
         } else {
             // Si no me quedan atributos→ etiquetar con el valor más común
             if (atributos.isEmpty()) {
                 raiz.hoja = new Hoja();
                 raiz.hoja.poisonus = raiz.cantEjemplosPoisonus >= raiz.cantEjemplosEdiable;
                 raiz.atributoDecision = null;
-                if (raiz.hoja.poisonus) System.out.println("HOJA: POISONUS");
-                else System.out.println("HOJA: EDIABLE");
+                if (raiz.hoja.poisonus) printTree("HOJA: POISONUS", atributos.size());
+                else printTree("HOJA: EDIABLE", atributos.size());
             } else {
                 // En caso contrario:‣ La raíz pregunte por A, atributo que mejor
                 // clasifica los ejemplos‣
@@ -42,7 +44,7 @@ public class ID3 {
                 raiz.atributoDecision = A;
                 //Estoy sacando el objeto Integer A, no el indice.
                 atributos.remove(A);
-                System.out.println("NODO: #ATTRS=" + atributos.size() + " A=" + A);
+                printTree("NODO: #ATTRS=" + atributos.size() + " A=" + A, atributos.size());
 
                 // Para cada valor vi de A ๏Genero una rama๏
                 List<String> valoresPosiblesAtributo = Main.atributos().get(A);
@@ -55,7 +57,7 @@ public class ID3 {
 
                     // Ejemplos vi ={ ejemplos en los cuales A= vi}๏
                     List<Ejemplo> ejemplosConMismoVi = Sv(entrenamiento, A, rama.valorAtributoDelPadre);
-                    System.out.println("RAMA: Valor ATRR Padre=" + rama.valorAtributoDelPadre);
+                    printTree("RAMA: Valor ATRR Padre=" + rama.valorAtributoDelPadre, atributos.size());
 
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
@@ -65,13 +67,13 @@ public class ID3 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = true;
 	                         rama.atributoDecision = null;
-                             System.out.println("HOJA: POISONUS = Sv Vacio");
+                             printTree("HOJA: POISONUS = Sv Vacio", atributos.size());
                          } else
 	                   	 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = false;
 	                         rama.atributoDecision = null;
-                             System.out.println("HOJA: EDIABLE = Sv Vacio");
+                             printTree("HOJA: EDIABLE = Sv Vacio", atributos.size());
                          }
                     }
                     // En caso contrario→ ID3(Ejemplos vi , Atributos -{A})
@@ -170,6 +172,13 @@ public class ID3 {
                 Sv.add(e);
         }
         return Sv;
+    }
+
+    private static void printTree(String text, int atributosSize) {
+        atributosSize = 22 - atributosSize;
+        if (LOG)
+            System.out.println(String.format("%" + (2 * atributosSize) + "s", "") + text);
+
     }
 
 }

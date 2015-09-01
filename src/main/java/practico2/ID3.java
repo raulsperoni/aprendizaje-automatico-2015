@@ -52,13 +52,14 @@ public class ID3 {
 
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
+                    //Para elegir el valor se toman en cuenta el subconjunto de ejemplos analizados hasta el momento
                     if (ejemplosConMismoVi.isEmpty()) {
 	                   	 if (raiz.cantEjemplosPoisonus>raiz.cantEjemplosEdiable)
 	                   	 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = true;
 	                         rama.atributoDecision = null;
-	                     	 } 
+	                     } 
 	                   	 else 
 	                   	 {
 	                         rama.hoja = new Hoja();

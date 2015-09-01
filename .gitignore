@@ -28,3 +28,4 @@ nb-configuration.xml
 RemoteSystemsTempFiles
 .classpath
 .project
+/bin/

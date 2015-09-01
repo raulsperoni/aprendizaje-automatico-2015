@@ -2,7 +2,6 @@ package practico2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class ID3 {
 
@@ -21,22 +20,29 @@ public class ID3 {
             raiz.hoja = new Hoja();
             raiz.hoja.poisonus = true;
             raiz.atributoDecision = null;
+            System.out.println("HOJA: POISONUS");
         } else if (edible) {
             raiz.hoja = new Hoja();
             raiz.hoja.poisonus = false;
             raiz.atributoDecision = null;
+            System.out.println("HOJA: EDIABLE");
         } else {
             // Si no me quedan atributos→ etiquetar con el valor más común
             if (atributos.isEmpty()) {
                 raiz.hoja = new Hoja();
                 raiz.hoja.poisonus = raiz.cantEjemplosPoisonus >= raiz.cantEjemplosEdiable;
                 raiz.atributoDecision = null;
+                if (raiz.hoja.poisonus) System.out.println("HOJA: POISONUS");
+                else System.out.println("HOJA: EDIABLE");
             } else {
                 // En caso contrario:‣ La raíz pregunte por A, atributo que mejor
                 // clasifica los ejemplos‣
-                int A = buscarAtributoConMejorGanancia(entrenamiento);
+                Integer A = buscarAtributoConMejorGanancia(entrenamiento, atributos);
                 //Asigno el atributo de decición a la raiz
                 raiz.atributoDecision = A;
+                //Estoy sacando el objeto Integer A, no el indice.
+                atributos.remove(A);
+                System.out.println("NODO: #ATTRS=" + atributos.size() + " A=" + A);
 
                 // Para cada valor vi de A ๏Genero una rama๏
                 List<String> valoresPosiblesAtributo = Main.atributos().get(A);
@@ -49,6 +55,7 @@ public class ID3 {
 
                     // Ejemplos vi ={ ejemplos en los cuales A= vi}๏
                     List<Ejemplo> ejemplosConMismoVi = Sv(entrenamiento, A, rama.valorAtributoDelPadre);
+                    System.out.println("RAMA: Valor ATRR Padre=" + rama.valorAtributoDelPadre);
 
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
@@ -58,18 +65,17 @@ public class ID3 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = true;
 	                         rama.atributoDecision = null;
-	                     	 } 
-	                   	 else 
+                             System.out.println("HOJA: POISONUS = Sv Vacio");
+                         } else
 	                   	 {
 	                         rama.hoja = new Hoja();
 	                         rama.hoja.poisonus = false;
 	                         rama.atributoDecision = null;
-	                   	 }
+                             System.out.println("HOJA: EDIABLE = Sv Vacio");
+                         }
                     }
                     // En caso contrario→ ID3(Ejemplos vi , Atributos -{A})
                     else {
-
-                        atributos.remove(A);
                         rama.hijos.add(ID3.calcular(ejemplosConMismoVi, atributos));
                     }
 
@@ -89,10 +95,9 @@ public class ID3 {
      * @param S
      * @return
      */
-    private static int buscarAtributoConMejorGanancia(List<Ejemplo> S) {
+    private static int buscarAtributoConMejorGanancia(List<Ejemplo> S, List<Integer> atributos) {
         int mejorAtributo = -1;
         double mejorGanancia = -1;
-        Set<Integer> atributos = Main.atributos().keySet();
         for (Integer A : atributos) {
             double gananciaActual = Gain(S, A);
             if (mejorAtributo == -1 || gananciaActual > mejorGanancia) {

@@ -53,7 +53,22 @@ public class ID3 {
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
                     if (ejemplosConMismoVi.isEmpty()) {
-                    	
+	                   	 for (Ejemplo e : ejemplosConMismoVi) {
+	         	            if (e.poisonus) rama.cantEjemplosPoisonus++;
+	         	            else rama.cantEjemplosEdiable++;
+	         	         }
+	                   	 if (rama.cantEjemplosPoisonus>rama.cantEjemplosEdiable)
+	                   	 {
+	                         rama.hoja = new Hoja();
+	                         rama.hoja.poisonus = true;
+	                         rama.atributoDecision = null;
+	                     } 
+	                   	 else 
+	                   	 {
+	                         rama.hoja = new Hoja();
+	                         rama.hoja.poisonus = false;
+	                         rama.atributoDecision = null;
+	                   	 }
                     	
                     }
                     // En caso contrario→ ID3(Ejemplos vi , Atributos -{A})

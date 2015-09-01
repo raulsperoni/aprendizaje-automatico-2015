@@ -41,6 +41,19 @@ public class Main {
             Subarbol root = ID3.calcular(entrenamiento_validacion_cruzada, attrsList);
 
             //Evaluo el conj de prueba con el resultado de ID3
+            Experimento exp = new Experimento(i, entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+            for (Ejemplo e : prueba_validacion_cruzada) {
+                Experimento.Resultado res = new Experimento.Resultado();
+                res.eraPoisonus = e.poisonus;
+                try {
+                    res.seClasificoPoisonus = ID3.evaluar(e, root);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                exp.resultados.add(res);
+            }
+            exp.calcularIndicadores();
+            System.out.println(exp.toString());
 
             //Hago algo con los valores resultantes, media, etc.
 
@@ -64,7 +77,7 @@ public class Main {
         List<String> bruises = Arrays.asList("t", "f");
         res.put(4, bruises);
 
-        List<String> odor = Arrays.asList("a", "l", "c", "y", "f", "m", "n", "p", "c");
+        List<String> odor = Arrays.asList("a", "l", "c", "y", "f", "m", "n", "p", "s");
         res.put(5, odor);
 
         List<String> gillatachment = Arrays.asList("a", "d", "f", "n");
@@ -76,10 +89,10 @@ public class Main {
         List<String> gillsize = Arrays.asList("b", "n");
         res.put(8, gillsize);
 
-        List<String> gillcolor = Arrays.asList("k", "n", "b", "h", "g", "r", "o", "p", "u", "e");
+        List<String> gillcolor = Arrays.asList("k", "n", "b", "h", "g", "r", "o", "p", "u", "e", "w", "y");
         res.put(9, gillcolor);
 
-        List<String> stalkshape = Arrays.asList("n", "b", "c", "g", "r", "p", "u", "e", "w", "y");
+        List<String> stalkshape = Arrays.asList("e", "t");
         res.put(10, stalkshape);
 
         List<String> stalckroot = Arrays.asList("b", "c", "u", "e", "z", "r", "?"); //TODO: ver esto
@@ -106,7 +119,7 @@ public class Main {
         List<String> ringnumber = Arrays.asList("n", "o", "t");
         res.put(18, ringnumber);
 
-        List<String> ringtype = Arrays.asList("p", "u");
+        List<String> ringtype = Arrays.asList("c", "e", "f", "l", "n", "p", "s", "z");
         res.put(19, ringtype);
 
         List<String> sporeprintcolor = Arrays.asList("k", "n", "b", "h", "r", "o", "u", "w", "y");

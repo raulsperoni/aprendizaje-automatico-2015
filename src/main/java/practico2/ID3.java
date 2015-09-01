@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ID3 {
 
-    private static boolean LOG = true;
+    private static boolean LOG = false;
 
     public static Subarbol calcular(List<Ejemplo> entrenamiento, List<Integer> atributos) {
         //Crear raiz
@@ -90,6 +90,38 @@ public class ID3 {
         return raiz;
 
     }
+
+
+    public static boolean evaluar(Ejemplo ejemploAEvaluar, Subarbol arbolDecision) throws Exception {
+        if (arbolDecision == null)
+            throw new Exception("Arbol null");
+
+        //Paso base, llegue a una hoja.
+        if (arbolDecision.hoja != null) {
+            return arbolDecision.hoja.poisonus;
+        } else {
+            //Busco el valor de ejemplo en el atributo de este paso del arbol
+            String valorDelEjemplo = ejemploAEvaluar.atributos.get(arbolDecision.atributoDecision);
+            Subarbol ramaCorrecta = null;
+            //Este es el caso en que este valor no fue observado en el entrenamiento para este atributo.
+            if (valorDelEjemplo == null) {
+                ramaCorrecta = arbolDecision.hijos.get(0);
+            }
+            //Caso normal
+            else {
+                for (Subarbol rama : arbolDecision.hijos) {
+                    if (rama.valorAtributoDelPadre.equals(valorDelEjemplo)) {
+                        ramaCorrecta = rama;
+                        break;
+                    }
+                }
+            }
+            return evaluar(ejemploAEvaluar, ramaCorrecta);
+        }
+
+
+    }
+
 
     /**
      * El mejor atributo de S

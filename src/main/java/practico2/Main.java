@@ -13,8 +13,7 @@ public class Main {
         Collections.shuffle(ejemplos);
         int corte = (ejemplos.size() * 4) / 5;
 
-        List<Ejemplo> entrenamiento_total = ejemplos.subList(0, corte);
-        Main.obtenerValorMasProbable();        
+        List<Ejemplo> entrenamiento_total = ejemplos.subList(0, corte);            
         
         //VALIDACION CRUZADA
         ArrayList<List<Ejemplo>> particiones = new ArrayList<>();

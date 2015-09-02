@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ID3 {
 
-    private static boolean LOG = false;
+    private static boolean LOG = true;
 
     public static Subarbol calcular(List<Ejemplo> entrenamiento, List<Integer> atributos) {
         //Crear raiz
@@ -22,11 +22,13 @@ public class ID3 {
             raiz.hoja = new Hoja();
             raiz.hoja.poisonus = true;
             raiz.atributoDecision = null;
+            printTree("TODOS EJEMPLOS SON POISONUS", 0);
             printTree("HOJA: POISONUS", atributos.size());
         } else if (edible) {
             raiz.hoja = new Hoja();
             raiz.hoja.poisonus = false;
             raiz.atributoDecision = null;
+            printTree("TODOS EJEMPLOS SON EDIABLE", 0);
             printTree("HOJA: EDIABLE", atributos.size());
         } else {
             // Si no me quedan atributos→ etiquetar con el valor más común
@@ -34,6 +36,7 @@ public class ID3 {
                 raiz.hoja = new Hoja();
                 raiz.hoja.poisonus = raiz.cantEjemplosPoisonus >= raiz.cantEjemplosEdiable;
                 raiz.atributoDecision = null;
+                printTree("ETIQUETO CON VAL MAS COMUN", 0);
                 if (raiz.hoja.poisonus) printTree("HOJA: POISONUS", atributos.size());
                 else printTree("HOJA: EDIABLE", atributos.size());
             } else {
@@ -44,6 +47,7 @@ public class ID3 {
                 raiz.atributoDecision = A;
                 //Estoy sacando el objeto Integer A, no el indice.
                 atributos.remove(A);
+                printTree("ELIJO ATTR CLASIFIQUE MEJOR EJS", 0);
                 printTree("NODO: #ATTRS=" + atributos.size() + " A=" + A, atributos.size());
 
                 // Para cada valor vi de A ๏Genero una rama๏

@@ -13,6 +13,8 @@ public class Experimento {
     public float precision;
     public float recuperacion;
     public float fallOf;
+    public float errors;
+    public Confianza intervaloconfianza;
 
     public Experimento(int numExperimento, int cantEjemplosEntrenamiento, int cantCantEjemplosPrueba) {
         this.numExperimento = numExperimento;
@@ -52,13 +54,20 @@ public class Experimento {
         precision = verdaderosPositivos / (verdaderosPositivos + falsosPositivos);
         recuperacion = verdaderosPositivos / (verdaderosPositivos + falsosNegativos);
         fallOf = falsosPositivos / (falsosPositivos + verdaderosNegativos);
-
+        errors = (falsosPositivos + falsosNegativos)/this.cantEjemplosEntrenamiento;
+        intervaloconfianza.x = errors - (1.96)*Math.sqrt((errors*(1-errors))/this.cantEjemplosEntrenamiento);
+        intervaloconfianza.y = errors + (1.96)*Math.sqrt((errors*(1-errors))/this.cantEjemplosEntrenamiento);
 
     }
 
     public static class Resultado {
         public boolean eraPoisonus;
         public boolean seClasificoPoisonus;
+    }
+    
+    public static class Confianza {
+        public double x;
+        public double y;
     }
 
 

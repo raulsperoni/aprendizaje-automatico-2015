@@ -20,17 +20,19 @@ public class AuxLoadData {
             try {
 
                 String line = br.readLine();
-
+                int id = 1;
                 while (line != null) {
                     String[] valores = line.split(",");
                     Ejemplo ejemplo = new Ejemplo();
                     ejemplo.poisonus = valores[0].equals("p");
+                    ejemplo.id = id;
                     for (int i = 1; i < valores.length; i++) {
                         ejemplo.atributos.put(i, valores[i]);
 
                     }
                     coso.add(ejemplo);
                     line = br.readLine();
+                    id++;
                 }
             } finally {
                 br.close();

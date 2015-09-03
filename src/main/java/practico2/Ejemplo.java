@@ -7,6 +7,7 @@ import java.util.HashMap;
  */
 public class Ejemplo {
 
+    int id;
     HashMap<Integer, String> atributos = new HashMap<>();
     boolean poisonus;
 }

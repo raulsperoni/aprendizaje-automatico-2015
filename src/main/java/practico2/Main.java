@@ -8,13 +8,40 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("MAA 2015");
+        System.out.println("Ejecutando ...");
+
+        //Cargo datos
         List<Ejemplo> ejemplos = AuxLoadData.retreive();
-
+        //Mezclo ejemplos
         Collections.shuffle(ejemplos);
+        //Defino corte entrenamiento/prueba
         int corte = (ejemplos.size() * 4) / 5;
+        //Conjunto Entrenamiento
+        List<Ejemplo> entrenamiento_total = ejemplos.subList(0, corte);
 
-        List<Ejemplo> entrenamiento_total = ejemplos.subList(0, corte);            
-        
+        /**
+         * VALIDACION CRUZADA
+         */
+        run(entrenamiento_total);
+
+        /**
+         * 4/5 vs 1/5
+         */
+        List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
+        run(entrenamiento_total, prueba_total);
+
+
+    }
+
+    /**
+     * Ejecucion con Validacion Cruzada
+     *
+     * @param entrenamiento_total
+     */
+    public static void run(List<Ejemplo> entrenamiento_total) {
+        System.out.println("Validacion cruzada tamano 10");
+
         //VALIDACION CRUZADA
         ArrayList<List<Ejemplo>> particiones = new ArrayList<>();
         int ini_particion = 0;
@@ -26,11 +53,11 @@ public class Main {
         //PARA CADA PARTICION
         for (int i = 0; i < 10; i++) {
 
+            //Tomo el conjunto de prueba i
             List<Ejemplo> prueba_validacion_cruzada = particiones.get(i);
-            List<Ejemplo> entrenamiento_validacion_cruzada = new ArrayList<>(entrenamiento_total);
             //Hago una copia del conjunto de entrenamiento.
-            //Collections.copy(entrenamiento_validacion_cruzada, entrenamiento_total);
-            //Le saco el conjunto de prueba actual.
+            List<Ejemplo> entrenamiento_validacion_cruzada = new ArrayList<>(entrenamiento_total);
+            //Le resto el conjunto de prueba actual al de entrenamiento.
             entrenamiento_validacion_cruzada.removeAll(prueba_validacion_cruzada);
 
             //Llamo a ID3 con el conjunto de entrenamiento.
@@ -55,13 +82,52 @@ public class Main {
             System.out.println(exp.toString());
 
             //Hago algo con los valores resultantes, media, etc.
+            //TODO: hacer
 
         }
 
 
     }
 
+    /**
+     * Evaluo resultado de entrenar con 4/5 con 1/5
+     *
+     * @param entrenamiento_total
+     * @param prueba_total
+     */
+    public static void run(List<Ejemplo> entrenamiento_total, List<Ejemplo> prueba_total) {
+        System.out.println("Evaluo resultado de entrenar con 4/5 con 1/5");
 
+        //Llamo a ID3 con el conjunto de entrenamiento.
+        Set<Integer> attrs = atributos().keySet();
+        List<Integer> attrsList = new ArrayList<>();
+        attrsList.addAll(attrs);
+        Subarbol root = ID3.calcular(entrenamiento_total, attrsList);
+
+        //Evaluo el conj de prueba con el resultado de ID3
+        Experimento exp = new Experimento(100, entrenamiento_total.size(), prueba_total.size());
+        for (Ejemplo e : prueba_total) {
+            Experimento.Resultado res = new Experimento.Resultado();
+            res.eraPoisonus = e.poisonus;
+            try {
+                res.seClasificoPoisonus = ID3.evaluar(e, root);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            exp.resultados.add(res);
+        }
+        exp.calcularIndicadores();
+        System.out.println(exp.toString());
+
+        //Hago algo con los valores resultantes, media, etc.
+        //TODO: hacer
+
+    }
+
+    /**
+     * Devuelvo los atributos y sus posibles valores segun la documentacion.
+     * @return
+     */
     public static HashMap<Integer, List<String>> atributos() {
         HashMap<Integer, List<String>> res = new HashMap<Integer, List<String>>();
         List<String> capshape = Arrays.asList("b", "c", "x", "f", "k", "s");

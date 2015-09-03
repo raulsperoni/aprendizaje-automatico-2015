@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ID3 {
 
-    private static boolean LOG = true;
+    private static boolean LOG = false;
 
     public static Subarbol calcular(List<Ejemplo> entrenamiento, List<Integer> atributos) {
         //Crear raiz

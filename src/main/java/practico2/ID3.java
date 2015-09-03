@@ -7,6 +7,13 @@ public class ID3 {
 
     private static boolean LOG = false;
 
+    /**
+     * Construyo un arbol a partir del conjunto de entrenamiento.
+     *
+     * @param entrenamiento
+     * @param atributos
+     * @return
+     */
     public static Subarbol calcular(List<Ejemplo> entrenamiento, List<Integer> atributos) {
         //Crear raiz
         Subarbol raiz = new Subarbol();
@@ -101,7 +108,13 @@ public class ID3 {
 
     }
 
-
+    /**
+     * Evaluo el ejemplo con el arbol.
+     * @param ejemploAEvaluar
+     * @param arbolDecision
+     * @return
+     * @throws Exception
+     */
     public static boolean evaluar(Ejemplo ejemploAEvaluar, Subarbol arbolDecision) throws Exception {
         if (arbolDecision == null)
             throw new Exception("Arbol null");
@@ -132,10 +145,8 @@ public class ID3 {
 
     }
 
-
     /**
      * El mejor atributo de S
-     *
      * @param S
      * @return
      */
@@ -216,6 +227,11 @@ public class ID3 {
         return Sv;
     }
 
+    /**
+     * Imprimir arbol con indentacion
+     * @param text
+     * @param atributosSize
+     */
     private static void printTree(String text, int atributosSize) {
         atributosSize = 22 - atributosSize;
         if (LOG)

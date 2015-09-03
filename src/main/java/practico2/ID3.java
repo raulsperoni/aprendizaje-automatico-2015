@@ -64,7 +64,7 @@ public class ID3 {
                 	printTree("CANT EJEMPLOS= " + entrenamiento.size(), 0);
                 	printTree("PRUEBO CON: "+ valoresPosiblesAtributo.get(i), 0);
                     Subarbol rama = new Subarbol();
-                    raiz.hijos.add(rama);//No pasa nada de hacer el add y despues modificarlo? se guarda un puntero a rama?
+                    raiz.hijos.add(rama);
 
                     rama.valorAtributoDelPadre = valoresPosiblesAtributo.get(i);
 

@@ -10,11 +10,18 @@ public class Experimento {
     public int cantEjemplosEntrenamiento;
     public int cantCantEjemplosPrueba;
     public List<Resultado> resultados = new ArrayList<>();
-    public float precision;
-    public float recuperacion;
-    public float fallOf;
-    public float errors;
-    public Confianza intervaloconfianza;
+
+    public double verdaderosPositivos = 0;
+    public double falsosPositivos = 0;
+    public double verdaderosNegativos = 0;
+    public double falsosNegativos = 0;
+
+    public double precision;
+    public double recuperacion;
+    public double fallOf;
+    public double medidaF;
+    public double errors;
+    public Confianza intervaloconfianza = new Confianza();
 
     public Experimento(int numExperimento, int cantEjemplosEntrenamiento, int cantCantEjemplosPrueba) {
         this.numExperimento = numExperimento;
@@ -28,17 +35,20 @@ public class Experimento {
                 "numExperimento=" + numExperimento +
                 ", cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
                 ", cantCantEjemplosPrueba=" + cantCantEjemplosPrueba +
+                ", verdaderosPositivos=" + verdaderosPositivos +
+                ", falsosPositivos=" + falsosPositivos +
+                ", verdaderosNegativos=" + verdaderosNegativos +
+                ", falsosNegativos=" + falsosNegativos +
                 ", precision=" + precision +
                 ", recuperacion=" + recuperacion +
+                ", medidaF=" + medidaF +
                 ", fallOf=" + fallOf +
+                ", errors=" + errors +
+                ", intervaloconfianza= [" + intervaloconfianza.x + "," + intervaloconfianza.y + "]" +
                 '}';
     }
 
     public void calcularIndicadores() {
-        int verdaderosPositivos = 0;
-        int falsosPositivos = 0;
-        int verdaderosNegativos = 0;
-        int falsosNegativos = 0;
         for (Resultado r : resultados) {
             if (r.eraPoisonus && r.seClasificoPoisonus)
                 verdaderosPositivos++;
@@ -50,13 +60,13 @@ public class Experimento {
                 verdaderosNegativos++;
         }
 
-
         precision = verdaderosPositivos / (verdaderosPositivos + falsosPositivos);
         recuperacion = verdaderosPositivos / (verdaderosPositivos + falsosNegativos);
         fallOf = falsosPositivos / (falsosPositivos + verdaderosNegativos);
+        medidaF = 2 * (precision * recuperacion / (precision + recuperacion));
         errors = (falsosPositivos + falsosNegativos)/this.cantEjemplosEntrenamiento;
-        intervaloconfianza.x = errors - (1.96)*Math.sqrt((errors*(1-errors))/this.cantEjemplosEntrenamiento);
-        intervaloconfianza.y = errors + (1.96)*Math.sqrt((errors*(1-errors))/this.cantEjemplosEntrenamiento);
+        intervaloconfianza.x = errors - (1.96) * Math.sqrt((errors * (1 - errors)) / this.cantCantEjemplosPrueba);
+        intervaloconfianza.y = errors + (1.96) * Math.sqrt((errors * (1 - errors)) / this.cantCantEjemplosPrueba);
 
     }
 
@@ -64,8 +74,8 @@ public class Experimento {
         public boolean eraPoisonus;
         public boolean seClasificoPoisonus;
     }
-    
-    public static class Confianza {
+
+    public class Confianza {
         public double x;
         public double y;
     }

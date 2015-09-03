@@ -19,7 +19,7 @@ public class Main {
         ArrayList<List<Ejemplo>> particiones = new ArrayList<>();
         int ini_particion = 0;
         for (int i = 0; i < 10; i++) {
-            particiones.add(entrenamiento_total.subList(ini_particion, ini_particion + 10));
+            particiones.add(entrenamiento_total.subList(ini_particion, ini_particion + 10));// :TODO solo 10 ejemplos por particion?
             ini_particion += 10;
         }
 

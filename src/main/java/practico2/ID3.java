@@ -10,7 +10,7 @@ public class ID3 {
     public static Subarbol calcular(List<Ejemplo> entrenamiento, List<Integer> atributos) {
         //Crear raiz
         Subarbol raiz = new Subarbol();
-        // Si todos los ej. tienen el mismo valor → etiquetar con ese valor
+        // Si todos los ej. tienen el mismo valor → etiquetar con ese valor        
         boolean poison = true, edible = true;
         for (Ejemplo ej : entrenamiento) {
             poison = poison && ej.poisonus;
@@ -53,7 +53,9 @@ public class ID3 {
                 // Para cada valor vi de A ๏Genero una rama๏
                 List<String> valoresPosiblesAtributo = Main.atributos().get(A);
                 for (int i = 0; i < valoresPosiblesAtributo.size(); i++) {
-
+                	printTree("FOR: Valor ATRR Padre=" + raiz.atributoDecision, atributos.size());
+                	printTree("CANT EJEMPLOS= " + entrenamiento.size(), 0);
+                	printTree("PRUEBO CON: "+ valoresPosiblesAtributo.get(i), 0);
                     Subarbol rama = new Subarbol();
                     raiz.hijos.add(rama);//No pasa nada de hacer el add y despues modificarlo? se guarda un puntero a rama?
 
@@ -62,11 +64,12 @@ public class ID3 {
                     // Ejemplos vi ={ ejemplos en los cuales A= vi}๏
                     List<Ejemplo> ejemplosConMismoVi = Sv(entrenamiento, A, rama.valorAtributoDelPadre);
                     printTree("RAMA: Valor ATRR Padre=" + rama.valorAtributoDelPadre, atributos.size());
-
+                    printTree("CANT EJEMPLOS MISMO Vi= " + ejemplosConMismoVi.size(), 0);
 
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
                     //Para elegir el valor se toman en cuenta el subconjunto de ejemplos analizados hasta el momento
                     if (ejemplosConMismoVi.isEmpty()) {
+                    	printTree("NINGUN EJEMPLO CON MISMO Vi", 0);
 	                   	 if (raiz.cantEjemplosPoisonus>raiz.cantEjemplosEdiable)
 	                   	 {
 	                         rama.hoja = new Hoja();
@@ -84,6 +87,7 @@ public class ID3 {
                     }
                     // En caso contrario→ ID3(Ejemplos vi , Atributos -{A})
                     else {
+                    	printTree("ID3 RECURSIVO", 0);
                         rama.hijos.add(ID3.calcular(ejemplosConMismoVi, atributos));
                     }
 

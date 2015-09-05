@@ -10,8 +10,12 @@ public class Main {
 
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
-
-       for(int i=0;i<10;i++)
+        Experimento valcruzadaTotal = new Experimento(102,0,0);
+        Experimento entrenamiento2Total = new Experimento(103,0,0);
+        Experimento valcruzadaparcial = new Experimento(104,0,0);
+        Experimento entrenamiento2parcial = new Experimento(105,0,0);;
+        int iterExp = 10;
+       for(int i=0;i<iterExp;i++)
        {
     	System.out.println("Iteración " + i);
         //Cargo datos
@@ -26,16 +30,53 @@ public class Main {
         /**
          * VALIDACION CRUZADA
          */
-        run(entrenamiento_total);
-
+        valcruzadaparcial = run(entrenamiento_total,10);
+        //actualizo contadores de entrenamiento general para hacer promedio
+        valcruzadaTotal.falsosNegativos += valcruzadaparcial.falsosNegativos;
+        valcruzadaTotal.falsosPositivos += valcruzadaparcial.falsosNegativos;
+        valcruzadaTotal.verdaderosNegativos += valcruzadaparcial.verdaderosNegativos;
+        valcruzadaTotal.verdaderosPositivos += valcruzadaparcial.verdaderosPositivos;
         /**
          * 4/5 vs 1/5
          */     
-	        List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
-	        run(entrenamiento_total, prueba_total);
-	        //Mezclo ejemplos
-	        //Collections.shuffle(ejemplos);
+        List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
+        entrenamiento2parcial = run(entrenamiento_total, prueba_total);        
+        //actualizo contadores de entrenamiento general para hacer promedio
+        entrenamiento2Total.falsosNegativos += entrenamiento2parcial.falsosNegativos;
+        entrenamiento2Total.falsosPositivos += entrenamiento2parcial.falsosNegativos;
+        entrenamiento2Total.verdaderosNegativos += entrenamiento2parcial.verdaderosNegativos;
+        entrenamiento2Total.verdaderosPositivos += entrenamiento2parcial.verdaderosPositivos;
+        
+        //Mezclo ejemplos
+        //Collections.shuffle(ejemplos);
        }
+       
+       
+       //divido contadores entre cantidad de entrenamientos
+       valcruzadaTotal.falsosNegativos = valcruzadaTotal.falsosNegativos/iterExp;
+       valcruzadaTotal.falsosPositivos = valcruzadaTotal.falsosNegativos/iterExp;
+       valcruzadaTotal.verdaderosNegativos = valcruzadaTotal.verdaderosNegativos/iterExp;
+       valcruzadaTotal.verdaderosPositivos = valcruzadaTotal.verdaderosPositivos/iterExp;
+       //Calculo media de entrenamientos validacion cruzada
+       valcruzadaTotal.cantCantEjemplosPrueba = valcruzadaparcial.cantCantEjemplosPrueba;
+       valcruzadaTotal.cantEjemplosEntrenamiento = valcruzadaparcial.cantEjemplosEntrenamiento;
+       valcruzadaTotal.calcularIndicadores();
+       System.out.println("Indicadores Validación cruzada Total");
+       System.out.println(valcruzadaTotal.toString());
+       
+       //divido contadores entre cantidad de entrenamientos de entrenamiento2
+       entrenamiento2Total.falsosNegativos = entrenamiento2Total.falsosNegativos/iterExp;
+       entrenamiento2Total.falsosPositivos = entrenamiento2Total.falsosNegativos/iterExp;
+       entrenamiento2Total.verdaderosNegativos = entrenamiento2Total.verdaderosNegativos/iterExp;
+       entrenamiento2Total.verdaderosPositivos = entrenamiento2Total.verdaderosPositivos/iterExp;
+       //Calculo media de entrenamientos sin validacion cruzada
+       entrenamiento2Total.cantCantEjemplosPrueba = entrenamiento2parcial.cantCantEjemplosPrueba;
+       entrenamiento2Total.cantEjemplosEntrenamiento = entrenamiento2parcial.cantEjemplosEntrenamiento;
+       entrenamiento2Total.calcularIndicadores();
+       System.out.println("Indicadores entrenamiento 2");
+       System.out.println(entrenamiento2Total.toString());
+
+       
     }
 
     /**
@@ -43,20 +84,23 @@ public class Main {
      *
      * @param entrenamiento_total
      */
-    public static void run(List<Ejemplo> entrenamiento_total) {
-        System.out.println("Validacion cruzada tamano 10");
+    public static Experimento run(List<Ejemplo> entrenamiento_total, int itervalcruzada) {
+    	
+        System.out.println("Validacion cruzada tamaño "+ itervalcruzada);
 
         //VALIDACION CRUZADA
         ArrayList<List<Ejemplo>> particiones = new ArrayList<>();
         int ini_particion = 0;
-        int tam_particion = entrenamiento_total.size() / 10;
-        for (int i = 0; i < 10; i++) {
+        int tam_particion = entrenamiento_total.size() / itervalcruzada;
+        for (int i = 0; i < itervalcruzada; i++) {
             particiones.add(entrenamiento_total.subList(ini_particion, ini_particion + tam_particion));
             ini_particion += tam_particion;
         }
-
+        
+        Experimento expTotal = new Experimento(101, entrenamiento_total.size()-tam_particion, tam_particion);
+        
         //PARA CADA PARTICION
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < itervalcruzada; i++) {
 
 
             //Tomo el conjunto de prueba i
@@ -126,13 +170,25 @@ public class Main {
                 exp.resultados.add(res);
             }
             exp.calcularIndicadores();
+            //actualizo contadores de experimento general para hacer promedio
+            expTotal.falsosNegativos += exp.falsosNegativos;
+            expTotal.falsosPositivos += exp.falsosNegativos;
+            expTotal.verdaderosNegativos += exp.verdaderosNegativos;
+            expTotal.verdaderosPositivos += exp.verdaderosPositivos;
             System.out.println(exp.toString());
 
             //Hago algo con los valores resultantes, media, etc.
             //TODO: hacer
 
         }
-
+        //divido contadores entre cantidad de experimentos
+        expTotal.falsosNegativos = expTotal.falsosNegativos/itervalcruzada;
+        expTotal.falsosPositivos = expTotal.falsosNegativos/itervalcruzada;
+        expTotal.verdaderosNegativos = expTotal.verdaderosNegativos/itervalcruzada;
+        expTotal.verdaderosPositivos = expTotal.verdaderosPositivos/itervalcruzada;
+        expTotal.calcularIndicadores();
+        System.out.println(expTotal.toString());
+        return expTotal;
 
     }
 
@@ -142,7 +198,7 @@ public class Main {
      * @param entrenamiento_total
      * @param prueba_total
      */
-    public static void run(List<Ejemplo> entrenamiento_total, List<Ejemplo> prueba_total) {
+    public static Experimento run(List<Ejemplo> entrenamiento_total, List<Ejemplo> prueba_total) {
         System.out.println("Evaluo resultado de entrenar con 4/5 con 1/5");
 
         //Llamo a ID3 con el conjunto de entrenamiento.
@@ -163,8 +219,9 @@ public class Main {
             }
             exp.resultados.add(res);
         }
-        exp.calcularIndicadores();
+        exp.calcularIndicadores(); 
         System.out.println(exp.toString());
+        return exp;
 
         //Hago algo con los valores resultantes, media, etc.
         //TODO: hacer

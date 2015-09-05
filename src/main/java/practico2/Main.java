@@ -59,7 +59,7 @@ public class Main {
             List<Ejemplo> prueba_validacion_cruzada = particiones.get(i);
 
 /*
-            //GENERAR FALSOS POSITIVOS.
+            //GENERAR FALSOS NEGATIVOS EJEMPLO 1.
                 int cont = 0;
                 for (Ejemplo e: prueba_validacion_cruzada){
                     if (e.poisonus && e.atributos.get(3).equals("w") && e.atributos.get(22).equals("l")){
@@ -68,8 +68,20 @@ public class Main {
                     }
                 }
 
-                System.out.println("FALSOS POSITIVOS: "+cont);
-  */          
+                System.out.println("FALSOS NEGATIVOS: "+cont);
+  
+            
+            //GENERAR FALSOS NEGATIVOS EJEMPLO 2.
+            int cont2 = 0;
+            for (Ejemplo e: prueba_validacion_cruzada){
+                if (e.poisonus && e.atributos.get(5).equals("c")){
+                    e.poisonus = false;
+                    cont2++;
+                }
+            }
+
+            System.out.println("FALSOS NEGATIVOS: "+cont2);         
+*/
 /*
             // Generar los otros falsos
              
@@ -82,7 +94,7 @@ public class Main {
                 }
 
                 System.out.println("FALSOS POSITIVOS: "+cont);
-             */
+*/             
              
 
 

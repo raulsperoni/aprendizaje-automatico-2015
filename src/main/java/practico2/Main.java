@@ -14,7 +14,7 @@ public class Main {
         //Cargo datos
         List<Ejemplo> ejemplos = AuxLoadData.retreive();
         //Mezclo ejemplos
-        //Collections.shuffle(ejemplos);
+        Collections.shuffle(ejemplos);
         //Defino corte entrenamiento/prueba
         int corte = (ejemplos.size() * 4) / 5;
         //Conjunto Entrenamiento
@@ -58,9 +58,9 @@ public class Main {
             //Tomo el conjunto de prueba i
             List<Ejemplo> prueba_validacion_cruzada = particiones.get(i);
 
-
+/*
             //GENERAR FALSOS POSITIVOS.
-            /*    int cont = 0;
+                int cont = 0;
                 for (Ejemplo e: prueba_validacion_cruzada){
                     if (e.poisonus && e.atributos.get(3).equals("w") && e.atributos.get(22).equals("l")){
                         e.poisonus = false;
@@ -69,8 +69,21 @@ public class Main {
                 }
 
                 System.out.println("FALSOS POSITIVOS: "+cont);
-            */
+  */          
+/*
+            // Generar los otros falsos
+             
+              int cont = 0;
+                for (Ejemplo e: prueba_validacion_cruzada){
+                    if (!e.poisonus && e.atributos.get(5).equals("a") && e.atributos.get(20).equals("n")){
+                        e.poisonus = true;
+                        cont++;
+                    }
+                }
 
+                System.out.println("FALSOS POSITIVOS: "+cont);
+             */
+             
 
 
             //Hago una copia del conjunto de entrenamiento.

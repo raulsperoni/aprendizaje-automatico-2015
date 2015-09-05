@@ -31,6 +31,22 @@ public class Experimento {
 
     @Override
     public String toString() {
+        return numExperimento +
+                "," + cantEjemplosEntrenamiento +
+                "," + cantCantEjemplosPrueba +
+                "," + verdaderosPositivos +
+                "," + falsosPositivos +
+                "," + verdaderosNegativos +
+                "," + falsosNegativos +
+                "," + precision +
+                "," + recuperacion +
+                "," + medidaF +
+                "," + fallOf +
+                "," + errors +
+                ",[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]";
+    }
+    
+    public String toString2() {
         return "Experimento{" +
                 "numExperimento=" + numExperimento +
                 ", cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +

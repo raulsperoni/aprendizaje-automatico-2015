@@ -11,6 +11,9 @@ public class Main {
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
 
+       for(int i=0;i<10;i++)
+       {
+    	System.out.println("Iteración " + i);
         //Cargo datos
         List<Ejemplo> ejemplos = AuxLoadData.retreive();
         //Mezclo ejemplos
@@ -27,11 +30,12 @@ public class Main {
 
         /**
          * 4/5 vs 1/5
-         */
-        List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
-        run(entrenamiento_total, prueba_total);
-
-
+         */     
+	        List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
+	        run(entrenamiento_total, prueba_total);
+	        //Mezclo ejemplos
+	        //Collections.shuffle(ejemplos);
+       }
     }
 
     /**

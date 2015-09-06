@@ -127,7 +127,7 @@ public class ID3 {
             String valorDelEjemplo = ejemploAEvaluar.atributos.get(arbolDecision.atributoDecision);
             Subarbol ramaCorrecta = null;
             //Este es el caso en que este valor no fue observado en el entrenamiento para este atributo.
-            if (valorDelEjemplo == null) { //: TODO aca me parece si valor es null es porque el ejemplo no tiene el atributo buscado, como se sabe que esa es la rama correcta? no debería evaluar todas las ramas?
+            if (valorDelEjemplo == null || valorDelEjemplo.equals("?")) { //: TODO aca me parece si valor es null es porque el ejemplo no tiene el atributo buscado, como se sabe que esa es la rama correcta? no debería evaluar todas las ramas?
                 ramaCorrecta = arbolDecision.hijos.get(0);
             }
             //Caso normal

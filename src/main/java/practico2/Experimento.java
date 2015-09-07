@@ -31,22 +31,6 @@ public class Experimento {
 
     @Override
     public String toString() {
-        return numExperimento +
-                ";" + cantEjemplosEntrenamiento +
-                ";" + cantCantEjemplosPrueba +
-                ";" + verdaderosPositivos +
-                ";" + falsosPositivos +
-                ";" + verdaderosNegativos +
-                ";" + falsosNegativos +
-                ";" + precision +
-                ";" + recuperacion +
-                ";" + medidaF +
-                ";" + fallOf +
-                ";" + errors +
-                ";[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]";
-    }
-    
-    public String toString2() {
         return "Experimento{" +
                 "numExperimento=" + numExperimento +
                 "; cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
@@ -64,6 +48,23 @@ public class Experimento {
                 '}';
     }
 
+    
+    public String toString2() {
+        return numExperimento +
+                ";" + cantEjemplosEntrenamiento +
+                ";" + cantCantEjemplosPrueba +
+                ";" + verdaderosPositivos +
+                ";" + falsosPositivos +
+                ";" + verdaderosNegativos +
+                ";" + falsosNegativos +
+                ";" + precision +
+                ";" + recuperacion +
+                ";" + medidaF +
+                ";" + fallOf +
+                ";" + errors +
+                ";[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]";
+    }
+    
     public void calcularIndicadores() {
         for (Resultado r : resultados) {
             if (r.eraPoisonus && r.seClasificoPoisonus)

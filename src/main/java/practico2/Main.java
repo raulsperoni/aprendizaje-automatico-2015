@@ -117,8 +117,8 @@ public class Main {
                 }
 
                 System.out.println("FALSOS NEGATIVOS: "+cont);
-  
-            
+  */
+/*            
             //GENERAR FALSOS NEGATIVOS EJEMPLO 2.
             int cont2 = 0;
             for (Ejemplo e: prueba_validacion_cruzada){
@@ -129,8 +129,8 @@ public class Main {
             }
 
             System.out.println("FALSOS NEGATIVOS: "+cont2);         
-*/
-/*
+
+
             // Generar los otros falsos
              
               int cont = 0;
@@ -142,7 +142,7 @@ public class Main {
                 }
 
                 System.out.println("FALSOS POSITIVOS: "+cont);
-*/             
+  */           
              
 
 
@@ -187,6 +187,7 @@ public class Main {
         expTotal.verdaderosNegativos = expTotal.verdaderosNegativos/itervalcruzada;
         expTotal.verdaderosPositivos = expTotal.verdaderosPositivos/itervalcruzada;
         expTotal.calcularIndicadores();
+        System.out.println("Promedio de los resultados");
         System.out.println(expTotal.toString());
         return expTotal;
 

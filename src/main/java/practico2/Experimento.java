@@ -32,35 +32,35 @@ public class Experimento {
     @Override
     public String toString() {
         return numExperimento +
-                "," + cantEjemplosEntrenamiento +
-                "," + cantCantEjemplosPrueba +
-                "," + verdaderosPositivos +
-                "," + falsosPositivos +
-                "," + verdaderosNegativos +
-                "," + falsosNegativos +
-                "," + precision +
-                "," + recuperacion +
-                "," + medidaF +
-                "," + fallOf +
-                "," + errors +
-                ",[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]";
+                ";" + cantEjemplosEntrenamiento +
+                ";" + cantCantEjemplosPrueba +
+                ";" + verdaderosPositivos +
+                ";" + falsosPositivos +
+                ";" + verdaderosNegativos +
+                ";" + falsosNegativos +
+                ";" + precision +
+                ";" + recuperacion +
+                ";" + medidaF +
+                ";" + fallOf +
+                ";" + errors +
+                ";[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]";
     }
     
     public String toString2() {
         return "Experimento{" +
                 "numExperimento=" + numExperimento +
-                ", cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
-                ", cantCantEjemplosPrueba=" + cantCantEjemplosPrueba +
-                ", verdaderosPositivos=" + verdaderosPositivos +
-                ", falsosPositivos=" + falsosPositivos +
-                ", verdaderosNegativos=" + verdaderosNegativos +
-                ", falsosNegativos=" + falsosNegativos +
-                ", precision=" + precision +
-                ", recuperacion=" + recuperacion +
-                ", medidaF=" + medidaF +
-                ", fallOf=" + fallOf +
-                ", errors=" + errors +
-                ", intervaloconfianza= [" + intervaloconfianza.x + "," + intervaloconfianza.y + "]" +
+                "; cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
+                "; cantCantEjemplosPrueba=" + cantCantEjemplosPrueba +
+                "; verdaderosPositivos=" + verdaderosPositivos +
+                "; falsosPositivos=" + falsosPositivos +
+                "; verdaderosNegativos=" + verdaderosNegativos +
+                "; falsosNegativos=" + falsosNegativos +
+                "; precision=" + precision +
+                "; recuperacion=" + recuperacion +
+                "; medidaF=" + medidaF +
+                "; fallOf=" + fallOf +
+                "; errors=" + errors +
+                "; intervaloconfianza= [" + intervaloconfianza.x + "," + intervaloconfianza.y + "]" +
                 '}';
     }
 

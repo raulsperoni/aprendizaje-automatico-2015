@@ -8,6 +8,29 @@ public class Main {
 
     public static void main(String[] args) {
 
+        if (args.length > 1) {
+            int numeroParticiones = Integer.valueOf(args[0]);
+            int numeroEjecucionesIndep = Integer.valueOf(args[1]);
+            System.out.println("Comienzo ID3, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep);
+            ejecucion(numeroParticiones, numeroEjecucionesIndep);
+
+        } else if (args.length > 0) {
+
+            int numeroParticiones = Integer.valueOf(args[0]);
+            System.out.println("Comienzo ID3, Particiones=" + numeroParticiones + " Ejecuciones=" + 1);
+            ejecucion(numeroParticiones, 1);
+
+        } else {
+            System.out.println("Comienzo ID3, Particiones=" + 10 + " Ejecuciones=" + 1);
+            ejecucion(10, 1);
+        }
+
+
+
+
+    }
+
+    public static void ejecucion(int numeroParticiones, int numeroEjecucionesIndep) {
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
         Experimento valcruzadaTotal = new Experimento(102, 0, 0);
@@ -15,9 +38,8 @@ public class Main {
         Experimento valcruzadaparcial = new Experimento(104, 0, 0);
         Experimento entrenamiento2parcial = new Experimento(105, 0, 0);
 
-        int iterExp = 1;
-        for (int i = 0; i < iterExp; i++) {
-            System.out.println("Iteración " + i);
+        for (int i = 0; i < numeroEjecucionesIndep; i++) {
+            System.out.println("Iteracion " + i);
             //Cargo datos
             List<Ejemplo> ejemplos = AuxLoadData.retreive();
             //Mezclo ejemplos
@@ -30,7 +52,7 @@ public class Main {
             /**
              * VALIDACION CRUZADA
              */
-            valcruzadaparcial = run(entrenamiento_total, 10);
+            valcruzadaparcial = run(entrenamiento_total, numeroParticiones);
             //actualizo contadores de entrenamiento general para hacer promedio
             valcruzadaTotal.falsosNegativos += valcruzadaparcial.falsosNegativos;
             valcruzadaTotal.falsosPositivos += valcruzadaparcial.falsosPositivos;
@@ -53,30 +75,28 @@ public class Main {
 
 
         //divido contadores entre cantidad de entrenamientos
-        valcruzadaTotal.falsosNegativos = valcruzadaTotal.falsosNegativos / iterExp;
-        valcruzadaTotal.falsosPositivos = valcruzadaTotal.falsosPositivos / iterExp;
-        valcruzadaTotal.verdaderosNegativos = valcruzadaTotal.verdaderosNegativos / iterExp;
-        valcruzadaTotal.verdaderosPositivos = valcruzadaTotal.verdaderosPositivos / iterExp;
+        valcruzadaTotal.falsosNegativos = valcruzadaTotal.falsosNegativos / numeroEjecucionesIndep;
+        valcruzadaTotal.falsosPositivos = valcruzadaTotal.falsosPositivos / numeroEjecucionesIndep;
+        valcruzadaTotal.verdaderosNegativos = valcruzadaTotal.verdaderosNegativos / numeroEjecucionesIndep;
+        valcruzadaTotal.verdaderosPositivos = valcruzadaTotal.verdaderosPositivos / numeroEjecucionesIndep;
         //Calculo media de entrenamientos validacion cruzada
         valcruzadaTotal.cantCantEjemplosPrueba = valcruzadaparcial.cantCantEjemplosPrueba;
         valcruzadaTotal.cantEjemplosEntrenamiento = valcruzadaparcial.cantEjemplosEntrenamiento;
         valcruzadaTotal.calcularIndicadores();
-        System.out.println("Indicadores Validación cruzada Total");
+        System.out.println("Indicadores Validacion cruzada Total");
         System.out.println(valcruzadaTotal.toString());
 
         //divido contadores entre cantidad de entrenamientos de entrenamiento2
-        entrenamiento2Total.falsosNegativos = entrenamiento2Total.falsosNegativos / iterExp;
-        entrenamiento2Total.falsosPositivos = entrenamiento2Total.falsosPositivos / iterExp;
-        entrenamiento2Total.verdaderosNegativos = entrenamiento2Total.verdaderosNegativos / iterExp;
-        entrenamiento2Total.verdaderosPositivos = entrenamiento2Total.verdaderosPositivos / iterExp;
+        entrenamiento2Total.falsosNegativos = entrenamiento2Total.falsosNegativos / numeroEjecucionesIndep;
+        entrenamiento2Total.falsosPositivos = entrenamiento2Total.falsosPositivos / numeroEjecucionesIndep;
+        entrenamiento2Total.verdaderosNegativos = entrenamiento2Total.verdaderosNegativos / numeroEjecucionesIndep;
+        entrenamiento2Total.verdaderosPositivos = entrenamiento2Total.verdaderosPositivos / numeroEjecucionesIndep;
         //Calculo media de entrenamientos sin validacion cruzada
         entrenamiento2Total.cantCantEjemplosPrueba = entrenamiento2parcial.cantCantEjemplosPrueba;
         entrenamiento2Total.cantEjemplosEntrenamiento = entrenamiento2parcial.cantEjemplosEntrenamiento;
         entrenamiento2Total.calcularIndicadores();
         System.out.println("Indicadores entrenamiento 2");
         System.out.println(entrenamiento2Total.toString());
-
-
     }
 
     /**
@@ -86,7 +106,7 @@ public class Main {
      */
     public static Experimento run(List<Ejemplo> entrenamiento_total, int itervalcruzada) {
 
-        System.out.println("Validacion cruzada tamaño " + itervalcruzada);
+        System.out.println("Validacion cruzada tamano " + itervalcruzada);
 
         //VALIDACION CRUZADA
         ArrayList<List<Ejemplo>> particiones = new ArrayList<>();
@@ -106,7 +126,7 @@ public class Main {
             //Tomo el conjunto de prueba i
             List<Ejemplo> prueba_validacion_cruzada = particiones.get(i);
 
-
+            /*
             //GENERAR FALSOS NEGATIVOS EJEMPLO 1.
                 int cont = 0;
                 for (Ejemplo e: prueba_validacion_cruzada){
@@ -117,7 +137,7 @@ public class Main {
                 }
 
                 System.out.println("FALSOS NEGATIVOS: "+cont);
-  /*
+
           
             //GENERAR FALSOS NEGATIVOS EJEMPLO 2.
             int cont2 = 0;
@@ -174,8 +194,6 @@ public class Main {
             expTotal.verdaderosPositivos += exp.verdaderosPositivos;
             System.out.println(exp.toString());
 
-            //Hago algo con los valores resultantes, media, etc.
-            //TODO: hacer
 
         }
         //divido contadores entre cantidad de experimentos

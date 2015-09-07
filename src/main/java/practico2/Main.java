@@ -15,7 +15,7 @@ public class Main {
         Experimento valcruzadaparcial = new Experimento(104, 0, 0);
         Experimento entrenamiento2parcial = new Experimento(105, 0, 0);
 
-        int iterExp = 10;
+        int iterExp = 1;
         for (int i = 0; i < iterExp; i++) {
             System.out.println("Iteración " + i);
             //Cargo datos
@@ -33,7 +33,7 @@ public class Main {
             valcruzadaparcial = run(entrenamiento_total, 10);
             //actualizo contadores de entrenamiento general para hacer promedio
             valcruzadaTotal.falsosNegativos += valcruzadaparcial.falsosNegativos;
-            valcruzadaTotal.falsosPositivos += valcruzadaparcial.falsosNegativos;
+            valcruzadaTotal.falsosPositivos += valcruzadaparcial.falsosPositivos;
             valcruzadaTotal.verdaderosNegativos += valcruzadaparcial.verdaderosNegativos;
             valcruzadaTotal.verdaderosPositivos += valcruzadaparcial.verdaderosPositivos;
             /**
@@ -43,7 +43,7 @@ public class Main {
             entrenamiento2parcial = run(entrenamiento_total, prueba_total);
             //actualizo contadores de entrenamiento general para hacer promedio
             entrenamiento2Total.falsosNegativos += entrenamiento2parcial.falsosNegativos;
-            entrenamiento2Total.falsosPositivos += entrenamiento2parcial.falsosNegativos;
+            entrenamiento2Total.falsosPositivos += entrenamiento2parcial.falsosPositivos;
             entrenamiento2Total.verdaderosNegativos += entrenamiento2parcial.verdaderosNegativos;
             entrenamiento2Total.verdaderosPositivos += entrenamiento2parcial.verdaderosPositivos;
 
@@ -54,7 +54,7 @@ public class Main {
 
         //divido contadores entre cantidad de entrenamientos
         valcruzadaTotal.falsosNegativos = valcruzadaTotal.falsosNegativos / iterExp;
-        valcruzadaTotal.falsosPositivos = valcruzadaTotal.falsosNegativos / iterExp;
+        valcruzadaTotal.falsosPositivos = valcruzadaTotal.falsosPositivos / iterExp;
         valcruzadaTotal.verdaderosNegativos = valcruzadaTotal.verdaderosNegativos / iterExp;
         valcruzadaTotal.verdaderosPositivos = valcruzadaTotal.verdaderosPositivos / iterExp;
         //Calculo media de entrenamientos validacion cruzada
@@ -66,7 +66,7 @@ public class Main {
 
         //divido contadores entre cantidad de entrenamientos de entrenamiento2
         entrenamiento2Total.falsosNegativos = entrenamiento2Total.falsosNegativos / iterExp;
-        entrenamiento2Total.falsosPositivos = entrenamiento2Total.falsosNegativos / iterExp;
+        entrenamiento2Total.falsosPositivos = entrenamiento2Total.falsosPositivos / iterExp;
         entrenamiento2Total.verdaderosNegativos = entrenamiento2Total.verdaderosNegativos / iterExp;
         entrenamiento2Total.verdaderosPositivos = entrenamiento2Total.verdaderosPositivos / iterExp;
         //Calculo media de entrenamientos sin validacion cruzada
@@ -106,7 +106,7 @@ public class Main {
             //Tomo el conjunto de prueba i
             List<Ejemplo> prueba_validacion_cruzada = particiones.get(i);
 
-/*
+
             //GENERAR FALSOS NEGATIVOS EJEMPLO 1.
                 int cont = 0;
                 for (Ejemplo e: prueba_validacion_cruzada){
@@ -117,8 +117,8 @@ public class Main {
                 }
 
                 System.out.println("FALSOS NEGATIVOS: "+cont);
-  */
-/*            
+  /*
+          
             //GENERAR FALSOS NEGATIVOS EJEMPLO 2.
             int cont2 = 0;
             for (Ejemplo e: prueba_validacion_cruzada){
@@ -142,7 +142,7 @@ public class Main {
                 }
 
                 System.out.println("FALSOS POSITIVOS: "+cont);
-  */           
+            */
             //Hago una copia del conjunto de entrenamiento.
             List<Ejemplo> entrenamiento_validacion_cruzada = new ArrayList<>(entrenamiento_total);
             //Le resto el conjunto de prueba actual al de entrenamiento.
@@ -218,7 +218,7 @@ public class Main {
             exp.resultados.add(res);
         }
         exp.calcularIndicadores();
-        System.out.println(exp.toString2());
+        System.out.println(exp.toString());
         return exp;
 
     }

@@ -1,4 +1,4 @@
-package practico3;
+package practico3.knn;
 
 import java.util.*;
 

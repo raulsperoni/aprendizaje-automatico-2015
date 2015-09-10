@@ -1,4 +1,4 @@
-package practico3;
+package practico3.knn;
 
 import static java.lang.Math.sqrt;
 import java.util.HashMap;

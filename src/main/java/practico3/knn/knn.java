@@ -83,7 +83,7 @@ public class knn {
             if(atributo_b.equals("?")){
                 atributo_b = comun.atributos.get(i);
             }
-            if(atributo_b.equals(atributo_a)){
+            if(!atributo_b.equals(atributo_a)){
                 dist = dist+1;
             }
         }
@@ -134,7 +134,10 @@ public class knn {
         double peso_comestible = 0;
         Set<Double> s = k_cercanos.keySet(); 
         for(Double n: s){
-            if(k_cercanos.get(n).poisonus){
+            if(n == 0){
+                return k_cercanos.get(n).poisonus;
+            }
+            else if(k_cercanos.get(n).poisonus){
                 peso_venenoso = peso_venenoso + (1/(n*n));
             }else{
                 peso_comestible = peso_comestible + (1/(n*n));

@@ -1,4 +1,4 @@
-package practico3.knn;
+package practico3.comun;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,6 +1,7 @@
 package practico3.naiveBayes;
 
-import practico2.Ejemplo;
+
+import practico3.comun.Ejemplo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class Probabilidades {
      * @return
      */
     public float P(boolean resultado) {
-        return resultado ? ejemplosPoisonus.size() / ejemplosTodos.size() : ejemplosEdible.size() / ejemplosTodos.size();
+        return resultado ? (float) ejemplosPoisonus.size() / ejemplosTodos.size() : (float) ejemplosEdible.size() / ejemplosTodos.size();
     }
 
     /**
@@ -52,7 +53,7 @@ public class Probabilidades {
             if (e.atributos.get(atributo) != null && e.atributos.get(atributo).equals(valorAtributo))
                 cantAtributosConValorAtributo++;
         }
-        return cantAtributosConValorAtributo / ejemplosARecorrer.size();
+        return (float) cantAtributosConValorAtributo / ejemplosARecorrer.size();
     }
 
 

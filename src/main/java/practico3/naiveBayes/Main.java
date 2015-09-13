@@ -1,4 +1,4 @@
-package practico3.knn;
+package practico3.naiveBayes;
 
 import practico3.comun.AuxLoadData;
 import practico3.comun.Ejemplo;
@@ -16,26 +16,24 @@ public class Main {
             int k = Integer.valueOf(args[2]);
             int numeroParticiones = Integer.valueOf(args[0]);
             int numeroEjecucionesIndep = Integer.valueOf(args[1]);
-            System.out.println("Comienzo knn, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k);
+            System.out.println("Comienzo NB, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k);
             ejecucion(numeroParticiones, numeroEjecucionesIndep, k);
         } else if (args.length > 1) {
             int numeroParticiones = Integer.valueOf(args[0]);
             int numeroEjecucionesIndep = Integer.valueOf(args[1]);
-            System.out.println("Comienzo knn, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + 3);
+            System.out.println("Comienzo NB, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + 3);
             ejecucion(numeroParticiones, numeroEjecucionesIndep, 3);
 
         } else if (args.length > 0) {
 
             int numeroParticiones = Integer.valueOf(args[0]);
-            System.out.println("Comienzo knn, Particiones=" + numeroParticiones + " Ejecuciones=" + 1 + " K=" + 3);
+            System.out.println("Comienzo NB, Particiones=" + numeroParticiones + " Ejecuciones=" + 1 + " K=" + 3);
             ejecucion(numeroParticiones, 1, 3);
 
         } else {
-            System.out.println("Comienzo knn, Particiones=" + 10 + " Ejecuciones=" + 1 + " K=" + 3);
+            System.out.println("Comienzo NB, Particiones=" + 10 + " Ejecuciones=" + 1 + " K=" + 3);
             ejecucion(10, 1, 3);
         }
-
-
 
 
     }
@@ -184,7 +182,7 @@ public class Main {
             Set<Integer> attrs = atributos().keySet();
             List<Integer> attrsList = new ArrayList<>();
             attrsList.addAll(attrs);
-            knn root = new knn(k, entrenamiento_validacion_cruzada);
+            naiveBayes root = new naiveBayes(entrenamiento_total, atributos());
             //Evaluo el conj de prueba con el resultado de knn
             Experimento exp = new Experimento(i, entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
             for (Ejemplo e : prueba_validacion_cruzada) {
@@ -232,7 +230,8 @@ public class Main {
         Set<Integer> attrs = atributos().keySet();
         List<Integer> attrsList = new ArrayList<>();
         attrsList.addAll(attrs);
-        knn root = new knn(k, entrenamiento_total);
+        //knn root = new knn(k, entrenamiento_total);
+        naiveBayes root = new naiveBayes(entrenamiento_total, atributos());
 
         //Evaluo el conj de prueba con el resultado de knn
         Experimento exp = new Experimento(100, entrenamiento_total.size(), prueba_total.size());

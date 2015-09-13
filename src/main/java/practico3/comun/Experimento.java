@@ -1,4 +1,4 @@
-package practico3.knn;
+package practico3.comun;
 
 import java.util.ArrayList;
 import java.util.List;

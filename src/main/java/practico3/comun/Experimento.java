@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Experimento {
 
-    public int numExperimento;
+    public String nomExperimento;
     public int cantEjemplosEntrenamiento;
     public int cantCantEjemplosPrueba;
     public List<Resultado> resultados = new ArrayList<>();
@@ -23,8 +23,8 @@ public class Experimento {
     public double errors;
     public Confianza intervaloconfianza = new Confianza();
 
-    public Experimento(int numExperimento, int cantEjemplosEntrenamiento, int cantCantEjemplosPrueba) {
-        this.numExperimento = numExperimento;
+    public Experimento(String nomExperimento, int cantEjemplosEntrenamiento, int cantCantEjemplosPrueba) {
+        this.nomExperimento = nomExperimento;
         this.cantEjemplosEntrenamiento = cantEjemplosEntrenamiento;
         this.cantCantEjemplosPrueba = cantCantEjemplosPrueba;
     }
@@ -32,7 +32,7 @@ public class Experimento {
     @Override
     public String toString() {
         return "Experimento{" +
-                "numExperimento=" + numExperimento +
+                "nomExperimento=" + nomExperimento +
                 "; cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
                 "; cantCantEjemplosPrueba=" + cantCantEjemplosPrueba +
                 "; verdaderosPositivos=" + verdaderosPositivos +
@@ -50,7 +50,7 @@ public class Experimento {
 
     
     public String toString2() {
-        return numExperimento +
+        return nomExperimento +
                 ";" + cantEjemplosEntrenamiento +
                 ";" + cantCantEjemplosPrueba +
                 ";" + verdaderosPositivos +

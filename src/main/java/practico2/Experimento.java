@@ -32,7 +32,7 @@ public class Experimento {
     @Override
     public String toString() {
         return "Experimento{" +
-                "numExperimento=" + numExperimento +
+                "nomExperimento=" + numExperimento +
                 "; cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
                 "; cantCantEjemplosPrueba=" + cantCantEjemplosPrueba +
                 "; verdaderosPositivos=" + verdaderosPositivos +

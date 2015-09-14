@@ -43,10 +43,10 @@ public class Main {
     public static void ejecucion(int numeroParticiones, int numeroEjecucionesIndep, int k) {
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
-        Experimento valcruzadaTotal = new Experimento(102, 0, 0);
-        Experimento entrenamiento2Total = new Experimento(103, 0, 0);
-        Experimento valcruzadaparcial = new Experimento(104, 0, 0);
-        Experimento entrenamiento2parcial = new Experimento(105, 0, 0);
+        Experimento valcruzadaTotal = new Experimento("Validacion cruzada total", 0, 0);
+        Experimento entrenamiento2Total = new Experimento("Entrenamiento 2 total", 0, 0);
+        Experimento valcruzadaparcial = new Experimento("Validacio cruzada parcial", 0, 0);
+        Experimento entrenamiento2parcial = new Experimento("Entrenamiento 2 parcial", 0, 0);
 
         for (int i = 0; i < numeroEjecucionesIndep; i++) {
             System.out.println("Iteracion " + i);
@@ -129,7 +129,7 @@ public class Main {
             ini_particion += tam_particion;
         }
 
-        Experimento expTotal = new Experimento(101, entrenamiento_total.size() - tam_particion, tam_particion);
+        Experimento expTotal = new Experimento("Exp total", entrenamiento_total.size() - tam_particion, tam_particion);
 
         //PARA CADA PARTICION
         for (int i = 0; i < itervalcruzada; i++) {
@@ -186,7 +186,7 @@ public class Main {
             attrsList.addAll(attrs);
             knn root = new knn(k, entrenamiento_validacion_cruzada);
             //Evaluo el conj de prueba con el resultado de knn
-            Experimento exp = new Experimento(i, entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+            Experimento exp = new Experimento("Exp " + i, entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
             for (Ejemplo e : prueba_validacion_cruzada) {
                 Experimento.Resultado res = new Experimento.Resultado();
                 res.eraPoisonus = e.poisonus;
@@ -235,7 +235,7 @@ public class Main {
         knn root = new knn(k, entrenamiento_total);
 
         //Evaluo el conj de prueba con el resultado de knn
-        Experimento exp = new Experimento(100, entrenamiento_total.size(), prueba_total.size());
+        Experimento exp = new Experimento("Exp total", entrenamiento_total.size(), prueba_total.size());
         for (Ejemplo e : prueba_total) {
             Experimento.Resultado res = new Experimento.Resultado();
             res.eraPoisonus = e.poisonus;

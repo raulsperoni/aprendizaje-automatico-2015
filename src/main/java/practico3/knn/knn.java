@@ -48,10 +48,18 @@ public class knn {
                 cant_atributos.put(atributo, 0);
             }
             //Cuento la cantidad de veces que aparece cada valor del atributo i en los ejemplos
-            for(Ejemplo e: ejemplos){
-                if(!e.atributos.get(i).equals("?")){
-                    cant_atributos.put(e.atributos.get(i), cant_atributos.get(e.atributos.get(i))+1);
-                }
+            for(Ejemplo e: ejemplos)
+            {
+              /*	for(int j=1;j<s.size();j++) // TODO verificar que falta este for en la funcion de Santiago
+            	{
+              		System.out.println(e.atributos.get(1));*/
+            	//pongo j= i para no borrar mi intento de poner el for y cambiar lo que sigue
+            	int j = i;
+	                if(!e.atributos.get(j).equals("?"))
+	                {
+	                    cant_atributos.put(e.atributos.get(j), cant_atributos.get(e.atributos.get(j))+1);
+	                }
+            	//}
             }
             //Encuentro el valor mas frecuente para el atributo i
             int cantidad_maxima = 0;
@@ -64,8 +72,7 @@ public class knn {
             }
             //Seteo el valor mas frecuente
             aux.atributos.put(i, atributo_mas_frecuente);
-        }
- 
+        } 
         return aux;
     }
     
@@ -127,10 +134,10 @@ public class knn {
                 }
                 //calculo contadores por atributo para calculo de pesos
                 //calculo p(valoratributo,poisonus)
-                double pesopoisonus = aportepoisonus.get(atributo)*log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
+              // double pesopoisonus = aportepoisonus.get(atributo)*log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
                 //calculo p(valoratributo,edible)
-                double pesoedible = aporteedible.get(atributo)*log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
-                pesos.put(i,pesos.get(atributo)+pesopoisonus+pesoedible);
+              //  double pesoedible = aporteedible.get(atributo)*log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
+                //pesos.put(i,pesos.get(atributo)+pesopoisonus+pesoedible);
             }
             //Seteo el valor mas frecuente
             aux.atributos.put(i, atributo_mas_frecuente);

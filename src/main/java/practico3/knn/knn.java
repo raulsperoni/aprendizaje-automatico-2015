@@ -198,7 +198,7 @@ public class knn {
      * @return 
      */
     public Map<Double, Ejemplo> k_cercanos(Ejemplo x){
-        Map<Double, Ejemplo> cercanos = new HashMap<>();
+        Map<Double, Ejemplo> cercanos = new HashMap<>(); // :TODO pueden haber 2 distancias iguales? me parece que no es lo mejor la distancia como clave
         double distancia_maxima = distancia(ejemplos.get(0), x);
         for(int i = 1; i<k; i++){
             cercanos.put(distancia(ejemplos.get(i), x), ejemplos.get(i));

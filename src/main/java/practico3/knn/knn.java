@@ -24,7 +24,7 @@ public class knn {
     public Ejemplo comun;
     public int k;
     public List<Ejemplo> ejemplos;
-    
+    public HashMap<Integer,Double> pesos;    
     public knn(int k, List<Ejemplo> ejemplos){
         this.k = k;
         this.ejemplos = ejemplos;
@@ -69,6 +69,80 @@ public class knn {
         return aux;
     }
     
+    /***
+     * Determina el valor mas comun para cada atributo con los datos y calcula contadores para pesos
+     * @return 
+     */
+    public Ejemplo comunesypesos(){
+        Ejemplo aux = new Ejemplo();
+        HashMap<Integer, List<String>> atr = Main.atributos();
+        Integer cantPoisonus = 0;
+        Integer cantEdible = 0;
+        //Para cada atributo encuentro el valor mas comun
+        for(int i=1; i<=atr.size(); i++){
+            List<String> s = atr.get(i);
+            HashMap<String, Integer> cant_atributos = new HashMap<>();
+            //contadores por atributo para calculo de pesos
+            	//contador para calculo de p(valoratributo,poisonus)
+            HashMap<String, Double> aportepoisonus = new HashMap<>();
+        		//contador para calculo de p(valoratributo,edible)
+            HashMap<String, Double> aporteedible = new HashMap<>();
+            //Inicializo en 0 la cuenta de cada valor del atributo i
+            for(String atributo: s){
+                cant_atributos.put(atributo, 0);
+            }
+            //Cuento la cantidad de veces que aparece cada valor del atributo i en los ejemplos
+            for(Ejemplo e: ejemplos){
+            	//para cada valor de atributo
+            	for(int j=0;j<s.size();j++) // TODO verificar que falta este for en la funcion de Santiago
+            	{
+	                if(!e.atributos.get(j).equals("?")){
+	                    cant_atributos.put(e.atributos.get(j), cant_atributos.get(e.atributos.get(j))+1);
+	                }
+                	//calculo contadores por atributo para calculo de pesos
+                    if(e.poisonus) 
+	                {
+	                	//calculo cantidad total de poisonus de la muestra
+	                	cantPoisonus ++; 
+	                	//calculo p(valoratributo,poisonus)
+	                	aportepoisonus.put(e.atributos.get(j), aportepoisonus.get(e.atributos.get(j))+1);
+	                }
+	                else 
+	                {
+	                	//calculo cantidad total de edibles de la muestra
+	                	cantEdible ++;	
+	                	//calculo p(valoratributo,edible)
+	                	aporteedible.put(e.atributos.get(j), aporteedible.get(e.atributos.get(j))+1);
+	                }
+            	}
+            }
+            //Encuentro el valor mas frecuente para el atributo i
+            int cantidad_maxima = 0;
+            String atributo_mas_frecuente = "?";
+            for(String atributo: s){
+            	
+                if(cant_atributos.get(atributo) > cantidad_maxima){
+                    cantidad_maxima = cant_atributos.get(atributo);
+                    atributo_mas_frecuente = atributo;
+                }
+                //calculo contadores por atributo para calculo de pesos
+                //calculo p(valoratributo,poisonus)
+                double pesopoisonus = aportepoisonus.get(atributo)*log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
+                //calculo p(valoratributo,edible)
+                double pesoedible = aporteedible.get(atributo)*log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
+                pesos.put(i,pesos.get(atributo)+pesopoisonus+pesoedible);
+            }
+            //Seteo el valor mas frecuente
+            aux.atributos.put(i, atributo_mas_frecuente);
+            //calculo peso del atributo
+            
+            //pesos(i,());
+            
+        }
+ 
+        return aux;
+    }
+    
     /*****
      * Calcula la distancia entre 2 ejemplos
      * @param a
@@ -88,6 +162,30 @@ public class knn {
             }
             if(!atributo_b.equals(atributo_a)){
                 dist = dist+1;
+            }
+        }
+        return sqrt(dist); //: TODO Vefiricar si es raiz o hay que elevar al cuadrado
+    }
+    
+    /*****
+     * Calcula la distancia entre 2 ejemplos teniendo en cuenta pesos
+     * @param a
+     * @param b
+     * @return 
+     */
+    public double distanciapesos(Ejemplo a, Ejemplo b){
+        double dist = 0;
+        for (int i=1; i<=a.atributos.size(); i++){
+            String atributo_a = a.atributos.get(i);
+            String atributo_b = b.atributos.get(i);
+            if(atributo_a.equals("?")){
+                atributo_a = comun.atributos.get(i);
+            }
+            if(atributo_b.equals("?")){
+                atributo_b = comun.atributos.get(i);
+            }
+            if(!atributo_b.equals(atributo_a)){
+                dist = dist+(1*pesos.get(a.atributos.get(i)));
             }
         }
         return sqrt(dist);

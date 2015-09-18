@@ -1,4 +1,8 @@
-package practico2;
+package practico3.id3;
+
+
+import practico3.comun.Ejemplo;
+import practico3.comun.Main;
 
 import java.util.ArrayList;
 import java.util.List;

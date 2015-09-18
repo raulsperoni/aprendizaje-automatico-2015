@@ -1,5 +1,7 @@
 package practico3.comun;
 
+import practico3.id3.ID3;
+import practico3.id3.Subarbol;
 import practico3.knn.knn;
 import practico3.naiveBayes.naiveBayes;
 
@@ -80,10 +82,6 @@ public class Main {
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
 
-        HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada;
-        HashMap<Algoritmo, Experimento> experimentosEvaluacionTotal;
-
-
         for (int i = 0; i < numeroEjecucionesIndep; i++) {
             System.out.println("Iteracion " + i);
             //Cargo datos
@@ -98,13 +96,21 @@ public class Main {
             /**
              * VALIDACION CRUZADA
              */
-            experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar);
+            HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar);
+            for (Algoritmo a : experimentosValidacionCruzada.keySet()) {
+                experimentosValidacionCruzada.get(a).add(calcularMedia("media", experimentosValidacionCruzada.get(a)));
+                AuxLoadData.printfile("ValidacionCruzadaIteracion " + i + " " + a.name(), experimentosValidacionCruzada.get(a));
+            }
+
 
             /**
              * 4/5 vs 1/5
              */
             List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
-            experimentosEvaluacionTotal = runAlgoritmoTotal(entrenamiento_total, prueba_total, k, algoritmosAEvaluar);
+            HashMap<Algoritmo, Experimento> experimentosEvaluacionTotal = runAlgoritmoTotal(entrenamiento_total, prueba_total, k, algoritmosAEvaluar);
+            for (Algoritmo a : experimentosEvaluacionTotal.keySet()) {
+                AuxLoadData.printfile("EvaluacionTotalIteracion " + i + " " + a.name(), Arrays.asList(experimentosEvaluacionTotal.get(a)));
+            }
 
         }
 
@@ -121,9 +127,9 @@ public class Main {
     public static HashMap<Algoritmo, List<Experimento>> runValidacionCruzada(List<Ejemplo> entrenamiento_total, int itervalcruzada, int k, List<Algoritmo> algoritmosAEvaluar) {
 
         HashMap<Algoritmo, List<Experimento>> res = new HashMap<>();
-        res.put(Algoritmo.KNN, new ArrayList<Experimento>());
-        res.put(Algoritmo.NAIVEBAYES, new ArrayList<Experimento>());
-        res.put(Algoritmo.ID3, new ArrayList<Experimento>());
+        for (Algoritmo a : algoritmosAEvaluar) {
+            res.put(a, new ArrayList<Experimento>());
+        }
 
         System.out.println("Validacion cruzada tamano " + itervalcruzada);
 
@@ -149,11 +155,11 @@ public class Main {
 
             if (algoritmosAEvaluar.contains(Algoritmo.KNN)) {
                 //Evaluo el conj de prueba con el resultado de KNN
-                knn KNN = new knn(k, entrenamiento_total);
-                Experimento exp = new Experimento("KNN TOTAL", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+                knn KNN = new knn(k, entrenamiento_validacion_cruzada);
+                Experimento exp = new Experimento("KNN VC", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
                 evaluarKNN(exp, prueba_validacion_cruzada, KNN);
                 exp.calcularIndicadores();
-                //System.out.println(exp.toString());
+                System.out.println(exp.toString());
                 res.get(Algoritmo.KNN).add(exp);
             }
 
@@ -162,12 +168,35 @@ public class Main {
                 Set<Integer> attrs = atributos().keySet();
                 List<Integer> attrsList = new ArrayList<>();
                 attrsList.addAll(attrs);
-                naiveBayes NB = new naiveBayes(entrenamiento_total, atributos());
-                Experimento exp = new Experimento("NB TOTAL", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+                naiveBayes NB = new naiveBayes(entrenamiento_validacion_cruzada, atributos());
+                Experimento exp = new Experimento("NB VC", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
                 evaluarNB(exp, prueba_validacion_cruzada, NB);
                 exp.calcularIndicadores();
-                //System.out.println(exp.toString());
+                System.out.println(exp.toString());
                 res.get(Algoritmo.NAIVEBAYES).add(exp);
+            }
+
+            if (algoritmosAEvaluar.contains(Algoritmo.ID3)) {
+                //Llamo a ID3 con el conjunto de entrenamiento.
+                Set<Integer> attrs = atributos().keySet();
+                List<Integer> attrsList = new ArrayList<>();
+                attrsList.addAll(attrs);
+                Subarbol root = ID3.calcular(entrenamiento_validacion_cruzada, attrsList);
+                //Evaluo el conj de prueba con el resultado de ID3
+                Experimento exp = new Experimento("ID3 VC", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+                for (Ejemplo e : prueba_validacion_cruzada) {
+                    Experimento.Resultado resultado = new Experimento.Resultado();
+                    resultado.eraPoisonus = e.poisonus;
+                    try {
+                        resultado.seClasificoPoisonus = ID3.evaluar(e, root);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    exp.resultados.add(resultado);
+                }
+                exp.calcularIndicadores();
+                System.out.println(exp.toString());
+                res.get(Algoritmo.ID3).add(exp);
             }
         }
         return res;
@@ -206,13 +235,27 @@ public class Main {
             res.put(Algoritmo.NAIVEBAYES, exp);
         }
 
+        if (algoritmosAEvaluar.contains(Algoritmo.ID3)) {
+            //Llamo a ID3 con el conjunto de entrenamiento.
+            Set<Integer> attrs = atributos().keySet();
+            List<Integer> attrsList = new ArrayList<>();
+            attrsList.addAll(attrs);
+            Subarbol root = ID3.calcular(entrenamiento_total, attrsList);
+            //Evaluo el conj de prueba con el resultado de ID3
+            Experimento exp = new Experimento("ID3 VC", entrenamiento_total.size(), prueba_total.size());
+            evaluarID3(exp, prueba_total, root);
+            exp.calcularIndicadores();
+            System.out.println(exp.toString());
+            res.put(Algoritmo.ID3, exp);
+        }
+
 
         return res;
 
     }
 
-    private static Experimento calcularMedia(String nombre, List<Experimento> experimentos, int totalEntrenamiento, int totalPrueba) {
-        Experimento resultado = new Experimento(nombre, totalEntrenamiento, totalPrueba);
+    private static Experimento calcularMedia(String nombre, List<Experimento> experimentos) {
+        Experimento resultado = new Experimento(nombre, experimentos.get(0).cantEjemplosEntrenamiento, experimentos.get(0).cantCantEjemplosPrueba);
         for (Experimento e : experimentos) {
             resultado.falsosNegativos += e.falsosNegativos;
             resultado.falsosPositivos += e.falsosPositivos;
@@ -251,6 +294,21 @@ public class Main {
             exp.resultados.add(res);
         }
     }
+
+    private static void evaluarID3(Experimento exp, List<Ejemplo> ejemplosAEvaluar, Subarbol id3) {
+        for (Ejemplo e : ejemplosAEvaluar) {
+            Experimento.Resultado res = new Experimento.Resultado();
+            res.eraPoisonus = e.poisonus;
+            try {
+                res.seClasificoPoisonus = ID3.evaluar(e, id3);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            exp.resultados.add(res);
+        }
+    }
+
+
 
     /**
      * Devuelvo los atributos y sus posibles valores segun la documentacion.
@@ -327,4 +385,6 @@ public class Main {
 
         return res;
     }
+
+
 }

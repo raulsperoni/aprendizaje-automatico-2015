@@ -1,7 +1,6 @@
 package practico3.comun;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +42,20 @@ public class AuxLoadData {
         }
 
         return coso;
+    }
+
+    public static void printfile(String nomfile, List<Experimento> experimentos) {
+        File file = new File(nomfile + ".csv");
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(Experimento.getCabecera());
+            for (Experimento e : experimentos) {
+                fileWriter.write(e.toString2());
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

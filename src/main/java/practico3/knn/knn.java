@@ -81,6 +81,7 @@ public class knn {
      * @return 
      */
     public Ejemplo comunes(){//ypesos(){
+    	//log = true;
         Ejemplo aux = new Ejemplo();
         HashMap<Integer, List<String>> atr = Main.atributos();
         Integer cantPoisonus = 0;
@@ -147,14 +148,21 @@ public class knn {
                 if (log) System.out.println("141");
                 //calculo contadores por atributo para calculo de pesos
                 //calculo p(valoratributo,poisonus)
-               double pesopoisonus = aportepoisonus.get(atributo)*Math.log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
+                double pesoedible = 0;
+                double pesopoisonus = 0;
+                if (aportepoisonus.get(atributo) != 0 && cant_atributos.get(atributo)*cantPoisonus != 0)
+                pesopoisonus = aportepoisonus.get(atributo)*Math.log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
                 //calculo p(valoratributo,edible)
-               if (log) System.out.println("Poison: "+ pesopoisonus);
-                double pesoedible = aporteedible.get(atributo)*Math.log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
+                System.out.println("Poison: "+ pesopoisonus);
+                System.out.println("aporteedible: "+ aporteedible.get(atributo));
+                if (aporteedible.get(atributo) != 0 && cant_atributos.get(atributo)*cantEdible != 0)
+                pesoedible = aporteedible.get(atributo)*Math.log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
                 if (log)  System.out.println("Peso Edible "+ pesoedible);
-                pesos.put(i,pesos.get(i)+pesopoisonus+pesoedible);
+                pesos.put(i,pesos.get(i)+((pesopoisonus+pesoedible)*(-1)));
                 if (log) System.out.println("Peso atrib: "+ atributo + "peso" + pesos.get(atributo));
+                System.out.println("Peso parcial: "+pesos.get(i));
             }
+            
             //Seteo el valor mas frecuente
             aux.atributos.put(i, atributo_mas_frecuente);
             //calculo peso del atributo
@@ -177,7 +185,7 @@ public class knn {
      * @param b
      * @return 
      */
-    public double distancia(Ejemplo a, Ejemplo b){
+    public double distancia2(Ejemplo a, Ejemplo b){
         double dist = 0;
         for (int i=1; i<=a.atributos.size(); i++){
             String atributo_a = a.atributos.get(i);
@@ -201,7 +209,7 @@ public class knn {
      * @param b
      * @return 
      */
-    public double distanciapesos(Ejemplo a, Ejemplo b){
+    public double distancia(Ejemplo a, Ejemplo b){
         double dist = 0;
         for (int i=1; i<=a.atributos.size(); i++){
             String atributo_a = a.atributos.get(i);
@@ -213,7 +221,7 @@ public class knn {
                 atributo_b = comun.atributos.get(i);
             }
             if(!atributo_b.equals(atributo_a)){
-                dist = dist+(1*pesos.get(a.atributos.get(i)));
+                dist = dist+(1*pesos.get(i));
             }
         }
         return sqrt(dist);

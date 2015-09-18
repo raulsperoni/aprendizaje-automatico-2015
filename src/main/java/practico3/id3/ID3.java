@@ -1,4 +1,8 @@
-package practico2;
+package practico3.id3;
+
+
+import practico3.comun.Ejemplo;
+import practico3.comun.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +64,9 @@ public class ID3 {
                 // Para cada valor vi de A ๏Genero una rama๏
                 List<String> valoresPosiblesAtributo = Main.atributos().get(A);
                 for (int i = 0; i < valoresPosiblesAtributo.size(); i++) {
-                    printTree("FOR: Valor ATRR Padre=" + raiz.atributoDecision, atributos.size());
-                    printTree("CANT EJEMPLOS= " + entrenamiento.size(), 0);
-                    printTree("PRUEBO CON: " + valoresPosiblesAtributo.get(i), 0);
+                	printTree("FOR: Valor ATRR Padre=" + raiz.atributoDecision, atributos.size());
+                	printTree("CANT EJEMPLOS= " + entrenamiento.size(), 0);
+                	printTree("PRUEBO CON: "+ valoresPosiblesAtributo.get(i), 0);
                     Subarbol rama = new Subarbol();
                     raiz.hijos.add(rama);
 
@@ -76,22 +80,25 @@ public class ID3 {
                     // Si Ejemplos vi es vacío→ etiquetar con el valor más probable๏
                     //Para elegir el valor se toman en cuenta el subconjunto de ejemplos analizados hasta el momento
                     if (ejemplosConMismoVi.isEmpty()) {
-                        printTree("NINGUN EJEMPLO CON MISMO Vi", 0);
-                        if (raiz.cantEjemplosPoisonus > raiz.cantEjemplosEdiable) {
-                            rama.hoja = new Hoja();
-                            rama.hoja.poisonus = true;
-                            rama.atributoDecision = null;
-                            printTree("HOJA: POISONUS = Sv Vacio", atributos.size());
-                        } else {
-                            rama.hoja = new Hoja();
-                            rama.hoja.poisonus = false;
-                            rama.atributoDecision = null;
-                            printTree("HOJA: EDIABLE = Sv Vacio", atributos.size());
-                        }
+                    	printTree("NINGUN EJEMPLO CON MISMO Vi", 0);
+	                   	 if (raiz.cantEjemplosPoisonus>raiz.cantEjemplosEdiable)
+	                   	 {
+	                         rama.hoja = new Hoja();
+	                         rama.hoja.poisonus = true;
+	                         rama.atributoDecision = null;
+	                         printTree("HOJA: POISONUS = Sv Vacio", atributos.size());
+	                     } 
+                         else
+	                   	 {
+	                         rama.hoja = new Hoja();
+	                         rama.hoja.poisonus = false;
+	                         rama.atributoDecision = null;
+                             printTree("HOJA: EDIABLE = Sv Vacio", atributos.size());
+                         }
                     }
                     // En caso contrario→ ID3(Ejemplos vi , Atributos -{A})
                     else {
-                        printTree("ID3 RECURSIVO", 0);
+                    	printTree("ID3 RECURSIVO", 0);
                         rama.hijos.add(ID3.calcular(ejemplosConMismoVi, atributos));
                     }
 
@@ -107,7 +114,6 @@ public class ID3 {
 
     /**
      * Evaluo el ejemplo con el arbol.
-     *
      * @param ejemploAEvaluar
      * @param arbolDecision
      * @return
@@ -145,7 +151,6 @@ public class ID3 {
 
     /**
      * El mejor atributo de S
-     *
      * @param S
      * @return
      */
@@ -164,7 +169,6 @@ public class ID3 {
 
     /**
      * Entropia de S
-     *
      * @param S
      * @return
      */
@@ -193,7 +197,6 @@ public class ID3 {
 
     /**
      * Ganancia de S respecto de atributo A
-     *
      * @param S
      * @param A
      * @return
@@ -214,7 +217,6 @@ public class ID3 {
 
     /**
      * Devuelvo los ejemplos que para el atributo A tienen valor V
-     *
      * @param S
      * @param A
      * @param V
@@ -231,7 +233,6 @@ public class ID3 {
 
     /**
      * Imprimir arbol con indentacion
-     *
      * @param text
      * @param atributosSize
      */

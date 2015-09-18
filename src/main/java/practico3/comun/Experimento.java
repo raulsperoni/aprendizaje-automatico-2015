@@ -10,23 +10,36 @@ public class Experimento {
     public int cantEjemplosEntrenamiento;
     public int cantCantEjemplosPrueba;
     public List<Resultado> resultados = new ArrayList<>();
-
     public double verdaderosPositivos = 0;
     public double falsosPositivos = 0;
     public double verdaderosNegativos = 0;
     public double falsosNegativos = 0;
-
     public double precision;
     public double recuperacion;
     public double fallOf;
     public double medidaF;
     public double errors;
     public Confianza intervaloconfianza = new Confianza();
-
     public Experimento(String nomExperimento, int cantEjemplosEntrenamiento, int cantCantEjemplosPrueba) {
         this.nomExperimento = nomExperimento;
         this.cantEjemplosEntrenamiento = cantEjemplosEntrenamiento;
         this.cantCantEjemplosPrueba = cantCantEjemplosPrueba;
+    }
+
+    public static String getCabecera() {
+        return "nomExperimento" +
+                ";cantEjemplosEntrenamiento" +
+                ";cantCantEjemplosPrueba" +
+                ";verdaderosPositivos" +
+                ";falsosPositivos" +
+                ";verdaderosNegativos" +
+                ";falsosNegativos" +
+                ";precision" +
+                ";recuperacion" +
+                ";medidaF" +
+                ";fallOf" +
+                ";errors" +
+                ";intervaloconfianza\n" ;
     }
 
     @Override
@@ -62,7 +75,7 @@ public class Experimento {
                 ";" + medidaF +
                 ";" + fallOf +
                 ";" + errors +
-                ";[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]";
+                ";[" + intervaloconfianza.x + "," + intervaloconfianza.y + "]\n" ;
     }
     
     public void calcularIndicadores() {

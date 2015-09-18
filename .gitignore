@@ -30,3 +30,5 @@ RemoteSystemsTempFiles
 .classpath
 .project
 /bin/
+
+*.csv

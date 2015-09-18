@@ -148,7 +148,9 @@ public class Main {
                 //Evaluo el conj de prueba con el resultado de KNN
                 knn KNN = new knn(k, entrenamiento_validacion_cruzada, pesos);
                 Experimento exp = new Experimento("KNN VC", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+                long startTime = System.currentTimeMillis();
                 evaluarKNN(exp, prueba_validacion_cruzada, KNN);
+                exp.duracion = System.currentTimeMillis() - startTime;
                 exp.calcularIndicadores();
                 System.out.println(exp.toString());
                 res.get(Algoritmo.KNN).add(exp);
@@ -161,7 +163,9 @@ public class Main {
                 attrsList.addAll(attrs);
                 naiveBayes NB = new naiveBayes(entrenamiento_validacion_cruzada, atributos());
                 Experimento exp = new Experimento("NB VC", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
+                long startTime = System.currentTimeMillis();
                 evaluarNB(exp, prueba_validacion_cruzada, NB);
+                exp.duracion = System.currentTimeMillis() - startTime;
                 exp.calcularIndicadores();
                 System.out.println(exp.toString());
                 res.get(Algoritmo.NAIVEBAYES).add(exp);
@@ -175,16 +179,9 @@ public class Main {
                 Subarbol root = ID3.calcular(entrenamiento_validacion_cruzada, attrsList);
                 //Evaluo el conj de prueba con el resultado de ID3
                 Experimento exp = new Experimento("ID3 VC", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
-                for (Ejemplo e : prueba_validacion_cruzada) {
-                    Experimento.Resultado resultado = new Experimento.Resultado();
-                    resultado.eraPoisonus = e.poisonus;
-                    try {
-                        resultado.seClasificoPoisonus = ID3.evaluar(e, root);
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                    exp.resultados.add(resultado);
-                }
+                long startTime = System.currentTimeMillis();
+                evaluarID3(exp, prueba_validacion_cruzada, root);
+                exp.duracion = System.currentTimeMillis() - startTime;
                 exp.calcularIndicadores();
                 System.out.println(exp.toString());
                 res.get(Algoritmo.ID3).add(exp);
@@ -207,7 +204,9 @@ public class Main {
             //Evaluo el conj de prueba con el resultado de KNN
             knn KNN = new knn(k, entrenamiento_total, pesos);
             Experimento exp = new Experimento("KNN TOTAL", entrenamiento_total.size(), prueba_total.size());
+            long startTime = System.currentTimeMillis();
             evaluarKNN(exp, prueba_total, KNN);
+            exp.duracion = System.currentTimeMillis() - startTime;
             exp.calcularIndicadores();
             //System.out.println(exp.toString());
             res.put(Algoritmo.KNN, exp);
@@ -220,7 +219,9 @@ public class Main {
             attrsList.addAll(attrs);
             naiveBayes NB = new naiveBayes(entrenamiento_total, atributos());
             Experimento exp = new Experimento("NB TOTAL", entrenamiento_total.size(), prueba_total.size());
+            long startTime = System.currentTimeMillis();
             evaluarNB(exp, prueba_total, NB);
+            exp.duracion = System.currentTimeMillis() - startTime;
             exp.calcularIndicadores();
             //System.out.println(exp.toString());
             res.put(Algoritmo.NAIVEBAYES, exp);
@@ -234,7 +235,9 @@ public class Main {
             Subarbol root = ID3.calcular(entrenamiento_total, attrsList);
             //Evaluo el conj de prueba con el resultado de ID3
             Experimento exp = new Experimento("ID3 VC", entrenamiento_total.size(), prueba_total.size());
+            long startTime = System.currentTimeMillis();
             evaluarID3(exp, prueba_total, root);
+            exp.duracion = System.currentTimeMillis() - startTime;
             exp.calcularIndicadores();
             System.out.println(exp.toString());
             res.put(Algoritmo.ID3, exp);
@@ -252,11 +255,13 @@ public class Main {
             resultado.falsosPositivos += e.falsosPositivos;
             resultado.verdaderosNegativos += e.verdaderosNegativos;
             resultado.verdaderosPositivos += e.verdaderosPositivos;
+            resultado.duracion += e.duracion;
         }
         resultado.falsosNegativos = resultado.falsosNegativos / experimentos.size();
         resultado.falsosPositivos = resultado.falsosPositivos / experimentos.size();
         resultado.verdaderosNegativos = resultado.verdaderosNegativos / experimentos.size();
         resultado.verdaderosPositivos = resultado.verdaderosPositivos / experimentos.size();
+        resultado.duracion = resultado.duracion / experimentos.size();
         return resultado;
     }
 

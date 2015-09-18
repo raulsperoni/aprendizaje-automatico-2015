@@ -1,6 +1,7 @@
 package practico3.knn;
 
 import practico3.comun.Ejemplo;
+import practico3.comun.Main;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class knn {
      */
     public Ejemplo comunes(){
         Ejemplo aux = new Ejemplo();
-        HashMap<Integer, List<String>> atr = Main.atributos();        
+        HashMap<Integer, List<String>> atr = Main.atributos();
         //Para cada atributo encuentro el valor mas comun
         for(int i=1; i<=atr.size(); i++){
             List<String> s = atr.get(i);

@@ -20,6 +20,8 @@ public class Experimento {
     public double medidaF;
     public double errors;
     public Confianza intervaloconfianza = new Confianza();
+    public long duracion;
+
     public Experimento(String nomExperimento, int cantEjemplosEntrenamiento, int cantCantEjemplosPrueba) {
         this.nomExperimento = nomExperimento;
         this.cantEjemplosEntrenamiento = cantEjemplosEntrenamiento;
@@ -28,6 +30,7 @@ public class Experimento {
 
     public static String getCabecera() {
         return "nomExperimento" +
+                ";duracion" +
                 ";cantEjemplosEntrenamiento" +
                 ";cantCantEjemplosPrueba" +
                 ";verdaderosPositivos" +
@@ -46,6 +49,7 @@ public class Experimento {
     public String toString() {
         return "Experimento{" +
                 "nomExperimento=" + nomExperimento +
+                "; duracion=" + duracion +
                 "; cantEjemplosEntrenamiento=" + cantEjemplosEntrenamiento +
                 "; cantCantEjemplosPrueba=" + cantCantEjemplosPrueba +
                 "; verdaderosPositivos=" + verdaderosPositivos +
@@ -64,6 +68,7 @@ public class Experimento {
     
     public String toString2() {
         return nomExperimento +
+                ";" + duracion +
                 ";" + cantEjemplosEntrenamiento +
                 ";" + cantCantEjemplosPrueba +
                 ";" + verdaderosPositivos +

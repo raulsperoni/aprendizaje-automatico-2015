@@ -31,7 +31,7 @@ public class Main {
             ejecucion(numeroParticiones, 1, 3);
 
         } else {
-            System.out.println("Comienzo knn, Particiones=" + 10 + " Ejecuciones=" + 1 + " K=" + 3);
+            System.out.println("Comienzo knn, Particiones=" + 10 + " Ejecuciones=" + 1 + " K=" + 1);
             ejecucion(10, 1, 3);
         }
 

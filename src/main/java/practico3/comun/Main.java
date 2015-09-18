@@ -12,43 +12,35 @@ public class Main {
     public static void main(String[] args) {
 
         List<Algoritmo> listalgoritmos = new ArrayList<>();
-        if (args.length > 3) {
-            int algoritmos = Integer.valueOf(args[0]);
-            int numeroParticiones = Integer.valueOf(args[1]);
-            int numeroEjecucionesIndep = Integer.valueOf(args[2]);
-            int k = Integer.valueOf(args[3]);
-            System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
-            ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
+        //valores por defecto
+        int algoritmos = 4;
+        int numeroParticiones = 10;
+        int numeroEjecucionesIndep = 1;
+        int k = 3;
+        int pesos = 0;
+        if (args.length > 4) {
+            algoritmos = Integer.valueOf(args[0]);
+            numeroParticiones = Integer.valueOf(args[1]);
+            numeroEjecucionesIndep = Integer.valueOf(args[2]);
+            k = Integer.valueOf(args[3]);
+            pesos = Integer.valueOf(args[4]);
+        } else if (args.length > 3) {
+            algoritmos = Integer.valueOf(args[0]);
+            numeroParticiones = Integer.valueOf(args[1]);
+            numeroEjecucionesIndep = Integer.valueOf(args[2]);
+            k = Integer.valueOf(args[3]);
         } else if (args.length > 2) {
-            int algoritmos = Integer.valueOf(args[0]);
-            int numeroParticiones = Integer.valueOf(args[1]);
-            int numeroEjecucionesIndep = Integer.valueOf(args[2]);
-            int k = 3;
-            System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
-            ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
-        } else if (args.length > 1) {
-            int algoritmos = Integer.valueOf(args[0]);
-            int numeroParticiones = Integer.valueOf(args[1]);
-            int numeroEjecucionesIndep = 1;
-            int k = 3;
-            System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
-            ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
+            algoritmos = Integer.valueOf(args[0]);
+            numeroParticiones = Integer.valueOf(args[1]);
+            numeroEjecucionesIndep = Integer.valueOf(args[2]);
+        }  else if (args.length > 1) {
+            algoritmos = Integer.valueOf(args[0]);
+            numeroParticiones = Integer.valueOf(args[1]);
         } else if (args.length > 0) {
-            int algoritmos = Integer.valueOf(args[0]);
-            int numeroParticiones = 10;
-            int numeroEjecucionesIndep = 1;
-            int k = 3;
-            System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
-            ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
-        } else {
-            int algoritmos = 4;
-            int numeroParticiones = 10;
-            int numeroEjecucionesIndep = 1;
-            int k = 3;
-            System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
-            ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
+            algoritmos = Integer.valueOf(args[0]);
         }
-
+        System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
+        ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
 
     }
 

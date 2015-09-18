@@ -1,7 +1,5 @@
 package practico2;
 
-import practico3.id3.ID3;
-
 import java.util.*;
 
 

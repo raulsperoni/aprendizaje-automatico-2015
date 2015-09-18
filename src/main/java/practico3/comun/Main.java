@@ -263,9 +263,9 @@ public class Main {
             resultado.verdaderosPositivos += e.verdaderosPositivos;
         }
         resultado.falsosNegativos = resultado.falsosNegativos / experimentos.size();
-        resultado.falsosNegativos = resultado.falsosPositivos / experimentos.size();
-        resultado.falsosNegativos = resultado.verdaderosNegativos / experimentos.size();
-        resultado.falsosNegativos = resultado.verdaderosPositivos / experimentos.size();
+        resultado.falsosPositivos = resultado.falsosPositivos / experimentos.size();
+        resultado.verdaderosNegativos = resultado.verdaderosNegativos / experimentos.size();
+        resultado.verdaderosPositivos = resultado.verdaderosPositivos / experimentos.size();
         return resultado;
     }
 

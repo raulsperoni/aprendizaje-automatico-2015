@@ -153,14 +153,14 @@ public class knn {
                 if (aportepoisonus.get(atributo) != 0 && cant_atributos.get(atributo)*cantPoisonus != 0)
                 pesopoisonus = aportepoisonus.get(atributo)*Math.log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
                 //calculo p(valoratributo,edible)
-                System.out.println("Poison: "+ pesopoisonus);
-                System.out.println("aporteedible: "+ aporteedible.get(atributo));
+                if (log) System.out.println("Poison: "+ pesopoisonus);
+                if (log) System.out.println("aporteedible: "+ aporteedible.get(atributo));
                 if (aporteedible.get(atributo) != 0 && cant_atributos.get(atributo)*cantEdible != 0)
                 pesoedible = aporteedible.get(atributo)*Math.log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
                 if (log)  System.out.println("Peso Edible "+ pesoedible);
                 pesos.put(i,pesos.get(i)+((pesopoisonus+pesoedible)*(-1)));
                 if (log) System.out.println("Peso atrib: "+ atributo + "peso" + pesos.get(atributo));
-                System.out.println("Peso parcial: "+pesos.get(i));
+                if (log) System.out.println("Peso parcial: "+pesos.get(i));
             }
             
             //Seteo el valor mas frecuente

@@ -39,8 +39,8 @@ public class Main {
         } else if (args.length > 0) {
             algoritmos = Integer.valueOf(args[0]);
         }
-        System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + "ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos));
-        ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos);
+        System.out.println("Comienzo, Particiones=" + numeroParticiones + " Ejecuciones=" + numeroEjecucionesIndep + " K=" + k + " ALGOS: " + algoritmosAEjecutar(listalgoritmos, algoritmos)+ " Con Pesos: "+ pesos);
+        ejecucion(numeroParticiones, numeroEjecucionesIndep, k, listalgoritmos, pesos);
 
     }
 
@@ -68,7 +68,7 @@ public class Main {
         return nombresalgos;
     }
 
-    public static void ejecucion(int numeroParticiones, int numeroEjecucionesIndep, int k, List<Algoritmo> algoritmosAEvaluar) {
+    public static void ejecucion(int numeroParticiones, int numeroEjecucionesIndep, int k, List<Algoritmo> algoritmosAEvaluar, int pesos) {
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
 
@@ -90,13 +90,13 @@ public class Main {
             /**
              * VALIDACION CRUZADA
              */
-            experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar);
+            experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar, pesos);
 
             /**
              * 4/5 vs 1/5
              */
             List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
-            experimentosEvaluacionTotal = runAlgoritmoTotal(entrenamiento_total, prueba_total, k, algoritmosAEvaluar);
+            experimentosEvaluacionTotal = runAlgoritmoTotal(entrenamiento_total, prueba_total, k, algoritmosAEvaluar, pesos);
 
         }
 
@@ -110,7 +110,7 @@ public class Main {
      * @param itervalcruzada
      * @param k
      */
-    public static HashMap<Algoritmo, List<Experimento>> runValidacionCruzada(List<Ejemplo> entrenamiento_total, int itervalcruzada, int k, List<Algoritmo> algoritmosAEvaluar) {
+    public static HashMap<Algoritmo, List<Experimento>> runValidacionCruzada(List<Ejemplo> entrenamiento_total, int itervalcruzada, int k, List<Algoritmo> algoritmosAEvaluar, int pesos) {
 
         HashMap<Algoritmo, List<Experimento>> res = new HashMap<>();
         res.put(Algoritmo.KNN, new ArrayList<Experimento>());
@@ -141,7 +141,7 @@ public class Main {
 
             if (algoritmosAEvaluar.contains(Algoritmo.KNN)) {
                 //Evaluo el conj de prueba con el resultado de KNN
-                knn KNN = new knn(k, entrenamiento_total);
+                knn KNN = new knn(k, entrenamiento_total,pesos);
                 Experimento exp = new Experimento("KNN TOTAL", entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
                 evaluarKNN(exp, prueba_validacion_cruzada, KNN);
                 exp.calcularIndicadores();
@@ -171,13 +171,13 @@ public class Main {
      * @param entrenamiento_total
      * @param prueba_total
      */
-    public static HashMap<Algoritmo, Experimento> runAlgoritmoTotal(List<Ejemplo> entrenamiento_total, List<Ejemplo> prueba_total, int k, List<Algoritmo> algoritmosAEvaluar) {
+    public static HashMap<Algoritmo, Experimento> runAlgoritmoTotal(List<Ejemplo> entrenamiento_total, List<Ejemplo> prueba_total, int k, List<Algoritmo> algoritmosAEvaluar, int pesos) {
         System.out.println("Evaluo resultado de entrenar con 4/5 con 1/5");
         HashMap<Algoritmo, Experimento> res = new HashMap<>();
 
         if (algoritmosAEvaluar.contains(Algoritmo.KNN)) {
             //Evaluo el conj de prueba con el resultado de KNN
-            knn KNN = new knn(k, entrenamiento_total);
+            knn KNN = new knn(k, entrenamiento_total, pesos);
             Experimento exp = new Experimento("KNN TOTAL", entrenamiento_total.size(), prueba_total.size());
             evaluarKNN(exp, prueba_total, KNN);
             exp.calcularIndicadores();

@@ -26,17 +26,23 @@ public class knn {
     public List<Ejemplo> ejemplos;
     public HashMap<Integer,Double> pesos = new HashMap<>();   
     public boolean log = false;
-    public knn(int k, List<Ejemplo> ejemplos){
+    public int usopesos;
+    public knn(int k, List<Ejemplo> ejemplos,int pesos){
         this.k = k;
         this.ejemplos = ejemplos;
-        this.comun = comunes();
+        this.usopesos = pesos;
+        if(usopesos==1)
+        	this.comun = comunespesos();
+        else
+        	this.comun = comunes();
+        
     }
     
     /***
      * Determina el valor mas comun para cada atributo con los datos 
      * @return 
      */
-    public Ejemplo comunes2(){
+    public Ejemplo comunes(){
         Ejemplo aux = new Ejemplo();
         HashMap<Integer, List<String>> atr = Main.atributos();        
         //Para cada atributo encuentro el valor mas comun
@@ -80,7 +86,7 @@ public class knn {
      * Determina el valor mas comun para cada atributo con los datos y calcula contadores para pesos
      * @return 
      */
-    public Ejemplo comunes(){//ypesos(){
+    public Ejemplo comunespesos(){//ypesos(){
     	//log = true;
         Ejemplo aux = new Ejemplo();
         HashMap<Integer, List<String>> atr = Main.atributos();
@@ -185,30 +191,6 @@ public class knn {
      * @param b
      * @return 
      */
-    public double distancia2(Ejemplo a, Ejemplo b){
-        double dist = 0;
-        for (int i=1; i<=a.atributos.size(); i++){
-            String atributo_a = a.atributos.get(i);
-            String atributo_b = b.atributos.get(i);
-            if(atributo_a.equals("?")){
-                atributo_a = comun.atributos.get(i);
-            }
-            if(atributo_b.equals("?")){
-                atributo_b = comun.atributos.get(i);
-            }
-            if(!atributo_b.equals(atributo_a)){
-                dist = dist+1;
-            }
-        }
-        return sqrt(dist); //: TODO Vefiricar si es raiz o hay que elevar al cuadrado
-    }
-    
-    /*****
-     * Calcula la distancia entre 2 ejemplos teniendo en cuenta pesos
-     * @param a
-     * @param b
-     * @return 
-     */
     public double distancia(Ejemplo a, Ejemplo b){
         double dist = 0;
         for (int i=1; i<=a.atributos.size(); i++){
@@ -221,14 +203,16 @@ public class knn {
                 atributo_b = comun.atributos.get(i);
             }
             if(!atributo_b.equals(atributo_a)){
-                dist = dist+(1*pesos.get(i));
+            	if(usopesos==1)
+            		dist = dist+(1*pesos.get(i));
+            	else
+            		dist = dist+1;
             }
         }
-        return sqrt(dist);
+        return sqrt(dist); //: TODO Vefiricar si es raiz o hay que elevar al cuadrado
     }
     
-    
-    /***
+     /***
      * Encuentra los k ejemplos mas cercanos a x
      * @param x
      * @return 

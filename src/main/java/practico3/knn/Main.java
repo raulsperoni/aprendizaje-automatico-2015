@@ -184,7 +184,7 @@ public class Main {
             Set<Integer> attrs = atributos().keySet();
             List<Integer> attrsList = new ArrayList<>();
             attrsList.addAll(attrs);
-            knn root = new knn(k, entrenamiento_validacion_cruzada);
+            knn root = new knn(k, entrenamiento_validacion_cruzada,pesos);
             //Evaluo el conj de prueba con el resultado de knn
             Experimento exp = new Experimento("Exp " + i, entrenamiento_validacion_cruzada.size(), prueba_validacion_cruzada.size());
             for (Ejemplo e : prueba_validacion_cruzada) {

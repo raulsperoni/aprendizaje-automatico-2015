@@ -24,7 +24,8 @@ public class knn {
     public Ejemplo comun;
     public int k;
     public List<Ejemplo> ejemplos;
-    public HashMap<Integer,Double> pesos;    
+    public HashMap<Integer,Double> pesos = new HashMap<>();   
+    public boolean log = false;
     public knn(int k, List<Ejemplo> ejemplos){
         this.k = k;
         this.ejemplos = ejemplos;
@@ -35,10 +36,9 @@ public class knn {
      * Determina el valor mas comun para cada atributo con los datos 
      * @return 
      */
-    public Ejemplo comunes(){
+    public Ejemplo comunes2(){
         Ejemplo aux = new Ejemplo();
-        HashMap<Integer, List<String>> atr = Main.atributos();
-        
+        HashMap<Integer, List<String>> atr = Main.atributos();        
         //Para cada atributo encuentro el valor mas comun
         for(int i=1; i<=atr.size(); i++){
             List<String> s = atr.get(i);
@@ -53,7 +53,7 @@ public class knn {
               /*	for(int j=1;j<s.size();j++) // TODO verificar que falta este for en la funcion de Santiago
             	{
               		System.out.println(e.atributos.get(1));*/
-            	//pongo j= i para no borrar mi intento de poner el for y cambiar lo que sigue
+            	//pongo j= i para no borrar mi intento de poner el for y cambiar lo qesue sigue
             	int j = i;
 	                if(!e.atributos.get(j).equals("?"))
 	                {
@@ -80,13 +80,15 @@ public class knn {
      * Determina el valor mas comun para cada atributo con los datos y calcula contadores para pesos
      * @return 
      */
-    public Ejemplo comunesypesos(){
+    public Ejemplo comunes(){//ypesos(){
         Ejemplo aux = new Ejemplo();
         HashMap<Integer, List<String>> atr = Main.atributos();
         Integer cantPoisonus = 0;
         Integer cantEdible = 0;
+        Double cero = 0.0;
         //Para cada atributo encuentro el valor mas comun
         for(int i=1; i<=atr.size(); i++){
+        	pesos.put(i, cero);
             List<String> s = atr.get(i);
             HashMap<String, Integer> cant_atributos = new HashMap<>();
             //contadores por atributo para calculo de pesos
@@ -94,50 +96,64 @@ public class knn {
             HashMap<String, Double> aportepoisonus = new HashMap<>();
         		//contador para calculo de p(valoratributo,edible)
             HashMap<String, Double> aporteedible = new HashMap<>();
-            //Inicializo en 0 la cuenta de cada valor del atributo i
+            //Inicializo en 0 la cuenta de cada valor del atributo i           
             for(String atributo: s){
-                cant_atributos.put(atributo, 0);
+            	
+                cant_atributos.put(atributo,0);
+                aportepoisonus.put(atributo, cero);
+                aporteedible.put(atributo, cero);
             }
             //Cuento la cantidad de veces que aparece cada valor del atributo i en los ejemplos
             for(Ejemplo e: ejemplos){
-            	//para cada valor de atributo
-            	for(int j=0;j<s.size();j++) // TODO verificar que falta este for en la funcion de Santiago
-            	{
-	                if(!e.atributos.get(j).equals("?")){
-	                    cant_atributos.put(e.atributos.get(j), cant_atributos.get(e.atributos.get(j))+1);
+            	if (log) System.out.println("11");
+	                if(!e.atributos.get(i).equals("?")){
+	                	if (log) System.out.println("11");
+	                    cant_atributos.put(e.atributos.get(i), cant_atributos.get(e.atributos.get(i))+1);
+	                    if (log) System.out.println("12");
+	                
+	                	//calculo contadores por atributo para calculo de pesos
+	                    if(e.poisonus) 
+		                {
+	                    	if (log) System.out.println("poison");
+		                	//calculo cantidad total de poisonus de la muestra
+		                	cantPoisonus ++; 
+		                	//calculo p(valoratributo,poisonus)
+		                	if (log) System.out.println("poison: " + e.atributos.get(i));
+		                	aportepoisonus.put(e.atributos.get(i), aportepoisonus.get(e.atributos.get(i))+1);
+		                }
+		                else 
+		                {
+		                	if (log) System.out.println("edible");
+		                	//calculo cantidad total de edibles de la muestra
+		                	cantEdible ++;	
+		                	//calculo p(valoratributo,edible)
+		                	if (log) System.out.println("edible: " + e.atributos.get(i));
+		                	aporteedible.put(e.atributos.get(i), aporteedible.get(e.atributos.get(i))+1);
+		                	if (log) System.out.println("15");
+		                }
 	                }
-                	//calculo contadores por atributo para calculo de pesos
-                    if(e.poisonus) 
-	                {
-	                	//calculo cantidad total de poisonus de la muestra
-	                	cantPoisonus ++; 
-	                	//calculo p(valoratributo,poisonus)
-	                	aportepoisonus.put(e.atributos.get(j), aportepoisonus.get(e.atributos.get(j))+1);
-	                }
-	                else 
-	                {
-	                	//calculo cantidad total de edibles de la muestra
-	                	cantEdible ++;	
-	                	//calculo p(valoratributo,edible)
-	                	aporteedible.put(e.atributos.get(j), aporteedible.get(e.atributos.get(j))+1);
-	                }
-            	}
+            	
             }
             //Encuentro el valor mas frecuente para el atributo i
+            if (log) System.out.println("14");
             int cantidad_maxima = 0;
             String atributo_mas_frecuente = "?";
             for(String atributo: s){
-            	
+            	if (log) System.out.println("114");
                 if(cant_atributos.get(atributo) > cantidad_maxima){
                     cantidad_maxima = cant_atributos.get(atributo);
                     atributo_mas_frecuente = atributo;
                 }
+                if (log) System.out.println("141");
                 //calculo contadores por atributo para calculo de pesos
                 //calculo p(valoratributo,poisonus)
-              // double pesopoisonus = aportepoisonus.get(atributo)*log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
+               double pesopoisonus = aportepoisonus.get(atributo)*Math.log(aportepoisonus.get(atributo)/(cant_atributos.get(atributo)*cantPoisonus));// TODO buscar formula logaritmo
                 //calculo p(valoratributo,edible)
-              //  double pesoedible = aporteedible.get(atributo)*log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
-                //pesos.put(i,pesos.get(atributo)+pesopoisonus+pesoedible);
+               if (log) System.out.println("Poison: "+ pesopoisonus);
+                double pesoedible = aporteedible.get(atributo)*Math.log(aporteedible.get(atributo)/(cant_atributos.get(atributo)*cantEdible)); // TODO buscar formula logaritmo
+                if (log)  System.out.println("Peso Edible "+ pesoedible);
+                pesos.put(i,pesos.get(i)+pesopoisonus+pesoedible);
+                if (log) System.out.println("Peso atrib: "+ atributo + "peso" + pesos.get(atributo));
             }
             //Seteo el valor mas frecuente
             aux.atributos.put(i, atributo_mas_frecuente);
@@ -146,7 +162,12 @@ public class knn {
             //pesos(i,());
             
         }
- 
+       /* 
+        for(int j=0;j<this.pesos.size();j++)
+        {
+        	
+        }*/
+        System.out.println("Pesos"+ pesos.toString());
         return aux;
     }
     

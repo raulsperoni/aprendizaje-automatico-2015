@@ -90,7 +90,9 @@ public class Main {
              */
             HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar,pesos);
             for (Algoritmo a : experimentosValidacionCruzada.keySet()) {
-                experimentosValidacionCruzada.get(a).add(calcularMedia("media", experimentosValidacionCruzada.get(a)));
+                Experimento media = calcularMedia("media", experimentosValidacionCruzada.get(a));
+                media.calcularIndicadores();
+                experimentosValidacionCruzada.get(a).add(media);
                 AuxLoadData.printfile("ValidacionCruzadaIteracion " + i + " " + a.name(), experimentosValidacionCruzada.get(a));
             }
 
@@ -208,7 +210,7 @@ public class Main {
             evaluarKNN(exp, prueba_total, KNN);
             exp.duracion = System.currentTimeMillis() - startTime;
             exp.calcularIndicadores();
-            //System.out.println(exp.toString());
+            System.out.println(exp.toString());
             res.put(Algoritmo.KNN, exp);
         }
 
@@ -223,7 +225,7 @@ public class Main {
             evaluarNB(exp, prueba_total, NB);
             exp.duracion = System.currentTimeMillis() - startTime;
             exp.calcularIndicadores();
-            //System.out.println(exp.toString());
+            System.out.println(exp.toString());
             res.put(Algoritmo.NAIVEBAYES, exp);
         }
 
@@ -234,7 +236,7 @@ public class Main {
             attrsList.addAll(attrs);
             Subarbol root = ID3.calcular(entrenamiento_total, attrsList);
             //Evaluo el conj de prueba con el resultado de ID3
-            Experimento exp = new Experimento("ID3 VC", entrenamiento_total.size(), prueba_total.size());
+            Experimento exp = new Experimento("ID3 TOTAL", entrenamiento_total.size(), prueba_total.size());
             long startTime = System.currentTimeMillis();
             evaluarID3(exp, prueba_total, root);
             exp.duracion = System.currentTimeMillis() - startTime;

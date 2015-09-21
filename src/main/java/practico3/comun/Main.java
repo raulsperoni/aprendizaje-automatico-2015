@@ -93,13 +93,13 @@ public class Main {
             /**
              * VALIDACION CRUZADA
              */
-           /* HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar,pesos);
+            HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar,pesos);
             for (Algoritmo a : experimentosValidacionCruzada.keySet()) {
                 Experimento media = calcularMedia("media", experimentosValidacionCruzada.get(a));
                 media.calcularIndicadores();
                 experimentosValidacionCruzada.get(a).add(media);
                 AuxLoadData.printfile("ValidacionCruzadaIteracion " + i + " " + a.name(), experimentosValidacionCruzada.get(a));
-            }*/
+            }
 
             /**
              * 4/5 vs 1/5
@@ -121,11 +121,11 @@ public class Main {
 
         }
         for (Algoritmo a : experimentosTotales.keySet()) {
-            Experimento mediatot = calcularMedia("media", experimentosTotales.get(a));
+            Experimento mediatot = calcularMedia("Media "+a.name(), experimentosTotales.get(a));
             mediatot.calcularIndicadores();
             experimentos.add(mediatot);
         }
-        AuxLoadData.printfile("Evaluación Total 111", experimentos);
+        AuxLoadData.printfile("Evaluación Total", experimentos);
 
     }
 

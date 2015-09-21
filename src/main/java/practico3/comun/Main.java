@@ -17,7 +17,7 @@ public class Main {
         //valores por defecto
         int algoritmos = 4;
         int numeroParticiones = 10;
-        int numeroEjecucionesIndep = 1;
+        int numeroEjecucionesIndep = 2;
         int k = 3;
         int pesos = 0;
         if (args.length > 4) {
@@ -74,6 +74,11 @@ public class Main {
         System.out.println("MAA 2015");
         System.out.println("Ejecutando ...");
 
+        HashMap<Algoritmo,List<Experimento>> experimentosTotales = new HashMap<>();
+        for (Algoritmo a : algoritmosAEvaluar) {
+        	experimentosTotales.put(a, new ArrayList<Experimento>());
+        }
+        List<Experimento> experimentos = new ArrayList<>();
         for (int i = 0; i < numeroEjecucionesIndep; i++) {
             System.out.println("Iteracion " + i);
             //Cargo datos
@@ -101,19 +106,26 @@ public class Main {
              */
             List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
             HashMap<Algoritmo, Experimento> experimentosEvaluacionTotal = runAlgoritmoTotal(entrenamiento_total, prueba_total, k, algoritmosAEvaluar,pesos);
-            List<Experimento> experimentos = new ArrayList<>();
+            
             for (Algoritmo a : experimentosEvaluacionTotal.keySet()) {            	
                 //AuxLoadData.printfile("EvaluacionTotalIteracion " + i + " " + a.name(), Arrays.asList(experimentosEvaluacionTotal.get(a)));
-            	experimentos.add(experimentosEvaluacionTotal.get(a));
-            	
+            	experimentosTotales.get(a).add(experimentosEvaluacionTotal.get(a));
+            	//experimentos.add(experimentosEvaluacionTotal.get(a));        	
             }
-            Experimento mediatot = calcularMedia("media", experimentos);
-            mediatot.calcularIndicadores();
-            experimentos.add(mediatot);
-            AuxLoadData.printfile("Evaluación Total 11", experimentos);
+            
+           // Experimento mediatot = calcularMedia("media", experimentos);
+           // mediatot.calcularIndicadores();
+           /* experimentos.add(mediatot);
+            conjexp.get(Algoritmo.KNN).add(exp);*/
+            
 
         }
-
+        for (Algoritmo a : experimentosTotales.keySet()) {
+            Experimento mediatot = calcularMedia("media", experimentosTotales.get(a));
+            mediatot.calcularIndicadores();
+            experimentos.add(mediatot);
+        }
+        AuxLoadData.printfile("Evaluación Total 111", experimentos);
 
     }
 

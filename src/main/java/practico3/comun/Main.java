@@ -88,22 +88,29 @@ public class Main {
             /**
              * VALIDACION CRUZADA
              */
-            HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar,pesos);
+           /* HashMap<Algoritmo, List<Experimento>> experimentosValidacionCruzada = runValidacionCruzada(entrenamiento_total, numeroParticiones, k, algoritmosAEvaluar,pesos);
             for (Algoritmo a : experimentosValidacionCruzada.keySet()) {
                 Experimento media = calcularMedia("media", experimentosValidacionCruzada.get(a));
                 media.calcularIndicadores();
                 experimentosValidacionCruzada.get(a).add(media);
                 AuxLoadData.printfile("ValidacionCruzadaIteracion " + i + " " + a.name(), experimentosValidacionCruzada.get(a));
-            }
+            }*/
 
             /**
              * 4/5 vs 1/5
              */
             List<Ejemplo> prueba_total = ejemplos.subList(corte, ejemplos.size());
             HashMap<Algoritmo, Experimento> experimentosEvaluacionTotal = runAlgoritmoTotal(entrenamiento_total, prueba_total, k, algoritmosAEvaluar,pesos);
-            for (Algoritmo a : experimentosEvaluacionTotal.keySet()) {
-                AuxLoadData.printfile("EvaluacionTotalIteracion " + i + " " + a.name(), Arrays.asList(experimentosEvaluacionTotal.get(a)));
+            List<Experimento> experimentos = new ArrayList<>();
+            for (Algoritmo a : experimentosEvaluacionTotal.keySet()) {            	
+                //AuxLoadData.printfile("EvaluacionTotalIteracion " + i + " " + a.name(), Arrays.asList(experimentosEvaluacionTotal.get(a)));
+            	experimentos.add(experimentosEvaluacionTotal.get(a));
+            	
             }
+            Experimento mediatot = calcularMedia("media", experimentos);
+            mediatot.calcularIndicadores();
+            experimentos.add(mediatot);
+            AuxLoadData.printfile("Evaluación Total 11", experimentos);
 
         }
 
@@ -244,10 +251,7 @@ public class Main {
             System.out.println(exp.toString());
             res.put(Algoritmo.ID3, exp);
         }
-
-
         return res;
-
     }
 
     private static Experimento calcularMedia(String nombre, List<Experimento> experimentos) {

@@ -17,7 +17,7 @@ public class Main {
         //valores por defecto
         int algoritmos = 4;
         int numeroParticiones = 10;
-        int numeroEjecucionesIndep = 2;
+        int numeroEjecucionesIndep = 1;
         int k = 3;
         int pesos = 0;
         if (args.length > 4) {

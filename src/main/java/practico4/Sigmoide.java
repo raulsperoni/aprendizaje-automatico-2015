@@ -1,34 +1,39 @@
 /**
- * 
+ *
  */
 package practico4;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * @author emi
- *
  */
 public class Sigmoide {
-	Integer id;
-	HashMap<Integer,Double> pesos = new HashMap<>();
-	public Sigmoide()
-	{		
-	}
-	
-	public Sigmoide(Integer id,Integer cantEntradas)
-	{
-		this.id=id;
-		Random r = new Random();
-		for(int i=0;i<cantEntradas;i++)
-		{	        
-			pesos.put(i,r.nextDouble());
-		}
-	}
-	public double salida(HashMap<Integer,Double> entradas)
-	{
-		Double resultado=0.0; 
-		return resultado;
-	}
+    final Integer id;
+    final TipoSigmoide tipo;
+    final List<Double> pesos;
+
+    public Sigmoide(Integer id, Integer cantEntradas, TipoSigmoide tipo) {
+        this.id = id;
+        this.pesos = new ArrayList<>(cantEntradas);
+        this.tipo = tipo;
+        Random r = new Random();
+        for (int i = 0; i < cantEntradas; i++) {
+            pesos.add(i, r.nextDouble());
+        }
+    }
+
+    public double salida(List<Double> entradas) {
+        return 1 / (1 + Math.exp(getSumaConPesos(entradas)));
+    }
+
+    private double getSumaConPesos(List<Double> entradas) {
+        double sum = 0d;
+        for (int i = 0; i < entradas.size(); i++) {
+            sum += entradas.get(i) * pesos.get(i);
+        }
+        return sum;
+    }
 }

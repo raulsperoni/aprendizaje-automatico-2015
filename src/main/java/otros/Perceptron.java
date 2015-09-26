@@ -1,4 +1,4 @@
-package practico4;
+package otros;
 
 import java.util.ArrayList;
 import java.util.List;

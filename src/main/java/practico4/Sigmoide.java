@@ -14,6 +14,7 @@ public abstract class Sigmoide {
     final Integer id;
     final List<Double> pesos;
     final Integer cantidadEntradas;
+    final List<Double> errores = new ArrayList<>();
 
     public Sigmoide(Integer id, Integer cantEntradas) {
         this.id = id;
@@ -26,7 +27,7 @@ public abstract class Sigmoide {
     }
 
     public double getSalida(List<Double> entradas) {
-        return salidaTanh(entradas);
+        return salidaSigmoid(entradas);
     }
 
     public void actualizarPesos(List<Double> entradas, Double error, Double aprendizaje) {

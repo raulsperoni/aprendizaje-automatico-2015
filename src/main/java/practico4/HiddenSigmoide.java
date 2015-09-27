@@ -10,7 +10,9 @@ public class HiddenSigmoide extends Sigmoide {
     }
 
     public double getError(Double salidaReal, Double terminoOutput) {
-        return salidaReal * (1 - salidaReal) * terminoOutput;
+        double error = salidaReal * (1 - salidaReal) * terminoOutput;
+        errores.add(error);
+        return error;
 
     }
 

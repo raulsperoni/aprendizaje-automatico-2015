@@ -10,7 +10,9 @@ public class OutputSigmoide extends Sigmoide {
     }
 
     public double getError(Double salidaReal, Double salidaEsperada) {
-        return salidaReal * (1 - salidaReal) * (salidaEsperada - salidaReal);
+        double error = salidaReal * (1 - salidaReal) * (salidaEsperada - salidaReal);
+        errores.add(error);
+        return error;
 
     }
 }

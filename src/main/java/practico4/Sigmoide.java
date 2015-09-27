@@ -13,9 +13,11 @@ import java.util.Random;
 public abstract class Sigmoide {
     final Integer id;
     final List<Double> pesos;
+    final Integer cantidadEntradas;
 
     public Sigmoide(Integer id, Integer cantEntradas) {
         this.id = id;
+        this.cantidadEntradas = cantEntradas;
         this.pesos = new ArrayList<>(cantEntradas);
         Random r = new Random();
         for (int i = 0; i < cantEntradas; i++) {
@@ -25,6 +27,12 @@ public abstract class Sigmoide {
 
     public double getSalida(List<Double> entradas) {
         return salidaTanh(entradas);
+    }
+
+    public void actualizarPesos(List<Double> entradas, Double error, Double aprendizaje) {
+        for (int i = 0; i < pesos.size(); i++) {
+            pesos.set(i, pesos.get(i) + aprendizaje * error * entradas.get(i));
+        }
     }
 
     protected double salidaSigmoid(List<Double> entradas) {

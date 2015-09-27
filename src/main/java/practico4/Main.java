@@ -27,15 +27,17 @@ public class Main {
     }
 
     public static void funcionIdentidad() {
-        List<Double> entradas_funcion1 = new ArrayList<>();
+        List<List<Double>> entradas_funcion1 = new ArrayList<>();
         List<Double> salidas_esperadas_funcion1 = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 20; i++) {
-            entradas_funcion1.add(i, Util.randDouble(-1, 1, r));
-            salidas_esperadas_funcion1.add(i, entradas_funcion1.get(i));
+            double x = Util.randDouble(-1, 1, r);
+            entradas_funcion1.add(i, new ArrayList<Double>(Arrays.asList(x)));
+            salidas_esperadas_funcion1.add(i, x);
         }
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1);
-        redNeuronal.backpropagation(new ArrayList<List<Double>>(Arrays.asList(entradas_funcion1)));
+        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1);
+        redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);
+        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(0.5d)));
     }
 
     public static void funcionPotencia4() {

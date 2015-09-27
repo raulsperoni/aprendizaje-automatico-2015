@@ -14,6 +14,7 @@ public class RedNeuronal {
 
     final List<HiddenSigmoide> capaHidden;
     final List<OutputSigmoide> capaOutput;
+    final Double aprendizaje;
     List<Double> capaInput;
 
     /**
@@ -23,7 +24,8 @@ public class RedNeuronal {
      * @param cantOutput cuantas neuronas output
      * @param sizeInput  cuantos valores en la neurona input
      */
-    public RedNeuronal(int cantHidden, int cantOutput, int sizeInput) {
+    public RedNeuronal(int cantHidden, int cantOutput, int sizeInput, Double aprendizaje) {
+        this.aprendizaje = aprendizaje;
         int cantNeuronas = 0;
         this.capaHidden = new ArrayList<>(cantHidden);
         for (int i = 0; i < cantHidden; i++) {
@@ -35,38 +37,68 @@ public class RedNeuronal {
         }
     }
 
-    public void backpropagation(List<List<Double>> ejemplosEntrenamiento) {
+    public List<Double> evaluar(List<Double> ejemplo) {
+        this.capaInput = ejemplo;
+        //Propagar hacia adelante
+        //lista de salidas hidden
+        List<Double> salidaHidden = new ArrayList<>();
+        for (int j = 0; j < capaHidden.size(); j++) {
+            salidaHidden.add(j, capaHidden.get(j).getSalida(this.capaInput));
+        }
+        //lista de salidas output
+        List<Double> salidaOutput = new ArrayList<>();
+        for (int j = 0; j < capaOutput.size(); j++) {
+            salidaOutput.add(j, capaOutput.get(j).getSalida(salidaHidden));
+        }
+        return salidaOutput;
+    }
+
+    public void backpropagation(List<List<Double>> ejemplosEntrenamiento, List<Double> salidasEsperadas) {
+
+        //TODO: aca va un for con las iteraciones?
 
         //Para cada ejemplo de entrenamiento
         for (int i = 0; i < ejemplosEntrenamiento.size(); i++) {
             this.capaInput = ejemplosEntrenamiento.get(i);
             //Propagar hacia adelante
-            //hidden
+            //lista de salidas hidden
             List<Double> salidaHidden = new ArrayList<>();
             for (int j = 0; j < capaHidden.size(); j++) {
                 salidaHidden.add(j, capaHidden.get(j).getSalida(this.capaInput));
             }
-            //output
+            //lista de salidas output
             List<Double> salidaOutput = new ArrayList<>();
             for (int j = 0; j < capaOutput.size(); j++) {
                 salidaOutput.add(j, capaOutput.get(j).getSalida(salidaHidden));
             }
 
             //Propagar errores hacia atras
-            //output
+            //lista de errores output
             List<Double> erroresOutput = new ArrayList<>();
+            Double terminoOutputParaElError = 0d;
             for (int j = 0; j < capaOutput.size(); j++) {
-                erroresOutput.add(j, capaOutput.get(j).getError());
+                //calculo cada error
+                erroresOutput.add(j, capaOutput.get(j).getError(salidaOutput.get(j), salidasEsperadas.get(i)));
+                //armo el termino para calcular el error de cada hidden.
+                for (int k = 0; k < capaOutput.get(j).cantidadEntradas; k++) {
+                    terminoOutputParaElError += erroresOutput.get(j) * capaOutput.get(j).pesos.get(k);
+                }
             }
-            //hidden
+            //lista de errores hidden
             List<Double> erroresHidden = new ArrayList<>();
             for (int j = 0; j < capaHidden.size(); j++) {
-                erroresHidden.add(j, capaHidden.get(j).getError(erroresOutput));
+                erroresHidden.add(j, capaHidden.get(j).getError(salidaHidden.get(j), terminoOutputParaElError));
             }
 
             //Actualizar pesos
-            //TODO: aca no me queda claro esto:
-            // La entrada de la unidad i hacia la j se denota xji, y el peso de i a j se denota wji.
+            //pesos hidden
+            for (int j = 0; j < capaHidden.size(); j++) {
+                capaHidden.get(j).actualizarPesos(capaInput, erroresHidden.get(j), aprendizaje);
+            }
+            //pesos output
+            for (int j = 0; j < capaOutput.size(); j++) {
+                capaOutput.get(j).actualizarPesos(salidaHidden, erroresOutput.get(j), aprendizaje);
+            }
 
 
         }

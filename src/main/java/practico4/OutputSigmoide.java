@@ -9,9 +9,8 @@ public class OutputSigmoide extends Sigmoide {
         super(id, cantEntradas);
     }
 
-    public double getError() {
-        //TODO: error de los output
-        return 0d;
+    public double getError(Double salidaReal, Double salidaEsperada) {
+        return salidaReal * (1 - salidaReal) * (salidaEsperada - salidaReal);
 
     }
 }

@@ -54,11 +54,13 @@ public class RedNeuronal {
         return salidaOutput;
     }
 
-    public void backpropagation(List<List<Double>> ejemplosEntrenamiento, List<Double> salidasEsperadas) {
+    public List<Double> backpropagation(List<List<Double>> ejemplosEntrenamiento, List<Double> salidasEsperadas) {
+
+        List<Double> ErrList = new ArrayList<>();
 
         for (int it = 0; it < maxIteraciones; it++) {
-
-            List<Double> E = new ArrayList<>();
+            //Error de todos los ejemplos de todas las unidades de salida
+            Double E = 0d;
 
             //Para cada ejemplo de entrenamiento
             for (int i = 0; i < ejemplosEntrenamiento.size(); i++) {
@@ -71,7 +73,6 @@ public class RedNeuronal {
                 }
                 //lista de salidas output
                 List<Double> salidaOutput = new ArrayList<>();
-                Double ErrTerm = 0d;
                 double valSalidaOutput = 0,valSalidaEsperada = salidasEsperadas.get(i);
                 //lista de errores output
                 List<Double> erroresOutput = new ArrayList<>();
@@ -85,12 +86,9 @@ public class RedNeuronal {
                     //Calculo Sk segun neurona elegida como salida (T4.3)
                     erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));
                     //calculo E (4.13)
-                    ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
-                    //System.out.println("Error: " + ErrTerm + "Salida: " + valSalidaOutput + "SalidaEsp: " + valSalidaEsperada);
+                    E += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
                 }
                 //Propagar errores hacia atras
-                //para calcular error E para graficar
-
                 Double terminoOutputParaElError = 0d;
                 //Calcular el error de cada nodo hidden segun neurona elegida.
                 for (int h = 0; h < capaHidden.size(); h++) {
@@ -102,10 +100,8 @@ public class RedNeuronal {
                     }
                 	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
                 	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));
-                    //System.out.println("ERR HID: " + it + "\t" + i + "\t" + erroresHidden.get(h));
                 }
-                //error E del ejemplo d indizado por el entero i
-                E.add(ErrTerm / 2);
+
                 //Actualizar pesos
                 //pesos hidden
                 for (int j = 0; j < capaHidden.size(); j++) {
@@ -115,9 +111,11 @@ public class RedNeuronal {
                 for (int j = 0; j < capaOutput.size(); j++) {
                     capaOutput.get(j).actualizarPesos(salidaHidden, erroresOutput.get(j), aprendizaje);
                 }
-                //System.out.print("# " + i + " #\t" + ErrTerm + "\t");
             }
-            System.out.println("");
+
+            ErrList.add(it, E / 2);
+            System.out.println("Err: " + E);
         }
+        return ErrList;
     }
 }

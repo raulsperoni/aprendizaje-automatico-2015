@@ -33,10 +33,7 @@ public abstract class Sigmoide {
     public void actualizarPesos(List<Double> entradas, Double error, Double aprendizaje) {
         for (int i = 0; i < pesos.size(); i++) {
             double incremento = aprendizaje * error * entradas.get(i);
-            if (incremento > 0.00001) {
-                System.out.println("iNCRE: " + "\t" + i + "\t" + incremento);
-                pesos.set(i, pesos.get(i) + incremento);
-            }
+            pesos.set(i, pesos.get(i) + incremento);
         }
     }
 

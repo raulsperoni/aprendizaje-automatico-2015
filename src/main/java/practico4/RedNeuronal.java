@@ -97,8 +97,8 @@ public class RedNeuronal {
                 	terminoOutputParaElError = 0d;
                     //Error en salida Sk es el iterador de k de cada unidad de salida 
                 	for (int k = 0; k < capaOutput.size(); k++) {
-                        //Calculo sumatoria Wk*Sk
-                        terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(k);
+                        //Calculo sumatoria Wkh*Sk
+                        terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(h);
                     }
                 	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
                 	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));

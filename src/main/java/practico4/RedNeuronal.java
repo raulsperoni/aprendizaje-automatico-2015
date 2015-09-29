@@ -74,34 +74,36 @@ public class RedNeuronal {
                 for (int j = 0; j < capaOutput.size(); j++) {
                     salidaOutput.add(j, capaOutput.get(j).getSalida(salidaHidden));
                 }
-
                 //Propagar errores hacia atras
                 //para calcular error E para graficar
                 Double ErrTerm = 0d;
                 //lista de errores output
                 List<Double> erroresOutput = new ArrayList<>();
-                Double terminoOutputParaElError = 0d;
-                for (int j = 0; j < capaOutput.size(); j++) {
-                    //calculo cada error
-                    double valSalidaOutput = salidaOutput.get(j);
-                    double valSalidaEsperada = salidasEsperadas.get(i);
-                    erroresOutput.add(j, capaOutput.get(j).getError(valSalidaOutput, valSalidaEsperada));
-                    //armo el termino para calcular el error de cada hidden.
-                    for (int k = 0; k < capaOutput.get(j).cantidadEntradas; k++) {
-                        terminoOutputParaElError += erroresOutput.get(j) * capaOutput.get(j).pesos.get(k);
-                    }
-                    //calculo E
-                    ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
-
-                }
-                //error E
-                E.add(ErrTerm / 2);
                 //lista de errores hidden
                 List<Double> erroresHidden = new ArrayList<>();
-                for (int j = 0; j < capaHidden.size(); j++) {
-                    erroresHidden.add(j, capaHidden.get(j).getError(salidaHidden.get(j), terminoOutputParaElError));
+                //Double que guarda sumatoria de errores en salida por el peso correspondiente
+                Double terminoOutputParaElError = 0d;
+                double valSalidaOutput = 0,valSalidaEsperada = salidasEsperadas.get(i);
+                //Calcular el error de cada nodo hidden segun neurona elegida.
+                for (int h = 0; h < capaHidden.size(); h++) {
+                	terminoOutputParaElError = 0d;
+                    //Error en salida Sk es el iterador de k de cada unidad de salida 
+                	for (int k = 0; k < capaOutput.size(); k++) {
+                        //calculo cada error de Salida
+                        valSalidaOutput = salidaOutput.get(k);
+                        //Calculo Sk segun neurona elegida como salida (T4.3)
+                        erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));	
+                        //Calculo sumatoria Wk*Sk
+                        terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(k);
+                        //calculo E (4.13)
+                        ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
+                    }
+                	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
+                	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));
                 }
-
+                //error E del ejemplo d indizado por el entero i
+                E.add(ErrTerm / 2);
+                
                 //Actualizar pesos
                 //pesos hidden
                 for (int j = 0; j < capaHidden.size(); j++) {

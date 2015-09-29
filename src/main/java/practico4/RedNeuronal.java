@@ -9,10 +9,10 @@ import java.util.List;
 /**
  * @author emi
  */
-public class RedNeuronal {
+public class RedNeuronal<T extends Neurona> {
 
-    final List<Neurona> capaHidden;
-    final List<Neurona> capaOutput;
+    final List<T> capaHidden;
+    final List<T> capaOutput;
     final Double aprendizaje;
     final int maxIteraciones;
     List<Double> capaInput;
@@ -24,17 +24,27 @@ public class RedNeuronal {
      * @param cantOutput cuantas neuronas output
      * @param sizeInput  cuantos valores en la neurona input
      */
-    public RedNeuronal(int cantHidden, int cantOutput, int sizeInput, Double aprendizaje, int maxIteraciones) {
+    public RedNeuronal(int cantHidden, int cantOutput, int sizeInput, Double aprendizaje, int maxIteraciones, Class cls) throws Exception {
+        /**
+         * Generics
+         */
+        Class[] cArg = new Class[3]; //Our constructor has 3 arguments
+        cArg[0] = Integer.class; //First argument is of *object* type Long
+        cArg[1] = Integer.class; //Second argument is of *object* type String
+        cArg[2] = Neurona.TipoNeurona.class; //Third argument is of *primitive* type int
+        /**
+         * Generics
+         */
         this.aprendizaje = aprendizaje;
         int cantNeuronas = 0;
         this.maxIteraciones = maxIteraciones;
         this.capaHidden = new ArrayList<>(cantHidden);
         for (int i = 0; i < cantHidden; i++) {
-            this.capaHidden.add(i, new Sigmoid(cantNeuronas++, sizeInput, Neurona.TipoNeurona.HIDDEN));
+            this.capaHidden.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, sizeInput, Neurona.TipoNeurona.HIDDEN));
         }
         this.capaOutput = new ArrayList<>(cantOutput);
         for (int i = 0; i < cantOutput; i++) {
-            this.capaOutput.add(i, new Sigmoid(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT));
+            this.capaHidden.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT));
         }
     }
 

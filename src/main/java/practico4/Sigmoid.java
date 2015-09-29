@@ -16,6 +16,7 @@ public class Sigmoid extends Neurona {
         return 1 / (1 + Math.exp(-getSumaConPesos(entradas)));
     }
 
+    @Override
     public double getError(Double salidaReal, Double termino) {
         double error = 0d;
         if (tipo == TipoNeurona.HIDDEN)

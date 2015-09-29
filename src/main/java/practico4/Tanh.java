@@ -17,6 +17,7 @@ public class Tanh extends Neurona {
         return Math.cos(x) / Math.sin(x);
     }
 
+    @Override
     public double getError(Double salidaReal, Double termino) {
         double error = 0d;
         if (tipo == TipoNeurona.HIDDEN)

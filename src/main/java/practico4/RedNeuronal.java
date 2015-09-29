@@ -44,7 +44,7 @@ public class RedNeuronal<T extends Neurona> {
         }
         this.capaOutput = new ArrayList<>(cantOutput);
         for (int i = 0; i < cantOutput; i++) {
-            this.capaHidden.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT));
+            this.capaOutput.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT));
         }
     }
 

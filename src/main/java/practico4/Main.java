@@ -39,7 +39,7 @@ public class Main {
             entradas_funcion1.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion1.add(i, x);
         }
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 20000, Sigmoid.class);
+        RedNeuronal redNeuronal = new RedNeuronal<Sigmoid>(2, 1, 1, 0.1, 20000, Sigmoid.class);
         redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);
         double ejemploAEvaluar = Util.randDouble(0, 1, r);
         List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(ejemploAEvaluar)));

@@ -18,10 +18,10 @@ public class Main {
         funcionIdentidad();
 
         //f(x) = x^4
-        funcionPotencia4();
+        //funcionPotencia4();
 
         //f(x) = cos(7/2*pi*x)
-        funcionCoseno();
+        //funcionCoseno();
 
 
     }
@@ -35,19 +35,23 @@ public class Main {
             entradas_funcion1.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion1.add(i, x);
         }
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 500);
+        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 100);
         redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);
         List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(0.99)));
     }
 
     public static void funcionPotencia4() {
-        List<Double> entradas_funcion2 = new ArrayList<>();
+    	List<List<Double>> entradas_funcion2 = new ArrayList<>();
         List<Double> salidas_esperadas_funcion2 = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 20; i++) {
-            entradas_funcion2.add(i, Util.randDouble(-1, 1, r));
-            salidas_esperadas_funcion2.add(i, Math.pow(entradas_funcion2.get(i), 4));
+        	double x = Util.randDouble(0, 1, r);
+            entradas_funcion2.add(i, new ArrayList<Double>(Arrays.asList(x)));
+            salidas_esperadas_funcion2.add(i, Math.pow(x, 4));
         }
+        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 500);
+        redNeuronal.backpropagation(entradas_funcion2, salidas_esperadas_funcion2);
+        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(0.99)));
     }
 
     public static void funcionCoseno() {

@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class RedNeuronal {
 
-    final List<HiddenSigmoide> capaHidden;
-    final List<OutputSigmoide> capaOutput;
+    final List<Neurona> capaHidden;
+    final List<Neurona> capaOutput;
     final Double aprendizaje;
     final int maxIteraciones;
     List<Double> capaInput;
@@ -30,11 +30,11 @@ public class RedNeuronal {
         this.maxIteraciones = maxIteraciones;
         this.capaHidden = new ArrayList<>(cantHidden);
         for (int i = 0; i < cantHidden; i++) {
-            this.capaHidden.add(i, new HiddenSigmoide(cantNeuronas++, sizeInput));
+            this.capaHidden.add(i, new Sigmoid(cantNeuronas++, sizeInput, Neurona.TipoNeurona.HIDDEN));
         }
         this.capaOutput = new ArrayList<>(cantOutput);
         for (int i = 0; i < cantOutput; i++) {
-            this.capaOutput.add(i, new OutputSigmoide(cantNeuronas++, cantHidden));
+            this.capaOutput.add(i, new Sigmoid(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT));
         }
     }
 

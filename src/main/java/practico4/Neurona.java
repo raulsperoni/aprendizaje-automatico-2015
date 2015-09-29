@@ -10,13 +10,14 @@ import java.util.Random;
 /**
  * @author emi
  */
-public abstract class Sigmoide {
+public abstract class Neurona {
     final Integer id;
     final List<Double> pesos;
     final Integer cantidadEntradas;
-    final List<Double> errores = new ArrayList<>();
+    final TipoNeurona tipo;
 
-    public Sigmoide(Integer id, Integer cantEntradas) {
+    public Neurona(Integer id, Integer cantEntradas, TipoNeurona tipo) {
+        this.tipo = tipo;
         this.id = id;
         this.cantidadEntradas = cantEntradas;
         this.pesos = new ArrayList<>(cantEntradas);
@@ -26,9 +27,9 @@ public abstract class Sigmoide {
         }
     }
 
-    public double getSalida(List<Double> entradas) {
-        return salidaSigmoid(entradas);
-    }
+    public abstract double getSalida(List<Double> entradas);
+
+    public abstract double getError(Double salidaReal, Double termino);
 
     public void actualizarPesos(List<Double> entradas, Double error, Double aprendizaje) {
         for (int i = 0; i < pesos.size(); i++) {
@@ -37,14 +38,6 @@ public abstract class Sigmoide {
         }
     }
 
-    protected double salidaSigmoid(List<Double> entradas) {
-        return 1 / (1 + Math.exp(-getSumaConPesos(entradas)));
-    }
-
-    protected double salidaTanh(List<Double> entradas) {
-        double x = getSumaConPesos(entradas);
-        return Math.cos(x) / Math.sin(x);
-    }
 
     protected double getSumaConPesos(List<Double> entradas) {
         double sum = 0d;
@@ -52,5 +45,10 @@ public abstract class Sigmoide {
             sum += entradas.get(i) * pesos.get(i);
         }
         return sum;
+    }
+
+
+    public enum TipoNeurona {
+        OUTPUT, HIDDEN
     }
 }

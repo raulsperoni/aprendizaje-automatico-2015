@@ -79,7 +79,7 @@ public class RedNeuronal {
                     valSalidaOutput = salidaOutput.get(j);
                     //calculo E (4.13)
                     ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
-                    System.out.println("Error: "+ ErrTerm +"Salida: "+ valSalidaOutput + "SalidaEsp: " + valSalidaEsperada);
+                    //System.out.println("Error: " + ErrTerm + "Salida: " + valSalidaOutput + "SalidaEsp: " + valSalidaEsperada);
                 }
                 //Propagar errores hacia atras
                 //para calcular error E para graficar
@@ -97,12 +97,14 @@ public class RedNeuronal {
                         //calculo cada error de Salida
                         valSalidaOutput = salidaOutput.get(k);
                         //Calculo Sk segun neurona elegida como salida (T4.3)
-                        erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));	
+                        erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));
+                        //System.out.println("ERR OUT: " + it + "\t" + i + "\t" + erroresOutput.get(k));
                         //Calculo sumatoria Wk*Sk
                         terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(k);
                     }
                 	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
                 	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));
+                    //System.out.println("ERR HID: " + it + "\t" + i + "\t" + erroresHidden.get(h));
                 }
                 //error E del ejemplo d indizado por el entero i
                 E.add(ErrTerm / 2);
@@ -115,7 +117,7 @@ public class RedNeuronal {
                 for (int j = 0; j < capaOutput.size(); j++) {
                     capaOutput.get(j).actualizarPesos(salidaHidden, erroresOutput.get(j), aprendizaje);
                 }
-                System.out.print("# " + i + " #\t" + ErrTerm + "\t");
+                //System.out.print("# " + i + " #\t" + ErrTerm + "\t");
             }
             System.out.println("");
         }

@@ -71,19 +71,24 @@ public class RedNeuronal {
                 }
                 //lista de salidas output
                 List<Double> salidaOutput = new ArrayList<>();
+                Double ErrTerm = 0d;
+                double valSalidaOutput = 0,valSalidaEsperada = salidasEsperadas.get(i);
                 for (int j = 0; j < capaOutput.size(); j++) {
                     salidaOutput.add(j, capaOutput.get(j).getSalida(salidaHidden));
+                    //calculo cada error de Salida
+                    valSalidaOutput = salidaOutput.get(j);
+                    //calculo E (4.13)
+                    ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
+                    System.out.println("Error: "+ ErrTerm +"Salida: "+ valSalidaOutput + "SalidaEsp: " + valSalidaEsperada);
                 }
                 //Propagar errores hacia atras
                 //para calcular error E para graficar
-                Double ErrTerm = 0d;
                 //lista de errores output
                 List<Double> erroresOutput = new ArrayList<>();
                 //lista de errores hidden
                 List<Double> erroresHidden = new ArrayList<>();
                 //Double que guarda sumatoria de errores en salida por el peso correspondiente
                 Double terminoOutputParaElError = 0d;
-                double valSalidaOutput = 0,valSalidaEsperada = salidasEsperadas.get(i);
                 //Calcular el error de cada nodo hidden segun neurona elegida.
                 for (int h = 0; h < capaHidden.size(); h++) {
                 	terminoOutputParaElError = 0d;
@@ -95,8 +100,6 @@ public class RedNeuronal {
                         erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));	
                         //Calculo sumatoria Wk*Sk
                         terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(k);
-                        //calculo E (4.13)
-                        ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
                     }
                 	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
                 	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));

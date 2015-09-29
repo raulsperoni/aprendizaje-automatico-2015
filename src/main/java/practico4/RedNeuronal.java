@@ -103,7 +103,6 @@ public class RedNeuronal {
                 }
                 //error E del ejemplo d indizado por el entero i
                 E.add(ErrTerm / 2);
-                
                 //Actualizar pesos
                 //pesos hidden
                 for (int j = 0; j < capaHidden.size(); j++) {
@@ -113,14 +112,9 @@ public class RedNeuronal {
                 for (int j = 0; j < capaOutput.size(); j++) {
                     capaOutput.get(j).actualizarPesos(salidaHidden, erroresOutput.get(j), aprendizaje);
                 }
-
-
                 System.out.print("# " + i + " #\t" + ErrTerm + "\t");
             }
-
             System.out.println("");
-
         }
-
     }
 }

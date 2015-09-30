@@ -11,7 +11,14 @@
 
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>jfreechart</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
+    </dependencies>
 
     <build>
 

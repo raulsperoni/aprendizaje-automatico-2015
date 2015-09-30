@@ -16,11 +16,15 @@ public abstract class Neurona {
     final Integer cantidadEntradas;
     final TipoNeurona tipo;
 
-    public Neurona(Integer id, Integer cantEntradas, TipoNeurona tipo) {
+    final Double momentumTerm;
+    private Double momentumIncrementoAnterior = 0d;
+
+    public Neurona(Integer id, Integer cantEntradas, TipoNeurona tipo, Double momentumTerm) {
         this.tipo = tipo;
         this.id = id;
         this.cantidadEntradas = cantEntradas;
         this.pesos = new ArrayList<>(cantEntradas);
+        this.momentumTerm = momentumTerm;
         Random r = new Random();
         for (int i = 0; i < cantEntradas; i++) {
             pesos.add(i, r.nextDouble());
@@ -33,8 +37,10 @@ public abstract class Neurona {
 
     public void actualizarPesos(List<Double> entradas, Double error, Double aprendizaje) {
         for (int i = 0; i < pesos.size(); i++) {
-            double incremento = aprendizaje * error * entradas.get(i);
+            double momentum = momentumIncrementoAnterior * momentumTerm;
+            double incremento = aprendizaje * error * entradas.get(i) + momentum;
             pesos.set(i, pesos.get(i) + incremento);
+            momentumIncrementoAnterior = incremento;
         }
     }
 

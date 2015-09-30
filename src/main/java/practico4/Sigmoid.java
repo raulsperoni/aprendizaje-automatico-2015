@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class Sigmoid extends Neurona {
 
-    public Sigmoid(Integer id, Integer cantEntradas, TipoNeurona tipo) {
-        super(id, cantEntradas, tipo);
+    public Sigmoid(Integer id, Integer cantEntradas, TipoNeurona tipo, Double momentumTerm) {
+        super(id, cantEntradas, tipo, momentumTerm);
     }
 
     @Override

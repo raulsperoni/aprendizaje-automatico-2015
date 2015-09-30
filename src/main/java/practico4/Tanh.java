@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class Tanh extends Neurona {
 
-    public Tanh(Integer id, Integer cantEntradas, TipoNeurona tipo) {
-        super(id, cantEntradas, tipo);
+    public Tanh(Integer id, Integer cantEntradas, TipoNeurona tipo, Double momentumTerm) {
+        super(id, cantEntradas, tipo, momentumTerm);
     }
 
     @Override

@@ -4,6 +4,7 @@
 package practico4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,14 +25,15 @@ public class RedNeuronal<T extends Neurona> {
      * @param cantOutput cuantas neuronas output
      * @param sizeInput  cuantos valores en la neurona input
      */
-    public RedNeuronal(int cantHidden, int cantOutput, int sizeInput, Double aprendizaje, int maxIteraciones, Class cls) throws Exception {
+    public RedNeuronal(int cantHidden, int cantOutput, int sizeInput, Double aprendizaje, int maxIteraciones, Class cls, Double momentumTerm) throws Exception {
         /**
          * Generics
          */
-        Class[] cArg = new Class[3]; //Our constructor has 3 arguments
+        Class[] cArg = new Class[4]; //Our constructor has 3 arguments
         cArg[0] = Integer.class; //First argument is of *object* type Long
         cArg[1] = Integer.class; //Second argument is of *object* type String
         cArg[2] = Neurona.TipoNeurona.class; //Third argument is of *primitive* type int
+        cArg[3] = Double.class;
         /**
          * Generics
          */
@@ -40,11 +42,11 @@ public class RedNeuronal<T extends Neurona> {
         this.maxIteraciones = maxIteraciones;
         this.capaHidden = new ArrayList<>(cantHidden);
         for (int i = 0; i < cantHidden; i++) {
-            this.capaHidden.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, sizeInput, Neurona.TipoNeurona.HIDDEN));
+            this.capaHidden.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, sizeInput, Neurona.TipoNeurona.HIDDEN, momentumTerm));
         }
         this.capaOutput = new ArrayList<>(cantOutput);
         for (int i = 0; i < cantOutput; i++) {
-            this.capaOutput.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT));
+            this.capaOutput.add(i, (T) cls.getConstructor(cArg).newInstance(cantNeuronas++, cantHidden, Neurona.TipoNeurona.OUTPUT, momentumTerm));
         }
     }
 
@@ -64,9 +66,9 @@ public class RedNeuronal<T extends Neurona> {
         return salidaOutput;
     }
 
-    public List<Double> backpropagation(List<List<Double>> ejemplosEntrenamiento, List<Double> salidasEsperadas) {
+    public HashMap<Integer, Double> backpropagation(List<List<Double>> ejemplosEntrenamiento, List<Double> salidasEsperadas) {
 
-        List<Double> ErrList = new ArrayList<>();
+        HashMap<Integer, Double> ErrList = new HashMap<>();
 
         for (int it = 0; it < maxIteraciones; it++) {
             //Error de todos los ejemplos de todas las unidades de salida
@@ -123,8 +125,10 @@ public class RedNeuronal<T extends Neurona> {
                 }
             }
 
-            ErrList.add(it, E / 2);
-            System.out.println("Err: " + E);
+            /**
+             * Agrego error a la lista
+             */
+            ErrList.put(it, E / 2);
         }
         return ErrList;
     }

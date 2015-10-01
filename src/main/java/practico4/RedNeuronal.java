@@ -13,7 +13,7 @@ public class RedNeuronal {
 
     final List<HiddenSigmoide> capaHidden;
     final List<OutputSigmoide> capaOutput;
-    final Double aprendizaje;
+    Double aprendizaje;
     final int maxIteraciones;
     List<Double> capaInput;
 
@@ -98,7 +98,7 @@ public class RedNeuronal {
                     //Error en salida Sk es el iterador de k de cada unidad de salida 
                 	for (int k = 0; k < capaOutput.size(); k++) {
                         //Calculo sumatoria Wk*Sk
-                        terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(k);
+                        terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(h);
                     }
                 	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
                 	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));
@@ -115,6 +115,7 @@ public class RedNeuronal {
                     capaOutput.get(j).actualizarPesos(salidaHidden, erroresOutput.get(j), aprendizaje);
                 }
                 System.out.print("# " + i + " #\t" + ErrTerm + "\t");
+                //aprendizaje-=0.0000000001;
             }
             System.out.println("");
         }

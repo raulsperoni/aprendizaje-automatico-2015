@@ -30,14 +30,16 @@ public class Main {
         List<List<Double>> entradas_funcion1 = new ArrayList<>();
         List<Double> salidas_esperadas_funcion1 = new ArrayList<>();
         Random r = new Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             double x = Util.randDouble(0, 1, r);
             entradas_funcion1.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion1.add(i, x);
         }
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 100);
-        redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);
-        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(0.99)));
+        double x = Util.randDouble(0, 1, r);
+        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 1000);
+        redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);//Arrays.asList(0.99);
+        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
+        System.out.println("Valor real: "+ x +"Resultado: " + resultado);
     }
 
     public static void funcionPotencia4() {

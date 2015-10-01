@@ -14,13 +14,13 @@ public class Main {
 
         try {
             //f(x) = x
-            funcionIdentidad();
+            //funcionIdentidad();
 
             //f(x) = x^4
-            funcionPotencia4();
+            //funcionPotencia4();
 
             //f(x) = cos(7/2*pi*x)
-            //funcionCoseno();
+            funcionCoseno();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,13 +117,32 @@ public class Main {
             entradas_funcion.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion.add(i, (Math.cos((7 / 2) * Math.PI * x) + 1) / 2);
         }
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 50000, Sigmoid.class, 0d);
+        int iteraciones = 5000;
+        Class cls = Tanh.class;
+        RedNeuronal redNeuronal = new RedNeuronal(6, 1, 1, 0.1, iteraciones, cls, 0d);
         HashMap<Integer, Double> err = redNeuronal.backpropagation(entradas_funcion, salidas_esperadas_funcion);
         Double minErr = err.get(err.size() - 1);
         Util.Plot(err, "Coseno: min:" + String.format("%.3f", minErr), 0, 500);
-        double ejemploAEvaluar = Util.randDouble(-1, 1, r);
-        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(ejemploAEvaluar)));
-        System.out.println("Ejemplo Coseno: " + ejemploAEvaluar + "\t" + "Resultado: " + Math.acos(((resultado.get(0) * 2) - 1 / Math.PI) * (2 / 7)));
+
+
+        /**
+         * Evaluacion
+         */
+
+        List<Double> entradasEval = new ArrayList<>();
+        List<Double> salidasExactasEval = new ArrayList<>();
+        List<Double> salidasRedEval = new ArrayList<>();
+        r = new Random();
+        for (int i = 0; i < 100; i++) {
+            double x = Util.randDouble(-1, 1, r);
+            entradasEval.add(i, x);
+            List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
+            salidasExactasEval.add(i, Math.cos((7 / 2) * Math.PI * x));
+            double res = resultado.get(0);
+            salidasRedEval.add(i, res);
+        }
+        Util.Plot(entradasEval, salidasExactasEval, salidasRedEval, "Coseno", iteraciones, cls);
+
 
 
     }

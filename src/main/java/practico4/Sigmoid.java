@@ -16,14 +16,11 @@ public class Sigmoid extends Neurona {
         return 1 / (1 + Math.exp(-getSumaConPesos(entradas)));
     }
 
-    @Override
-    public double getError(Double salidaReal, Double termino) {
-        double error = 0d;
-        if (tipo == TipoNeurona.HIDDEN)
-            error = salidaReal * (1 - salidaReal) * termino;
-        else if (tipo == TipoNeurona.OUTPUT)
-            error = salidaReal * (1 - salidaReal) * (termino - salidaReal);
-        return error;
 
+    @Override
+    protected double derivada(double valorFuncional) {
+        return valorFuncional * (1 - valorFuncional);
     }
+
+
 }

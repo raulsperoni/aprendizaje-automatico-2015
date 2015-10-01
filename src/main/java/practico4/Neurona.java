@@ -33,7 +33,17 @@ public abstract class Neurona {
 
     public abstract double getSalida(List<Double> entradas);
 
-    public abstract double getError(Double salidaReal, Double termino);
+    public double getError(Double salidaReal, Double termino) {
+        double error = 0d;
+        if (tipo == TipoNeurona.HIDDEN)
+            error = derivada(salidaReal) * termino;
+        else if (tipo == TipoNeurona.OUTPUT)
+            error = derivada(salidaReal) * (termino - salidaReal);
+        return error;
+
+    }
+
+    protected abstract double derivada(double valorFuncional);
 
     public void actualizarPesos(List<Double> entradas, Double error, Double aprendizaje) {
         for (int i = 0; i < pesos.size(); i++) {

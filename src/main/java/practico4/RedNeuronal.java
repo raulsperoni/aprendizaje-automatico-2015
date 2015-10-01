@@ -98,7 +98,7 @@ public class RedNeuronal<T extends Neurona> {
                     //Calculo Sk segun neurona elegida como salida (T4.3)
                     erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));
                     //calculo E (4.13)
-                    E += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
+                    E += Math.pow(valSalidaOutput - valSalidaEsperada, 2);
                 }
                 //Propagar errores hacia atras
                 Double terminoOutputParaElError = 0d;

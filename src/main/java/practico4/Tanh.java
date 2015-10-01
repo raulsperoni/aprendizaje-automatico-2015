@@ -14,17 +14,13 @@ public class Tanh extends Neurona {
     @Override
     public double getSalida(List<Double> entradas) {
         double x = getSumaConPesos(entradas);
-        return Math.cos(x) / Math.sin(x);
+        return Math.tanh(x);
     }
 
     @Override
-    public double getError(Double salidaReal, Double termino) {
-        double error = 0d;
-        if (tipo == TipoNeurona.HIDDEN)
-            error = (1 - salidaReal) * (1 - salidaReal) * termino;
-        else if (tipo == TipoNeurona.OUTPUT)
-            error = (1 - salidaReal) * (1 - salidaReal) * (termino - salidaReal);
-        return error;
-
+    protected double derivada(double valorFuncional) {
+        return 1 - Math.pow(valorFuncional, 2);
     }
+
+
 }

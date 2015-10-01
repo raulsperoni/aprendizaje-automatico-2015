@@ -15,10 +15,10 @@ public class Main {
         //Ejercicio 3
 
         //f(x) = x
-        funcionIdentidad();
+        //funcionIdentidad();
 
         //f(x) = x^4
-        //funcionPotencia4();
+        funcionPotencia4();
 
         //f(x) = cos(7/2*pi*x)
         //funcionCoseno();
@@ -35,25 +35,29 @@ public class Main {
             entradas_funcion1.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion1.add(i, x);
         }
-        double x = Util.randDouble(0, 1, r);
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 1000);
-        redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);//Arrays.asList(0.99);
-        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
-        System.out.println("Valor real: "+ x +"Resultado: " + resultado);
+        RedNeuronal redNeuronal = new RedNeuronal(6, 1, 1, 0.1, 20000);
+        redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);
+        double ejemploAEvaluar = Util.randDouble(0, 1, r);
+        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(ejemploAEvaluar)));
+        System.out.println("Ejemplo: " + ejemploAEvaluar + "\t" + "Resultado: " + resultado.get(0));
     }
 
     public static void funcionPotencia4() {
-    	List<List<Double>> entradas_funcion2 = new ArrayList<>();
-        List<Double> salidas_esperadas_funcion2 = new ArrayList<>();
+
+        List<List<Double>> entradas_funcion = new ArrayList<>();
+        List<Double> salidas_esperadas_funcion = new ArrayList<>();
         Random r = new Random();
-        for (int i = 0; i < 20; i++) {
-        	double x = Util.randDouble(0, 1, r);
-            entradas_funcion2.add(i, new ArrayList<Double>(Arrays.asList(x)));
-            salidas_esperadas_funcion2.add(i, Math.pow(x, 4));
+        for (int i = 0; i < 500; i++) {
+            double x = Util.randDouble(0, 1, r);
+            entradas_funcion.add(i, new ArrayList<Double>(Arrays.asList(x)));
+            salidas_esperadas_funcion.add(i, Math.pow(x, 4d));
         }
-        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 500);
-        redNeuronal.backpropagation(entradas_funcion2, salidas_esperadas_funcion2);
-        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(0.99)));
+        RedNeuronal redNeuronal = new RedNeuronal(2, 1, 1, 0.1, 10000);
+        redNeuronal.backpropagation(entradas_funcion, salidas_esperadas_funcion);
+        double ejemploAEvaluar = Util.randDouble(0, 1, r);
+        List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(ejemploAEvaluar)));
+        System.out.println("Ejemplo: " + ejemploAEvaluar + "\t" + "Resultado: " + Math.sqrt(Math.sqrt(resultado.get(0))));
+
     }
 
     public static void funcionCoseno() {

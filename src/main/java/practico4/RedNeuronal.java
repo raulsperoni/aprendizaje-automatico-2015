@@ -86,7 +86,7 @@ public class RedNeuronal {
                     erroresOutput.add(k, capaOutput.get(k).getError(valSalidaOutput, valSalidaEsperada));
                     //calculo E (4.13)
                     ErrTerm += (valSalidaOutput - valSalidaEsperada) * (valSalidaOutput - valSalidaEsperada);
-                    System.out.println("Error: "+ ErrTerm +"Salida: "+ valSalidaOutput + "SalidaEsp: " + valSalidaEsperada);
+                    //System.out.println("Error: " + ErrTerm + "Salida: " + valSalidaOutput + "SalidaEsp: " + valSalidaEsperada);
                 }
                 //Propagar errores hacia atras
                 //para calcular error E para graficar
@@ -97,11 +97,12 @@ public class RedNeuronal {
                 	terminoOutputParaElError = 0d;
                     //Error en salida Sk es el iterador de k de cada unidad de salida 
                 	for (int k = 0; k < capaOutput.size(); k++) {
-                        //Calculo sumatoria Wk*Sk
+                        //Calculo sumatoria Wkh*Sk
                         terminoOutputParaElError += erroresOutput.get(k) * capaOutput.get(k).pesos.get(h);
                     }
                 	//Calculo error en nodo Hidden h G'*SUM(Wkh*Sk) (T4.4)
                 	erroresHidden.add(h, capaHidden.get(h).getError(salidaHidden.get(h), terminoOutputParaElError));
+                    //System.out.println("ERR HID: " + it + "\t" + i + "\t" + erroresHidden.get(h));
                 }
                 //error E del ejemplo d indizado por el entero i
                 E.add(ErrTerm / 2);
@@ -114,8 +115,7 @@ public class RedNeuronal {
                 for (int j = 0; j < capaOutput.size(); j++) {
                     capaOutput.get(j).actualizarPesos(salidaHidden, erroresOutput.get(j), aprendizaje);
                 }
-                System.out.print("# " + i + " #\t" + ErrTerm + "\t");
-                //aprendizaje-=0.0000000001;
+                //System.out.print("# " + i + " #\t" + ErrTerm + "\t");
             }
             System.out.println("");
         }

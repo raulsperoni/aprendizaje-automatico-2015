@@ -117,7 +117,7 @@ public class Main {
             entradas_funcion.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion.add(i, (coseno(x)));
         }
-        int iteraciones = 10000;
+        int iteraciones = 100000;
         Class cls = Sigmoid.class;
         RedNeuronal redNeuronal = new RedNeuronal(6, 1, 1, 0.1, iteraciones, cls, 0d);
         HashMap<Integer, Double> err = redNeuronal.backpropagation(entradas_funcion, salidas_esperadas_funcion);

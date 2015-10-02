@@ -113,11 +113,11 @@ public class Main {
         List<Double> salidas_esperadas_funcion = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 500; i++) {
-            double x = Util.randDouble(0, 3d / 7d, r);
+            double x = Util.randDouble(0, 4d / 7d, r);
             entradas_funcion.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion.add(i, (coseno(x)));
         }
-        int iteraciones = 80000;
+        int iteraciones = 10000;
         Class cls = Sigmoid.class;
         RedNeuronal redNeuronal = new RedNeuronal(6, 1, 1, 0.1, iteraciones, cls, 0d);
         HashMap<Integer, Double> err = redNeuronal.backpropagation(entradas_funcion, salidas_esperadas_funcion);
@@ -125,9 +125,10 @@ public class Main {
         Util.Plot(err, "Coseno: min:" + String.format("%.3f", minErr), 0, err.size());
 
 
-        //1 - (1/2!)x2 + (1/4!)x4 - (1/6!)x6
         /**
          * Evaluacion
+         * Pude entrenar desde 0 a 4/7.
+         * Lo demas lo deduzco por periodicidad.
          */
 
         List<Double> entradasEval = new ArrayList<>();
@@ -135,15 +136,31 @@ public class Main {
         List<Double> salidasRedEval = new ArrayList<>();
         r = new Random();
         for (int i = 0; i < 100; i++) {
-            double x = Util.randDouble(0, 1, r);
+            double x = Util.randDouble(-1, 1, r);
             entradasEval.add(i, x);
-            List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
-            salidasExactasEval.add(i, (coseno(x) * 2) - 1);
+            List<Double> resultado = new ArrayList<>();
+            //Dentro de lo que entrene
+            if (x >= 0d && x < 4d / 7d) {
+                resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
+            }
+            //Espejo de lo que entrene
+            else if (x < 0 && x >= -4d / 7d) {
+                resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(-x)));
+            }
+            //Cola izquierda
+            else if (x < -4d / 7d && x >= -1) {
+                resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x + 7d / 7d)));
+            }
+            //Cola derecha
+            else {
+                resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x - 4d / 7d)));
+            }
             double res = (resultado.get(0) * 2) - 1;
             salidasRedEval.add(i, res);
+            salidasExactasEval.add(i, (coseno(x) * 2) - 1);
+
         }
         Util.Plot(entradasEval, salidasExactasEval, salidasRedEval, "Coseno", iteraciones, cls);
-
 
 
     }

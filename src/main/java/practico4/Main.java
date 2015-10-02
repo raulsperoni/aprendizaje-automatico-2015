@@ -113,11 +113,11 @@ public class Main {
         List<Double> salidas_esperadas_funcion = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 500; i++) {
-            double x = Util.randDouble(1d / 7d, 2d / 7d, r);
+            double x = Util.randDouble(0, 3d / 7d, r);
             entradas_funcion.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion.add(i, (coseno(x)));
         }
-        int iteraciones = 10000;
+        int iteraciones = 80000;
         Class cls = Sigmoid.class;
         RedNeuronal redNeuronal = new RedNeuronal(6, 1, 1, 0.1, iteraciones, cls, 0d);
         HashMap<Integer, Double> err = redNeuronal.backpropagation(entradas_funcion, salidas_esperadas_funcion);
@@ -135,11 +135,11 @@ public class Main {
         List<Double> salidasRedEval = new ArrayList<>();
         r = new Random();
         for (int i = 0; i < 100; i++) {
-            double x = Util.randDouble(1d / 7d, 2d / 7d, r);
+            double x = Util.randDouble(0, 1, r);
             entradasEval.add(i, x);
             List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
-            salidasExactasEval.add(i, (coseno(x)));
-            double res = resultado.get(0);
+            salidasExactasEval.add(i, (coseno(x) * 2) - 1);
+            double res = (resultado.get(0) * 2) - 1;
             salidasRedEval.add(i, res);
         }
         Util.Plot(entradasEval, salidasExactasEval, salidasRedEval, "Coseno", iteraciones, cls);
@@ -150,6 +150,6 @@ public class Main {
 
     private static double coseno(double x) {
         x = (x * Math.PI * 7) / 2;
-        return Math.cos(x) + 1;
+        return (Math.cos(x) + 1) / 2;
     }
 }

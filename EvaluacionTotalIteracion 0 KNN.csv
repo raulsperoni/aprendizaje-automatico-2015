@@ -1,0 +1,2 @@
+nomExperimento;duracion;cantEjemplosEntrenamiento;cantCantEjemplosPrueba;verdaderosPositivos;falsosPositivos;verdaderosNegativos;falsosNegativos;precision;recuperacion;medidaF;fallOf;errors;intervaloconfianza
+KNN TOTAL;8172;6499;1625;0.0;0.0;814.0;811.0;NaN;0.0;NaN;0.0;0.12478842898907525;[0.10872001277025546,0.14085684520789504]

@@ -1,4 +1,4 @@
-package practico4;
+package practico4.E3;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;

@@ -1,6 +1,9 @@
-package practico4;
+package practico4.E3;
 
 import java.util.*;
+import practico4.RedNeuronal;
+import practico4.Sigmoid;
+import practico4.Tanh;
 
 /**
  * Created by RSperoni on 23/09/2015.

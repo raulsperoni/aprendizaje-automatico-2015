@@ -45,7 +45,7 @@ public class Util {
 
         int width = 1024; /* Width of the image */
         int height = 768; /* Height of the image */
-        File XYChart = new File("ErrPlot" + nom + ".jpeg");
+        File XYChart = new File(nom + ".jpeg");
         ChartUtilities.saveChartAsJPEG(XYChart, xylineChart, width, height);
     }
 
@@ -75,7 +75,7 @@ public class Util {
 
         int width = 1024; /* Width of the image */
         int height = 768; /* Height of the image */
-        File XYChart = new File("Func" + nom + iteraciones + cls.getName() + ".jpeg");
+        File XYChart = new File(nom + ".jpeg");
         ChartUtilities.saveChartAsJPEG(XYChart, xylineChart, width, height);
     }
 

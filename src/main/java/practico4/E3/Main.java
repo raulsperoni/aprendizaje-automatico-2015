@@ -1,9 +1,10 @@
 package practico4.E3;
 
-import java.util.*;
 import practico4.RedNeuronal;
 import practico4.Sigmoid;
 import practico4.Tanh;
+
+import java.util.*;
 
 /**
  * Created by RSperoni on 23/09/2015.
@@ -17,13 +18,13 @@ public class Main {
 
         try {
             //f(x) = x
-            //funcionIdentidad();
+            funcionIdentidad();
 
             //f(x) = x^4
             //funcionPotencia4();
 
             //f(x) = cos(7/2*pi*x)
-            funcionCoseno();
+            //funcionCoseno();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,12 +42,13 @@ public class Main {
             entradas_funcion1.add(i, new ArrayList<Double>(Arrays.asList(x)));
             salidas_esperadas_funcion1.add(i, x);
         }
-        int iteraciones = 50000;
+        int iteraciones = 10000;
         Class cls = Tanh.class;
-        RedNeuronal redNeuronal = new RedNeuronal<>(6, 1, 1, 0.1, iteraciones, cls, 0d);
+        int cantHidden = 2;
+        RedNeuronal redNeuronal = new RedNeuronal<>(cantHidden, 1, 1, 0.1, iteraciones, cls, 0d);
         HashMap<Integer, Double> err = redNeuronal.backpropagation(entradas_funcion1, salidas_esperadas_funcion1);
         Double minErr = err.get(err.size() - 1);
-        Util.Plot(err, "Indentidad: min:" + String.format("%.3f", minErr), 0, err.size());
+        Util.Plot(err, "Id-" + cls.getName() + "-It: " + iteraciones + "-Hid: " + cantHidden + "-Min: " + String.format("%.3f", minErr), 0, err.size());
 
         /**
          * Evaluacion
@@ -59,16 +61,12 @@ public class Main {
         for (int i = 0; i < 100; i++) {
             double x = Util.randDouble(-1, 1, r);
             entradasEval.add(i, x);
-            //if (x < 0) x = -x;
             List<Double> resultado = redNeuronal.evaluar(new ArrayList<Double>(Arrays.asList(x)));
             salidasExactasEval.add(i, x);
             double res = resultado.get(0);
-            //if (x < 0)
-            //    salidasRedEval.add(i,-res);
-            //else
             salidasRedEval.add(i, res);
         }
-        Util.Plot(entradasEval, salidasExactasEval, salidasRedEval, "Identidad", iteraciones, cls);
+        Util.Plot(entradasEval, salidasExactasEval, salidasRedEval, "Id-" + cls.getName() + "-It: " + iteraciones + "-Hid: " + cantHidden, iteraciones, cls);
 
 
     }

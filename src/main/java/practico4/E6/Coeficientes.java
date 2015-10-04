@@ -1,6 +1,5 @@
 package practico4.E6;
 
-import practico1.*;
 import java.util.Random;
 
 /**

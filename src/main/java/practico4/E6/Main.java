@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package practico4.E6;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Random;
 
 /**
  *
@@ -30,8 +27,15 @@ public class Main {
             int countGanoO = 0;
             int countEmpate = 0;
 
-            //declaro los jugadores
+            //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
+            jugador1.coeficientes.w0 = 459.26056f;
+            jugador1.coeficientes.w1 = -311.13654f;
+            jugador1.coeficientes.w2 = 771.94965f;
+            jugador1.coeficientes.w3 = -75.19854f;
+            jugador1.coeficientes.w4 = -188.01028f;
+            jugador1.coeficientes.w5 = -508.89853f;
+            jugador1.coeficientes.indep = 0.18602931f;
             JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
             float mu = 0.01f;
@@ -45,13 +49,11 @@ public class Main {
                 jugador2.tablero = tablero;
                 EstadoTablero estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
                 EstadoTablero estadoTableroPrueba;
-                Map<Integer, Double> ejemplosVent = new HashMap();
-                Map<Integer, Double> ejemplosVop = new HashMap();
+                List<List<Double>> ejemplos = new ArrayList();
+                List<Double> ejemplosVop = new ArrayList();
 
 
                 //Movimientos
-                double VEnt;
-                int cant_movimientos = 0;
                 while (!estadoTablero.finalizado) {
 
 
@@ -92,9 +94,17 @@ public class Main {
                     //imprimir ta-te-ti
                     //tablero.imprimir();
 
-                    //Si soy X actualizo VopUltimoTurno
-                    double VOpUltimoTurno = estadoTablero.VOp;
-                    ejemplosVop.put(cant_movimientos, VOpUltimoTurno);
+                    //Guardo un ejemplo para que el jugador con red neuronal entrene al terminar la partida
+                    List<Double> inputs = new ArrayList();
+                    inputs.add((double) jugador1.tablero.cantFichasO);
+                    inputs.add((double) jugador1.tablero.cantFichasX);
+                    inputs.add((double) jugador1.tablero.cantLineasInutilesParaO);
+                    inputs.add((double) jugador1.tablero.cantLineasInutilesParaX);
+                    inputs.add((double) jugador1.tablero.cantMinimaRestanteParaGanarO);
+                    inputs.add((double) jugador1.tablero.cantMinimaRestanteParaGanarX);
+                    
+                    ejemplos.add(inputs);
+                    ejemplosVop.add(estadoTablero.VOp);
 
 
                     if (!estadoTablero.finalizado) {
@@ -104,18 +114,40 @@ public class Main {
                          */
                         //System.out.println("TURNO DE: " + oponente);
 
-
-                        //Mejor pos.
-                        mejorVop = -1;
-                        mejori = -1;
-                        mejorj = -1;
-
-
-                        //2- Calcular posicion para movida probando.
+                        //2- Calculo la probabilidad ACUMULADA de realizar cada movida probando
+                        Map<Integer, Double> probabilidades = new HashMap();
+                        probabilidades.put(0, 0d);
+                        Map<Integer, Integer> posicion = new HashMap();
+                        double total = 0;
+                        int contador = 1;
+                        for(int i=0; i<tablero.SIZE; i++){
+                            for(int j=0; j<tablero.SIZE; j++){
+                                if(tablero.grilla[i][j] == Tablero.Marca.N){
+                                    double aux = jugador2.setMarca(i, j, true);
+                                    probabilidades.put(contador, probabilidades.get(contador-1) + Math.exp(aux));
+                                    total=probabilidades.get(contador);
+                                    posicion.put(contador, i*10 + j);
+                                    contador++;
+                                }
+                            }
+                        }
                         
 
-                        //3- Mover
-                        
+                        //3- Muevo con cierto margen de azar para balancear explotacion y exploracion
+                        Random r = new Random();
+                        double p = r.nextDouble();
+                        boolean bandera = false;
+                        int contador2 = -1;
+                        while(!bandera){
+                            contador2++;
+                            bandera = p<(probabilidades.get(contador2)/total);
+                        }
+                        double posicionJ2 = probabilidades.get(contador2)%10d;
+                        int posicionJ = (int) posicionJ2;
+                        double posicionI2 = probabilidades.get(contador2)/10d;
+                        int posicionI = (int) posicionI2;
+                        jugador2.setMarca(posicionI, posicionJ, false);
+                        estadoTablero = jugador2.tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
 
                         //imprimir ta-te-ti
                         //tablero.imprimir();
@@ -126,44 +158,36 @@ public class Main {
 
                     if (estadoTablero.finalizado && !estadoTablero.empate) {
                         if (estadoTablero.ganador == Tablero.Marca.X) {
-
-                            VEnt = 100;
                             countGanoX++;
-
                         } else {
-
-                            VEnt = -100;
                             countGanoO++;
                         }
-
                         System.out.println("GANO: " + estadoTablero.ganador);
-
                     } else if (estadoTablero.empate) {
-
-                        VEnt = 0;
                         countEmpate++;
                         System.out.println("EMPATE!!! ");
-
                     } else {
-
                         //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
                         EstadoTablero trucho = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
+<<<<<<< HEAD
                         VEnt = trucho.VOp;
                     }
                     ejemplosVent.put(cant_movimientos, VEnt);
                     //actualizo wi's con minimos cuadrados
                     
+=======
+                    }                    
+>>>>>>> b14d3e79d8f89d64cae2e25700dbfb8c31c92dc4
                     
                     //imprimo datos de jugada.
                     //coeficientes.imprimir();
                     //Actualizar MU
                     mu -= STEP_MU;
-                    cant_movimientos++;
 
                 }
-                for(int i=0; i<=cant_movimientos; i++){
-                    jugador1.coeficientes.actualizarCoeficientes(tablero, mu, ejemplosVent.get(i), ejemplosVop.get(i), Tablero.Marca.X);
-                }
+                //Actualizo los coeficientes de la red neuronal con backpropagation
+                jugador2.red.backpropagation(ejemplos, ejemplosVop);
+                
                 cantIteraciones++;
 
             }
@@ -184,6 +208,5 @@ public class Main {
     
         }
     }
-    
-    
+       
 }

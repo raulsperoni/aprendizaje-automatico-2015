@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 500;
+            int MAX_IT = 30;
             float STEP_MU = 0.00001f;  //TODO: ver esto
             int SIZE = 3;
 
@@ -123,7 +123,7 @@ public class Main {
                         for(int i=0; i<tablero.SIZE; i++){
                             for(int j=0; j<tablero.SIZE; j++){
                                 if(tablero.grilla[i][j] == Tablero.Marca.N){
-                                    double aux = jugador2.setMarca(i, j, true);
+                                    double aux = jugador2.setMarca(i, j,jugador2.marca, true, true);
                                     probabilidades.put(contador, probabilidades.get(contador-1) + Math.exp(aux));
                                     total=probabilidades.get(contador);
                                     posicion.put(contador, i*10 + j);
@@ -138,15 +138,15 @@ public class Main {
                         double p = r.nextDouble();
                         boolean bandera = false;
                         int contador2 = -1;
-                        while(!bandera){
+                        while((!bandera) && (probabilidades.get(contador2+1)!=null)){
                             contador2++;
-                            bandera = p<(probabilidades.get(contador2)/total);
+                            bandera = p<(probabilidades.get(contador2))/total;
                         }
-                        double posicionJ2 = probabilidades.get(contador2)%10d;
+                        double posicionJ2 = posicion.get(contador2)%10d;
                         int posicionJ = (int) posicionJ2;
-                        double posicionI2 = probabilidades.get(contador2)/10d;
+                        double posicionI2 = posicion.get(contador2)/10d;
                         int posicionI = (int) posicionI2;
-                        jugador2.setMarca(posicionI, posicionJ, false);
+                        jugador2.setMarca(posicionI, posicionJ, jugador2.marca, false, false);
                         estadoTablero = jugador2.tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
 
                         //imprimir ta-te-ti
@@ -159,13 +159,16 @@ public class Main {
                     if (estadoTablero.finalizado && !estadoTablero.empate) {
                         if (estadoTablero.ganador == Tablero.Marca.X) {
                             countGanoX++;
+                            tablero.imprimir();
                         } else {
                             countGanoO++;
+                            tablero.imprimir();
                         }
                         System.out.println("GANO: " + estadoTablero.ganador);
                     } else if (estadoTablero.empate) {
                         countEmpate++;
                         System.out.println("EMPATE!!! ");
+                        tablero.imprimir();
                     } else {
                         //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
                         EstadoTablero trucho = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
@@ -183,7 +186,7 @@ public class Main {
                 cantIteraciones++;
 
             }
-
+            
             System.out.println("########################");
             int cant = countGanoO + countGanoX + countEmpate;
             System.out.println("Cantidad de juegos: " + cant);
@@ -197,7 +200,7 @@ public class Main {
 
 
         }catch(Exception e){
-    
+            e.printStackTrace();
         }
     }
        

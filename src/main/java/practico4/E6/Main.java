@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 30;
+            int MAX_IT = 100;
             float STEP_MU = 0.00001f;  //TODO: ver esto
             int SIZE = 3;
 
@@ -145,10 +145,10 @@ public class Main {
                             contador2++;
                             bandera = p<(probabilidades.get(contador2))/total;
                         }
-                        System.out.println(String.format("%10s", p));
+                        /*System.out.println(String.format("%10s", p));
                         System.out.println(String.format("%10s", contador2));
                         System.out.println(String.format("%10s", posicion.size()));
-                        System.out.println(String.format("%10s", probabilidades.size()));
+                        System.out.println(String.format("%10s", probabilidades.size()));*/
                         double posicionJ2 = posicion.get(contador2)%10d;
                         int posicionJ = (int) posicionJ2;
                         double posicionI2 = posicion.get(contador2)/10d;
@@ -168,16 +168,16 @@ public class Main {
                     if (estadoTablero.finalizado && !estadoTablero.empate) {
                         if (estadoTablero.ganador == Tablero.Marca.X) {
                             countGanoX++;
-                            tablero.imprimir();
+                            //tablero.imprimir();
                         } else {
                             countGanoO++;
-                            tablero.imprimir();
+                            //tablero.imprimir();
                         }
                         System.out.println("GANO: " + estadoTablero.ganador);
                     } else if (estadoTablero.empate) {
                         countEmpate++;
                         System.out.println("EMPATE!!! ");
-                        tablero.imprimir();
+                        //tablero.imprimir();
                     } else {
                         //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
                         EstadoTablero trucho = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);

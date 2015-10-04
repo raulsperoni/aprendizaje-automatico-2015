@@ -65,7 +65,11 @@ public class Tablero {
 
         Marca ganador = null;
         if (juegofin && !empate){
-            ganador = m;
+            if(cantMinimaRestanteParaGanarX == 0){
+                ganador = Marca.X;
+            }else {
+                ganador = Marca.O;
+            }
         }
 
         //Seteo los resultados
@@ -86,6 +90,7 @@ public class Tablero {
     
     public void actualizarEstado(){
         Marca m = Marca.X;
+        Marca r = Marca.O;
         int cantLineasInutilesM = 0;
             int minimoParaGanarM = SIZE;
             int cantLineasInutilesR = 0;
@@ -119,12 +124,12 @@ public class Tablero {
                 int cantRestantesParaGanar = SIZE;
                 for (int l = 0; l<SIZE; l++){
                     if(esPosibleGanar){
-                        if(grilla[k][l] == m){
-                            cantLineasInutilesR += 1;
-                            esPosibleGanar = false;
+                        if(grilla[k][l] == r){
+                            cantRestantesParaGanar -= 1;
                         }
                         else if(grilla[k][l] != Tablero.Marca.N){
-                            cantRestantesParaGanar -= 1;
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false;
                         }
                     }
                 }
@@ -160,12 +165,12 @@ public class Tablero {
                 int cantRestantesParaGanar = SIZE;
                 for (int l = 0; l<SIZE; l++){
                     if(esPosibleGanar){
-                        if(grilla[l][k] == m){
-                            cantLineasInutilesR += 1;
-                            esPosibleGanar = false;
+                        if(grilla[l][k] == r){
+                            cantRestantesParaGanar -= 1;
                         }
                         else if(grilla[l][k] != Tablero.Marca.N){
-                            cantRestantesParaGanar -= 1;
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false;
                         }
                     }
                 }
@@ -215,13 +220,12 @@ public class Tablero {
             cantRestantesParaGanar = SIZE;
             for (int k = 0; k<SIZE; k++){
                 if(esPosibleGanar){
-                    if(grilla[k][k] == m){
-                        cantLineasInutilesR += 1;
-                        esPosibleGanar = false;   
-
+                    if(grilla[k][k] == r){
+                            cantRestantesParaGanar -= 1;
                         }
                         else if(grilla[k][k] != Tablero.Marca.N){
-                            cantRestantesParaGanar -= 1; 
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false;
                         }
                 }
             }
@@ -233,14 +237,12 @@ public class Tablero {
             cantRestantesParaGanar = SIZE;
             for (int k = 0; k<SIZE; k++){
                 if(esPosibleGanar){
-                    if(grilla[k][SIZE-k-1] == m){
+                    if(grilla[k][SIZE-k-1] == r){
+                        cantRestantesParaGanar -= 1; 
+                    } else if(grilla[k][k] != Tablero.Marca.N){
                         cantLineasInutilesR += 1;
-                        esPosibleGanar = false;   
-
-                        }
-                        else if(grilla[k][k] != Tablero.Marca.N){
-                            cantRestantesParaGanar -= 1; 
-                        }
+                        esPosibleGanar = false;  
+                    }
                 }
             }
             if(minimoParaGanarR > cantRestantesParaGanar && esPosibleGanar){

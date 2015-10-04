@@ -1,6 +1,5 @@
 package practico4.E6;
 
-import practico1.*;
 
 /**
  * Created by RSperoni on 19/08/2015.

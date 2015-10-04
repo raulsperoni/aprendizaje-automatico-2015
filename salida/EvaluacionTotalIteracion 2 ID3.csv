@@ -1,2 +1,0 @@
-nomExperimento;duracion;cantEjemplosEntrenamiento;cantCantEjemplosPrueba;verdaderosPositivos;falsosPositivos;verdaderosNegativos;falsosNegativos;precision;recuperacion;medidaF;fallOf;errors;intervaloconfianza
-ID3 TOTAL;0;6499;1625;762.0;35.0;820.0;8.0;0.9560853199498118;0.9896103896103896;0.9725590299936183;0.04093567251461988;0.006616402523465148;[0.0026745639015443266,0.01055824114538597]

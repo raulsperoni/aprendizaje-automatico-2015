@@ -149,9 +149,6 @@ public class Main {
                         //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
                         EstadoTablero trucho = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
                         VEnt = trucho.VOp;
-
-
-
                     }
                     ejemplosVent.put(cant_movimientos, VEnt);
                     //actualizo wi's con minimos cuadrados

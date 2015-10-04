@@ -32,7 +32,7 @@ public class Main {
 
             //declaro los jugadores
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
-            JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O);
+            JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
             float mu = 0.01f;
             int cantIteraciones = 0;

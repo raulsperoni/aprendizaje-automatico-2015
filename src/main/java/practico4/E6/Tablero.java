@@ -62,7 +62,9 @@ public class Tablero {
     public EstadoTablero getEstadoTablero(Marca m, Coeficientes coeficientes) {
         boolean empate = ((cantFichasX + cantFichasO == SIZE * SIZE) && (cantMinimaRestanteParaGanarX != 0) && (cantMinimaRestanteParaGanarO != 0));
         boolean juegofin = ((cantMinimaRestanteParaGanarX == 0) || (cantMinimaRestanteParaGanarO == 0) || (cantFichasX + cantFichasO == SIZE * SIZE));
-
+        System.out.println("empate: "+empate);
+        System.out.println("juegofin: "+juegofin);
+        System.out.println("cX"+cantFichasX +"cX"+cantFichasO+"cantminX"+cantMinimaRestanteParaGanarX+"cantminO"+cantMinimaRestanteParaGanarO);
         Marca ganador = null;
         if (juegofin && !empate){
             if(cantMinimaRestanteParaGanarX == 0){

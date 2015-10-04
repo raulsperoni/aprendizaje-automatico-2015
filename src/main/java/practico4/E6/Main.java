@@ -92,7 +92,7 @@ public class Main {
                     }
 
                     //imprimir ta-te-ti
-                    //tablero.imprimir();
+                    tablero.imprimir();
 
                     //Guardo un ejemplo para que el jugador con red neuronal entrene al terminar la partida
                     List<Double> inputs = new ArrayList();
@@ -141,7 +141,10 @@ public class Main {
                         while((!bandera) && (probabilidades.get(contador2+1)!=null)){
                             contador2++;
                             bandera = p<(probabilidades.get(contador2))/total;
-                        }
+                        }                        
+                        System.out.println("contador2: "+contador2);
+                        double pos= posicion.get(contador2);
+                        System.out.println("posicion: "+pos);                        
                         double posicionJ2 = posicion.get(contador2)%10d;
                         int posicionJ = (int) posicionJ2;
                         double posicionI2 = posicion.get(contador2)/10d;
@@ -150,7 +153,7 @@ public class Main {
                         estadoTablero = jugador2.tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
 
                         //imprimir ta-te-ti
-                        //tablero.imprimir();
+                        tablero.imprimir();
 
 
                     }

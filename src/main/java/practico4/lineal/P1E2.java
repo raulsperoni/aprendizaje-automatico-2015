@@ -102,7 +102,7 @@ public class P1E2 {
                     for (int i = 0; i < tablero.SIZE; i++) {
                         for (int j = 0; j < tablero.SIZE; j++) {
                             try {
-                                estadoTableroPrueba = tablero.setMarca(i, j, oponente, true, true, coeficienteslineal);
+                                //estadoTableroPrueba = tablero.setMarca(i, j, oponente, true, true, coeficienteslineal);
                                 if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
                                     mejorVop = estadoTableroPrueba.VOp;
                                     mejori = i;
@@ -114,7 +114,7 @@ public class P1E2 {
                     }
 
                     //3- Mover
-                    estadoTablero = tablero.setMarca(mejori, mejorj, oponente, false, false, coeficienteslineal);
+                    //estadoTablero = tablero.setMarca(mejori, mejorj, oponente, false, false, coeficienteslineal);
 
                     //imprimir ta-te-ti
                     tablero.imprimir();

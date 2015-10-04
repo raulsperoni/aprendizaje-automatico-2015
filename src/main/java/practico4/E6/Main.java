@@ -29,13 +29,13 @@ public class Main {
 
             //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
-            jugador1.coeficientes.w0 = 459.26056f;
-            jugador1.coeficientes.w1 = -311.13654f;
-            jugador1.coeficientes.w2 = 771.94965f;
-            jugador1.coeficientes.w3 = -75.19854f;
-            jugador1.coeficientes.w4 = -188.01028f;
-            jugador1.coeficientes.w5 = -508.89853f;
-            jugador1.coeficientes.indep = 0.18602931f;
+            jugador1.coeficientes.w0 = 2.9353569f;
+            jugador1.coeficientes.w1 = -0.6056756f;
+            jugador1.coeficientes.w2 = 1.9616599f;
+            jugador1.coeficientes.w3 = 1.2146791f;
+            jugador1.coeficientes.w4 = -1.3071471f;
+            jugador1.coeficientes.w5 = -4.862419f;
+            jugador1.coeficientes.indep = 0.46656638f;
             JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
             float mu = 0.01f;
@@ -86,9 +86,10 @@ public class Main {
 
                     //3- Mover
                     try{
-                        estadoTablero = jugador1.setMarca(mejori, mejorj, Tablero.Marca.X, false, false);
+                        jugador1.setMarca(mejori, mejorj, Tablero.Marca.X, false, false);
+                        estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
                     } catch(Exception jugadaProhibidaIgnore) {
-
+                        jugadaProhibidaIgnore.printStackTrace();
                     }
 
                     //imprimir ta-te-ti
@@ -118,6 +119,8 @@ public class Main {
                         Map<Integer, Double> probabilidades = new HashMap();
                         probabilidades.put(0, 0d);
                         Map<Integer, Integer> posicion = new HashMap();
+                        posicion.put(0, 0);
+                        
                         double total = 0;
                         int contador = 1;
                         for(int i=0; i<tablero.SIZE; i++){
@@ -142,12 +145,18 @@ public class Main {
                             contador2++;
                             bandera = p<(probabilidades.get(contador2))/total;
                         }
+                        System.out.println(String.format("%10s", p));
+                        System.out.println(String.format("%10s", contador2));
+                        System.out.println(String.format("%10s", posicion.size()));
+                        System.out.println(String.format("%10s", probabilidades.size()));
                         double posicionJ2 = posicion.get(contador2)%10d;
                         int posicionJ = (int) posicionJ2;
                         double posicionI2 = posicion.get(contador2)/10d;
                         int posicionI = (int) posicionI2;
-                        jugador2.setMarca(posicionI, posicionJ, jugador2.marca, false, false);
-                        estadoTablero = jugador2.tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
+                        if(contador2 != 0){
+                            jugador2.setMarca(posicionI, posicionJ, jugador2.marca, false, false);
+                            estadoTablero = tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
+                        }
 
                         //imprimir ta-te-ti
                         //tablero.imprimir();

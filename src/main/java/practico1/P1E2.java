@@ -7,7 +7,7 @@ package practico1;
 public class P1E2 {
 
     static float MIN_MU = 0.0000001f;
-    static int MAX_IT = 500;
+    static int MAX_IT = 5000;
     static float STEP_MU = 0.00001f;  //TODO: ver esto
 
 
@@ -116,7 +116,7 @@ public class P1E2 {
                     estadoTablero = tablero.setMarca(mejori, mejorj, oponente, false, false, coeficientes);
 
                     //imprimir ta-te-ti
-                    tablero.imprimir();
+                    //tablero.imprimir();
 
 
                 }
@@ -125,12 +125,12 @@ public class P1E2 {
                 if (estadoTablero.finalizado && !estadoTablero.empate) {
                     if (estadoTablero.ganador == Tablero.Marca.X) {
 
-                        VEnt = 100;
+                        VEnt = 1;
                         countGanoX++;
 
                     } else {
 
-                        VEnt = -100;
+                        VEnt = -1;
                         countGanoO++;
                     }
 

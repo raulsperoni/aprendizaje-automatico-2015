@@ -138,12 +138,12 @@ public class Tablero {
                 int cantRestantesParaGanar = SIZE;
                 for (int l = 0; l<SIZE; l++){
                     if(esPosibleGanar){
-                        if(this.grilla[k][l] == m){
-                            cantLineasInutilesR += 1;
-                            esPosibleGanar = false;
+                        if(this.grilla[k][l] == r){
+                            cantRestantesParaGanar -= 1;
                         }
                         else if(this.grilla[k][l] != Marca.N){
-                            cantRestantesParaGanar -= 1;
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false;
                         }
                     }
                 }
@@ -179,12 +179,12 @@ public class Tablero {
                 int cantRestantesParaGanar = SIZE;
                 for (int l = 0; l<SIZE; l++){
                     if(esPosibleGanar){
-                        if(this.grilla[l][k] == m){
-                            cantLineasInutilesR += 1;
-                            esPosibleGanar = false;
+                        if(this.grilla[l][k] == r){
+                            cantRestantesParaGanar -= 1;
                         }
                         else if(this.grilla[l][k] != Marca.N){
-                            cantRestantesParaGanar -= 1;
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false;
                         }
                     }
                 }
@@ -234,13 +234,12 @@ public class Tablero {
             cantRestantesParaGanar = SIZE;
             for (int k = 0; k<SIZE; k++){
                 if(esPosibleGanar){
-                    if(this.grilla[k][k] == m){
-                        cantLineasInutilesR += 1;
-                        esPosibleGanar = false;   
-
+                    if(this.grilla[k][k] == r){
+                          cantRestantesParaGanar -= 1;
                         }
-                        else if(this.grilla[k][k] != Marca.N){
-                            cantRestantesParaGanar -= 1; 
+                        else if(this.grilla[k][k] != Marca.N){ 
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false; 
                         }
                 }
             }
@@ -252,13 +251,12 @@ public class Tablero {
             cantRestantesParaGanar = SIZE;
             for (int k = 0; k<SIZE; k++){
                 if(esPosibleGanar){
-                    if(this.grilla[k][SIZE-k-1] == m){
-                        cantLineasInutilesR += 1;
-                        esPosibleGanar = false;   
-
+                    if(this.grilla[k][SIZE-k-1] == r){
+                          cantRestantesParaGanar -= 1;
                         }
-                        else if(this.grilla[k][k] != Marca.N){
-                            cantRestantesParaGanar -= 1; 
+                        else if(this.grilla[k][k] != Marca.N){   
+                            cantLineasInutilesR += 1;
+                            esPosibleGanar = false; 
                         }
                 }
             }

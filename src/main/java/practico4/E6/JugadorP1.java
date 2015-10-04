@@ -80,10 +80,10 @@ public class JugadorP1 {
         /*Analizo el tablero sin preocuparme por el siguiente movimiento */
         else{
             //Si es de mentira, vuelvo el movimiento para atras.
-            EstadoTablero estado = tablero.getEstadoTablero(m, coeficientes);
             if (esDeMentira) {
                 tablero.setMarca(i, j, Tablero.Marca.N);
             }
+            EstadoTablero estado = tablero.getEstadoTablero(m, coeficientes);
             return estado;
         }
     }

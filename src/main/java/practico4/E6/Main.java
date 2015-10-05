@@ -11,6 +11,13 @@ import java.util.Random;
  * @author santiago
  */
 public class Main {
+	
+    //Estadisticas
+    private static int countGanoX = 0;
+    private static int countGanoO = 0;
+    private static int countEmpate = 0;
+    private static float mu = 0.01f;
+    private static float STEP_MU = 0.00001f;
 
     /**
      * @param args the command line arguments
@@ -19,13 +26,10 @@ public class Main {
         try{
             float MIN_MU = 0.0000001f;
             int MAX_IT = 5;
-            float STEP_MU = 0.00001f;  //TODO: ver esto
+            
             int SIZE = 3;
 
-            //Estadisticas
-            int countGanoX = 0;
-            int countGanoO = 0;
-            int countEmpate = 0;
+
 
             //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
@@ -38,58 +42,103 @@ public class Main {
             jugador1.coeficientes.indep = 0.46656638f;
             JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
-            float mu = 0.01f;
             int cantIteraciones = 0;
-            
-            //Tablero1
-            Tablero tablero1 = new Tablero(SIZE);
-            jugador1.tablero = tablero1;
-            jugador2.tablero = tablero1;
-            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
-            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
-            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
-            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-            jugador2.setMarca(1, 1, Tablero.Marca.O, false, false);
-            tablero1.imprimir();
-            
-            //Tablero2
-            Tablero tablero2 = new Tablero(SIZE);
-            jugador1.tablero = tablero2;
-            jugador2.tablero = tablero2;
-            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
-            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-            jugador1.setMarca(0, 2, Tablero.Marca.X, false, false);
-            jugador2.setMarca(2, 0, Tablero.Marca.O, false, false);
-            tablero2.imprimir();
-            
-            //Tablero3
-            Tablero tablero3 = new Tablero(SIZE);
-            jugador1.tablero = tablero3;
-            jugador2.tablero = tablero3;
-            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-            tablero3.imprimir();
-            
-            //Tablero4
-            Tablero tablero4 = new Tablero(SIZE);
-            jugador1.tablero = tablero4;
-            jugador2.tablero = tablero4;
-            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
-            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
-            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
-            tablero4.imprimir();
-            
-            //Tablero5
-            Tablero tablero5 = new Tablero(SIZE);
-            jugador1.tablero = tablero5;
-            jugador2.tablero = tablero5;
-            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
-            tablero5.imprimir();
-
+            int entrenamiento = 1;
+            for(int i=0;i<entrenamiento;i++)
+            {
+	            //Tablero1
+	            Tablero tablero1 = new Tablero(SIZE);
+	            jugador1.tablero = tablero1;
+	            jugador2.tablero = tablero1;
+	            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(1, 1, Tablero.Marca.O, false, false);
+	            tablero1.imprimir();
+	            jugar(tablero1, jugador1, jugador2);
+	            
+	            //Tablero2
+	            Tablero tablero2 = new Tablero(SIZE);
+	            jugador1.tablero = tablero2;
+	            jugador2.tablero = tablero2;
+	            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(0, 2, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(2, 0, Tablero.Marca.O, false, false);
+	            tablero2.imprimir();
+	            jugar(tablero2, jugador1, jugador2);
+	            
+	            //Tablero3
+	            Tablero tablero3 = new Tablero(SIZE);
+	            jugador1.tablero = tablero3;
+	            jugador2.tablero = tablero3;
+	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+	            tablero3.imprimir();
+	            jugar(tablero3, jugador1, jugador2);
+	            
+	            //Tablero4
+	            Tablero tablero4 = new Tablero(SIZE);
+	            jugador1.tablero = tablero4;
+	            jugador2.tablero = tablero4;
+	            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+	            tablero4.imprimir();
+	            jugar(tablero4, jugador1, jugador2);
+	            
+	            //Tablero5
+	            Tablero tablero5 = new Tablero(SIZE);
+	            jugador1.tablero = tablero5;
+	            jugador2.tablero = tablero5;
+	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+	            tablero5.imprimir();
+	            jugar(tablero5, jugador1, jugador2);
+	            
+	            //Tablero6
+	            Tablero tablero6 = new Tablero(SIZE);
+	            jugador1.tablero = tablero6;
+	            jugador2.tablero = tablero6;
+	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+	            tablero6.imprimir();
+	            jugar(tablero6, jugador1, jugador2);
+	            
+	            //Tablero7
+	            Tablero tablero7 = new Tablero(SIZE);
+	            jugador1.tablero = tablero7;
+	            jugador2.tablero = tablero7;
+	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+	            tablero7.imprimir();
+	            jugar(tablero7, jugador1, jugador2);
+	            
+	            //Tablero8
+	            Tablero tablero8 = new Tablero(SIZE);
+	            jugador1.tablero = tablero8;
+	            jugador2.tablero = tablero8;
+	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
+	            tablero8.imprimir();
+	            jugar(tablero8, jugador1, jugador2);
+	            
+	            //Tablero9
+	            Tablero tablero9 = new Tablero(SIZE);
+	            jugador1.tablero = tablero9;
+	            jugador2.tablero = tablero9;
+	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
+	            tablero9.imprimir();
+	            jugar(tablero9, jugador1, jugador2);
+            }
             
             while (mu > MIN_MU && cantIteraciones < MAX_IT) {
 
@@ -97,154 +146,7 @@ public class Main {
                 Tablero tablero = new Tablero(SIZE);
                 jugador1.tablero = tablero;
                 jugador2.tablero = tablero;                
-                EstadoTablero estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
-                EstadoTablero estadoTableroPrueba;
-                List<List<Double>> ejemplos = new ArrayList();
-                List<Double> ejemplosVop = new ArrayList();
-
-                //Movimientos
-                while (!estadoTablero.finalizado) {
-
-
-                    /**
-                     * JUGADOR PRACTICO 1
-                     */
-                    //System.out.println("TURNO DE: " + jugador);
-
-
-                    //Mejor pos.
-                    double mejorVop = -1;
-                    int mejori = -1;
-                    int mejorj = -1;
-
-
-                    //2- Calcular posicion para movida probando.
-                    for (int i = 0; i < tablero.SIZE; i++) {
-                        for (int j = 0; j < tablero.SIZE; j++) {
-                            try {
-                                estadoTableroPrueba = jugador1.setMarca(i, j, Tablero.Marca.X, true, true);
-                                if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
-                                    mejorVop = estadoTableroPrueba.VOp;
-                                    mejori = i;
-                                    mejorj = j;
-                                }
-                            } catch (Exception jugadaProhibidaIgnored) {
-                            }
-                        }
-                    }
-
-                    //3- Mover
-                    try{
-                        jugador1.setMarca(mejori, mejorj, Tablero.Marca.X, false, false);
-                        estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
-                    } catch(Exception jugadaProhibidaIgnore) {
-                        jugadaProhibidaIgnore.printStackTrace();
-                    }
-
-                    //imprimir ta-te-ti
-                    tablero.imprimir();
-
-                    //Guardo un ejemplo para que el jugador con red neuronal entrene al terminar la partida
-                    List<Double> inputs = new ArrayList();
-                    inputs.add((double) jugador1.tablero.cantFichasO);
-                    inputs.add((double) jugador1.tablero.cantFichasX);
-                    inputs.add((double) jugador1.tablero.cantLineasInutilesParaO);
-                    inputs.add((double) jugador1.tablero.cantLineasInutilesParaX);
-                    inputs.add((double) jugador1.tablero.cantMinimaRestanteParaGanarO);
-                    inputs.add((double) jugador1.tablero.cantMinimaRestanteParaGanarX);
-                    
-                    ejemplos.add(inputs);
-                    ejemplosVop.add(estadoTablero.VOp);
-
-
-                    if (!estadoTablero.finalizado) {
-
-                        /**
-                         * JUGADOR PRACTICO 4
-                         */
-                        //System.out.println("TURNO DE: " + oponente);
-
-                        //2- Calculo la probabilidad ACUMULADA de realizar cada movida probando
-                        Map<Integer, Double> probabilidades = new HashMap();
-                        probabilidades.put(0, 0d);
-                        Map<Integer, Integer> posicion = new HashMap();
-                        posicion.put(0, 0);
-                        
-                        double total = 0;
-                        int contador = 1;
-                        for(int i=0; i<tablero.SIZE; i++){
-                            for(int j=0; j<tablero.SIZE; j++){
-                                if(tablero.grilla[i][j] == Tablero.Marca.N){
-                                    double aux = jugador2.setMarca(i, j,jugador2.marca, true, true);
-                                    probabilidades.put(contador, probabilidades.get(contador-1) + Math.exp(aux));
-                                    total=probabilidades.get(contador);
-                                    posicion.put(contador, i*10 + j);
-                                    contador++;
-                                }
-                            }
-                        }
-                        
-
-                        //3- Muevo con cierto margen de azar para balancear explotacion y exploracion
-                        Random r = new Random();
-                        double p = r.nextDouble();
-                        boolean bandera = false;
-                        int contador2 = -1;
-                        while((!bandera) && (probabilidades.get(contador2+1)!=null)){
-                            contador2++;
-                            bandera = p<(probabilidades.get(contador2))/total;           
-                        }
-                        /*           
-                        System.out.println("contador2: "+contador2);
-                        double pos= posicion.get(contador2);
-                        System.out.println("posicion: "+pos); 
-                        System.out.println(String.format("%10s", p));
-                        System.out.println(String.format("%10s", contador2));
-                        System.out.println(String.format("%10s", posicion.size()));
-                        System.out.println(String.format("%10s", probabilidades.size()));*/
-                        double posicionJ2 = posicion.get(contador2)%10d;
-                        int posicionJ = (int) posicionJ2;
-                        double posicionI2 = posicion.get(contador2)/10d;
-                        int posicionI = (int) posicionI2;
-                        if(contador2 != 0){
-                            jugador2.setMarca(posicionI, posicionJ, jugador2.marca, false, false);
-                            estadoTablero = tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
-                        }
-
-                        //imprimir ta-te-ti
-                        tablero.imprimir();
-
-
-                    }
-
-
-                    if (estadoTablero.finalizado && !estadoTablero.empate) {
-                        if (estadoTablero.ganador == Tablero.Marca.X) {
-                            countGanoX++;
-                            //tablero.imprimir();
-                        } else {
-                            countGanoO++;
-                            //tablero.imprimir();
-                        }
-                        System.out.println("GANO: " + estadoTablero.ganador);
-                    } else if (estadoTablero.empate) {
-                        countEmpate++;
-                        System.out.println("EMPATE!!! ");
-                        //tablero.imprimir();
-                    } else {
-                        //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
-                        EstadoTablero trucho = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
-                    }                    
-                    
-                    //imprimo datos de jugada.
-                    //coeficientes.imprimir();
-                    //Actualizar MU
-                    mu -= STEP_MU;
-
-                }
-                //Actualizo los coeficientes de la red neuronal con backpropagation
-                jugador2.red.backpropagation(ejemplos, ejemplosVop);
-                
+                jugar(tablero,jugador1,jugador2);                
                 cantIteraciones++;
 
             }
@@ -265,5 +167,160 @@ public class Main {
             e.printStackTrace();
         }
     }
+    public static void jugar(Tablero tablero, JugadorP1 jugador1,JugadorRefuerzo jugador2)
+    {
+    try{
+    	EstadoTablero estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
+        EstadoTablero estadoTableroPrueba;
+        List<List<Double>> ejemplos = new ArrayList();
+        List<Double> ejemplosVop = new ArrayList();
+
+        //Movimientos
+        while (!estadoTablero.finalizado) {
+
+
+            /**
+             * JUGADOR PRACTICO 1
+             */
+            //System.out.println("TURNO DE: " + jugador);
+
+
+            //Mejor pos.
+            double mejorVop = -1;
+            int mejori = -1;
+            int mejorj = -1;
+
+
+            //2- Calcular posicion para movida probando.
+            for (int i = 0; i < tablero.SIZE; i++) {
+                for (int j = 0; j < tablero.SIZE; j++) {
+                    try {
+                        estadoTableroPrueba = jugador1.setMarca(i, j, Tablero.Marca.X, true, true);
+                        if (mejorVop == -1 || estadoTableroPrueba.VOp > mejorVop) {
+                            mejorVop = estadoTableroPrueba.VOp;
+                            mejori = i;
+                            mejorj = j;
+                        }
+                    } catch (Exception jugadaProhibidaIgnored) {
+                    }
+                }
+            }
+
+            //3- Mover
+            try{
+                jugador1.setMarca(mejori, mejorj, Tablero.Marca.X, false, false);
+                estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
+            } catch(Exception jugadaProhibidaIgnore) {
+                jugadaProhibidaIgnore.printStackTrace();
+            }
+
+            //imprimir ta-te-ti
+            tablero.imprimir();
+
+            //Guardo un ejemplo para que el jugador con red neuronal entrene al terminar la partida
+            List<Double> inputs = new ArrayList();
+            inputs.add((double) jugador1.tablero.cantFichasO);
+            inputs.add((double) jugador1.tablero.cantFichasX);
+            inputs.add((double) jugador1.tablero.cantLineasInutilesParaO);
+            inputs.add((double) jugador1.tablero.cantLineasInutilesParaX);
+            inputs.add((double) jugador1.tablero.cantMinimaRestanteParaGanarO);
+            inputs.add((double) jugador1.tablero.cantMinimaRestanteParaGanarX);
+            
+            ejemplos.add(inputs);
+            ejemplosVop.add(estadoTablero.VOp);
+
+
+            if (!estadoTablero.finalizado) {
+
+                /**
+                 * JUGADOR PRACTICO 4
+                 */
+                //System.out.println("TURNO DE: " + oponente);
+
+                //2- Calculo la probabilidad ACUMULADA de realizar cada movida probando
+                Map<Integer, Double> probabilidades = new HashMap();
+                probabilidades.put(0, 0d);
+                Map<Integer, Integer> posicion = new HashMap();
+                posicion.put(0, 0);
+                
+                double total = 0;
+                int contador = 1;
+                for(int i=0; i<tablero.SIZE; i++){
+                    for(int j=0; j<tablero.SIZE; j++){
+                        if(tablero.grilla[i][j] == Tablero.Marca.N){
+                            double aux = jugador2.setMarca(i, j,jugador2.marca, true, true);
+                            probabilidades.put(contador, probabilidades.get(contador-1) + Math.exp(aux));
+                            total=probabilidades.get(contador);
+                            posicion.put(contador, i*10 + j);
+                            contador++;
+                        }
+                    }
+                }
+                
+
+                //3- Muevo con cierto margen de azar para balancear explotacion y exploracion
+                Random r = new Random();
+                double p = r.nextDouble();
+                boolean bandera = false;
+                int contador2 = -1;
+                while((!bandera) && (probabilidades.get(contador2+1)!=null)){
+                    contador2++;
+                    bandera = p<(probabilidades.get(contador2))/total;           
+                }
+                /*           
+                System.out.println("contador2: "+contador2);
+                double pos= posicion.get(contador2);
+                System.out.println("posicion: "+pos); 
+                System.out.println(String.format("%10s", p));
+                System.out.println(String.format("%10s", contador2));
+                System.out.println(String.format("%10s", posicion.size()));
+                System.out.println(String.format("%10s", probabilidades.size()));*/
+                double posicionJ2 = posicion.get(contador2)%10d;
+                int posicionJ = (int) posicionJ2;
+                double posicionI2 = posicion.get(contador2)/10d;
+                int posicionI = (int) posicionI2;
+                if(contador2 != 0){
+                    jugador2.setMarca(posicionI, posicionJ, jugador2.marca, false, false);
+                    estadoTablero = tablero.getEstadoTablero(Tablero.Marca.O, jugador1.coeficientes);
+                }
+
+                //imprimir ta-te-ti
+                tablero.imprimir();
+
+
+            }
+
+
+            if (estadoTablero.finalizado && !estadoTablero.empate) {
+                if (estadoTablero.ganador == Tablero.Marca.X) {
+                    countGanoX++;
+                    //tablero.imprimir();
+                } else {
+                    countGanoO++;
+                    //tablero.imprimir();
+                }
+                System.out.println("GANO: " + estadoTablero.ganador);
+            } else if (estadoTablero.empate) {
+                countEmpate++;
+                System.out.println("EMPATE!!! ");
+                //tablero.imprimir();
+            } else {
+                //Calculo VEnt desde el punto de vista de X usando el Vop del ultimo turno.
+                EstadoTablero trucho = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
+            }                    
+            
+            //imprimo datos de jugada.
+            //coeficientes.imprimir();
+            //Actualizar MU
+            mu -= STEP_MU;
+
+        }
+        //Actualizo los coeficientes de la red neuronal con backpropagation
+        jugador2.red.backpropagation(ejemplos, ejemplosVop);
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+    }
+    
        
 }

@@ -61,34 +61,10 @@ public class JugadorRefuerzo {
             }else{
 
                 //Estimo el valor de V
-                List<Double> ejemplo = new ArrayList();
-                ejemplo.add((double) tablero.cantFichasO);
-                ejemplo.add((double) tablero.cantFichasX);
-                ejemplo.add((double) tablero.cantLineasInutilesParaO);
-                ejemplo.add((double) tablero.cantLineasInutilesParaX);
-                ejemplo.add((double) tablero.cantMinimaRestanteParaGanarO);
-                ejemplo.add((double) tablero.cantMinimaRestanteParaGanarX);
-                List<Double> Vop = red.evaluar(ejemplo);
+                List<Double> Vop = V();
 
-                //Determino la recompensa
-                double recompensa;
-                if(m == Tablero.Marca.O){
-                    if(tablero.cantMinimaRestanteParaGanarO == 0){
-                        recompensa = 100;
-                    }else if(tablero.cantMinimaRestanteParaGanarX <= 1){
-                        recompensa = -100;
-                    }else{
-                        recompensa = 0;
-                    }
-                }else{
-                    if(tablero.cantMinimaRestanteParaGanarX == 0){
-                        recompensa = 100;
-                    }else if(tablero.cantMinimaRestanteParaGanarO <= 1){
-                        recompensa = -100;
-                    }else{
-                        recompensa = 0;
-                    }
-                }
+                //Determino la recompensa                
+                double recompensa = recompensa(m);
 
                 //Si la jugada era de prueba vuelvo para atras
                 if(esMentira){
@@ -100,5 +76,41 @@ public class JugadorRefuerzo {
         }else{
             throw new Exception("Jugada prohibida");
         }
+    }
+    
+    public List<Double> V()
+    {
+        //Estimo el valor de V
+        List<Double> ejemplo = new ArrayList();
+        ejemplo.add((double) tablero.cantFichasO);
+        ejemplo.add((double) tablero.cantFichasX);
+        ejemplo.add((double) tablero.cantLineasInutilesParaO);
+        ejemplo.add((double) tablero.cantLineasInutilesParaX);
+        ejemplo.add((double) tablero.cantMinimaRestanteParaGanarO);
+        ejemplo.add((double) tablero.cantMinimaRestanteParaGanarX);
+        return red.evaluar(ejemplo);
+    }
+    public double recompensa(Tablero.Marca m)
+    {
+        //Determino la recompensa
+        double recompensa;
+        if(m == Tablero.Marca.O){
+            if(tablero.cantMinimaRestanteParaGanarO == 0){
+                recompensa = 100;
+            }else if(tablero.cantMinimaRestanteParaGanarX <= 1){
+                recompensa = -100;
+            }else{
+                recompensa = 0;
+            }
+        }else{
+            if(tablero.cantMinimaRestanteParaGanarX == 0){
+                recompensa = 100;
+            }else if(tablero.cantMinimaRestanteParaGanarO <= 1){
+                recompensa = -100;
+            }else{
+                recompensa = 0;
+            }
+        }
+        return recompensa;
     }
 }

@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 100;
+            int MAX_IT = 5;
             float STEP_MU = 0.00001f;  //TODO: ver esto
             int SIZE = 3;
 
@@ -41,17 +41,66 @@ public class Main {
             float mu = 0.01f;
             int cantIteraciones = 0;
             
+            //Tablero1
+            Tablero tablero1 = new Tablero(SIZE);
+            jugador1.tablero = tablero1;
+            jugador2.tablero = tablero1;
+            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+            jugador2.setMarca(1, 1, Tablero.Marca.O, false, false);
+            tablero1.imprimir();
+            
+            //Tablero2
+            Tablero tablero2 = new Tablero(SIZE);
+            jugador1.tablero = tablero2;
+            jugador2.tablero = tablero2;
+            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+            jugador1.setMarca(0, 2, Tablero.Marca.X, false, false);
+            jugador2.setMarca(2, 0, Tablero.Marca.O, false, false);
+            tablero2.imprimir();
+            
+            //Tablero3
+            Tablero tablero3 = new Tablero(SIZE);
+            jugador1.tablero = tablero3;
+            jugador2.tablero = tablero3;
+            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+            tablero3.imprimir();
+            
+            //Tablero4
+            Tablero tablero4 = new Tablero(SIZE);
+            jugador1.tablero = tablero4;
+            jugador2.tablero = tablero4;
+            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+            tablero4.imprimir();
+            
+            //Tablero5
+            Tablero tablero5 = new Tablero(SIZE);
+            jugador1.tablero = tablero5;
+            jugador2.tablero = tablero5;
+            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+            tablero5.imprimir();
+
+            
             while (mu > MIN_MU && cantIteraciones < MAX_IT) {
 
                 //Inicializo
                 Tablero tablero = new Tablero(SIZE);
                 jugador1.tablero = tablero;
-                jugador2.tablero = tablero;
+                jugador2.tablero = tablero;                
                 EstadoTablero estadoTablero = tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes);
                 EstadoTablero estadoTableroPrueba;
                 List<List<Double>> ejemplos = new ArrayList();
                 List<Double> ejemplosVop = new ArrayList();
-
 
                 //Movimientos
                 while (!estadoTablero.finalizado) {
@@ -143,19 +192,16 @@ public class Main {
                         int contador2 = -1;
                         while((!bandera) && (probabilidades.get(contador2+1)!=null)){
                             contador2++;
-                            bandera = p<(probabilidades.get(contador2))/total;
-<<<<<<< HEAD
-                        }                        
+                            bandera = p<(probabilidades.get(contador2))/total;           
+                        }
+                        /*           
                         System.out.println("contador2: "+contador2);
                         double pos= posicion.get(contador2);
-                        System.out.println("posicion: "+pos);                        
-=======
-                        }
-                        /*System.out.println(String.format("%10s", p));
+                        System.out.println("posicion: "+pos); 
+                        System.out.println(String.format("%10s", p));
                         System.out.println(String.format("%10s", contador2));
                         System.out.println(String.format("%10s", posicion.size()));
                         System.out.println(String.format("%10s", probabilidades.size()));*/
->>>>>>> 581633d05f9eeb09983859400081dd4140f49a35
                         double posicionJ2 = posicion.get(contador2)%10d;
                         int posicionJ = (int) posicionJ2;
                         double posicionI2 = posicion.get(contador2)/10d;

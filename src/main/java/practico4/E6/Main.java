@@ -20,6 +20,7 @@ public class Main {
     private static float mu = 0.01f;
     private static float STEP_MU = 0.00001f;
     public static double gamma = 0.8;
+    public static int SIZE = 3;
 
     /**
      * @param args the command line arguments
@@ -27,8 +28,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 0;            
-            int SIZE = 3;
+            int MAX_IT = 0;     
             //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
             jugador1.coeficientes.w0 = 2.9353569f;
@@ -41,10 +41,9 @@ public class Main {
             JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
             int cantIteraciones = 0;
-            int entrenamiento = 1;
-            List<Tablero> tablerosEnt= new ArrayList<Tablero>();
+            int entrenamiento = 3;            
             for(int i=0;i<entrenamiento;i++)
-            {
+            {/*
 	            //Tablero1
 	            Tablero tablero1 = new Tablero(SIZE);
 	            jugador1.tablero = tablero1;
@@ -165,14 +164,23 @@ public class Main {
 	            tablero10.imprimir();
 	            tablerosEnt.add(tablero10);
 	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero10, jugador1, jugador2);
+	            jugar(tablero10, jugador1, jugador2);*/
+            	List<Tablero> tablerosEnt = generarTableros(jugador1, jugador2);
+                for (Tablero tablero : tablerosEnt) {
+    				jugador1.tablero = tablero;
+    				jugador2.tablero = tablero;
+    	            tablero.imprimir();
+    	            imprimirVop(jugador1,jugador2);
+    	            jugar(tablero, jugador1, jugador2);
+    			}
+                List<Tablero> tablerosEnt2 = generarTableros(jugador1, jugador2);
+                for (Tablero tablero : tablerosEnt2) {
+    				jugador1.tablero = tablero;
+    				jugador2.tablero = tablero;
+    	            //tablero.imprimir();
+    	            imprimirVop(jugador1,jugador2);
+    			}
             }
-            for (Tablero tablero : tablerosEnt) {
-				jugador1.tablero = tablero;
-				jugador2.tablero = tablero;
-	            tablero.imprimir();
-	            imprimirVop(jugador1,jugador2);
-			}
             
             while (mu > MIN_MU && cantIteraciones < MAX_IT) {
 
@@ -366,5 +374,108 @@ public class Main {
         double VopJ2 = recompensa+gamma*VJ2;	         
         System.out.println("Vop JugadorLineal: "+VopJ1+"Vop JugadorRN: "+VopJ2);
     }   
+    
+    public static List<Tablero> generarTableros(JugadorP1 jugador1, JugadorRefuerzo jugador2)
+    {
+
+        List<Tablero> tablerosEnt= new ArrayList<Tablero>();
+    	try{
+        //Tablero1
+        Tablero tablero1 = new Tablero(SIZE);
+        jugador1.tablero = tablero1;
+        jugador2.tablero = tablero1;
+        jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+        jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+        jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+        jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(1, 1, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero1);
+        
+        //Tablero2
+        Tablero tablero2 = new Tablero(SIZE);
+        jugador1.tablero = tablero2;
+        jugador2.tablero = tablero2;
+        jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+        jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+        jugador1.setMarca(0, 2, Tablero.Marca.X, false, false);
+        jugador2.setMarca(2, 0, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero2);
+        
+        //Tablero3
+        Tablero tablero3 = new Tablero(SIZE);
+        jugador1.tablero = tablero3;
+        jugador2.tablero = tablero3;
+        jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+        jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+        tablerosEnt.add(tablero3);
+        
+        //Tablero4
+        Tablero tablero4 = new Tablero(SIZE);
+        jugador1.tablero = tablero4;
+        jugador2.tablero = tablero4;
+        jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
+        jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+        jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero4);
+        
+        //Tablero5
+        Tablero tablero5 = new Tablero(SIZE);
+        jugador1.tablero = tablero5;
+        jugador2.tablero = tablero5;
+        jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+        jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+        jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero5);
+        
+        //Tablero6
+        Tablero tablero6 = new Tablero(SIZE);
+        jugador1.tablero = tablero6;
+        jugador2.tablero = tablero6;
+        jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
+        jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
+        jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero6);
+        
+        //Tablero7
+        Tablero tablero7 = new Tablero(SIZE);
+        jugador1.tablero = tablero7;
+        jugador2.tablero = tablero7;
+        jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero7);
+        
+        //Tablero8
+        Tablero tablero8 = new Tablero(SIZE);
+        jugador1.tablero = tablero8;
+        jugador2.tablero = tablero8;
+        jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
+        jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero8);
+        
+        //Tablero9
+        Tablero tablero9 = new Tablero(SIZE);
+        jugador1.tablero = tablero9;
+        jugador2.tablero = tablero9;
+        jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+        jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero9);
+        
+        //Tablero10
+        Tablero tablero10 = new Tablero(SIZE);
+        jugador1.tablero = tablero10;
+        jugador2.tablero = tablero10;
+        jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+        jugador2.setMarca(1, 0, Tablero.Marca.O, false, false);
+        tablerosEnt.add(tablero10);
+               
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    	return tablerosEnt; 
+    }
        
 }

@@ -25,12 +25,8 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 5;
-            
+            int MAX_IT = 100;            
             int SIZE = 3;
-
-
-
             //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
             jugador1.coeficientes.w0 = 2.9353569f;
@@ -134,10 +130,19 @@ public class Main {
 	            Tablero tablero9 = new Tablero(SIZE);
 	            jugador1.tablero = tablero9;
 	            jugador2.tablero = tablero9;
-	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
+	            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
 	            tablero9.imprimir();
 	            jugar(tablero9, jugador1, jugador2);
+	            
+	            //Tablero10
+	            Tablero tablero10 = new Tablero(SIZE);
+	            jugador1.tablero = tablero10;
+	            jugador2.tablero = tablero10;
+	            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
+	            jugador2.setMarca(1, 0, Tablero.Marca.O, false, false);
+	            tablero10.imprimir();
+	            jugar(tablero10, jugador1, jugador2);
             }
             
             while (mu > MIN_MU && cantIteraciones < MAX_IT) {

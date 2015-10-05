@@ -1,6 +1,5 @@
 package practico4.E6;
 
-import practico1.*;
 
 
 public class Tablero {
@@ -257,7 +256,7 @@ public class Tablero {
                     if(grilla[k][l] == m){
                         cantFichasM += 1;
                     }
-                    else if(grilla[k][l] != Tablero.Marca.N){
+                    else if(grilla[k][l] == r){
                         cantFichasR += 1;
                     }
                 }
@@ -266,20 +265,12 @@ public class Tablero {
             /**
             * Actualizo todo
             */
-            if (m == Tablero.Marca.X){
-                cantFichasX++;
-                cantMinimaRestanteParaGanarX = minimoParaGanarM;
-                cantMinimaRestanteParaGanarO = minimoParaGanarR;
-                cantLineasInutilesParaX = cantLineasInutilesM;
-                cantLineasInutilesParaO = cantLineasInutilesR;
-            }    
-            else {
-                cantFichasO++;
-                cantMinimaRestanteParaGanarO = minimoParaGanarM;
-                cantMinimaRestanteParaGanarX = minimoParaGanarR;
-                cantLineasInutilesParaO = cantLineasInutilesM;
-                cantLineasInutilesParaX = cantLineasInutilesR;
-            }        
+            cantFichasX = cantFichasM;
+            cantFichasO = cantFichasR;
+            cantMinimaRestanteParaGanarX = minimoParaGanarM;
+            cantMinimaRestanteParaGanarO = minimoParaGanarR;
+            cantLineasInutilesParaX = cantLineasInutilesM;
+            cantLineasInutilesParaO = cantLineasInutilesR;       
     }
 
     public enum Marca {

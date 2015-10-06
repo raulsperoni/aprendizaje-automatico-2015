@@ -28,7 +28,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 100;     
+            int MAX_IT = 200;     
             //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
             jugador1.coeficientes.w0 = 2.9353569f;
@@ -41,10 +41,17 @@ public class Main {
             JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
             int cantIteraciones = 0;
-            int entrenamiento = 1;            
+            int entrenamiento = 0;            
             for(int i=0;i<entrenamiento;i++)
             {
             	List<Tablero> tablerosEnt = generarTableros(jugador1, jugador2);
+            	System.out.println("Vop del Jugador antes de entrenar");
+                for (Tablero tablero : tablerosEnt) {
+    				jugador1.tablero = tablero;
+    				jugador2.tablero = tablero;
+    	            imprimirVop(jugador1,jugador2);
+    			}
+                System.out.println("Comienza a entrenar");
                 for (Tablero tablero : tablerosEnt) {
     				jugador1.tablero = tablero;
     				jugador2.tablero = tablero;
@@ -52,6 +59,7 @@ public class Main {
     	            imprimirVop(jugador1,jugador2);
     	            jugar(tablero, jugador1, jugador2);
     			}
+                System.out.println("Vop del Jugador luego de entrenar");
                 List<Tablero> tablerosEnt2 = generarTableros(jugador1, jugador2);
                 for (Tablero tablero : tablerosEnt2) {
     				jugador1.tablero = tablero;
@@ -68,17 +76,17 @@ public class Main {
                 jugador1.tablero = tablero;
                 jugador2.tablero = tablero;                
                 jugar(tablero,jugador1,jugador2); 
-                imprimirVop(jugador1, jugador2);
+                //imprimirVop(jugador1, jugador2);
                 cantIteraciones++;
 
             }
-            List<Tablero> tablerosEnt2 = generarTableros(jugador1, jugador2);
+            /*List<Tablero> tablerosEnt2 = generarTableros(jugador1, jugador2);
             for (Tablero tablero : tablerosEnt2) {
 				jugador1.tablero = tablero;
 				jugador2.tablero = tablero;
 	            //tablero.imprimir();
 	            imprimirVop(jugador1,jugador2);
-			}
+			}*/
             System.out.println("########################");
             int cant = countGanoO + countGanoX + countEmpate;
             System.out.println("Cantidad de juegos: " + cant);
@@ -258,7 +266,7 @@ public class Main {
         //Determino la recompensa                
         double recompensa = jugador2.recompensa(Tablero.Marca.O);
         double VopJ2 = recompensa+gamma*VJ2;//Math.pow(gamma, jugador2.tablero.cantFichasO+jugador2.tablero.cantFichasX)*VJ2;	         
-        System.out.println("Vop JugadorLineal: "+VopJ1+"Vop JugadorRN: "+VopJ2);
+        System.out.println(VopJ2);
     }   
     
     public static List<Tablero> generarTableros(JugadorP1 jugador1, JugadorRefuerzo jugador2)

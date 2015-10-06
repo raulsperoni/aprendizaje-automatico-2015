@@ -28,7 +28,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             float MIN_MU = 0.0000001f;
-            int MAX_IT = 0;     
+            int MAX_IT = 100;     
             //declaro los jugadores, el jugador1 va a tener coeficientes predefinidos por los resultados del practico 1
             JugadorP1 jugador1 = new JugadorP1(null, Tablero.Marca.X);
             jugador1.coeficientes.w0 = 2.9353569f;
@@ -41,130 +41,9 @@ public class Main {
             JugadorRefuerzo jugador2 = new JugadorRefuerzo(null, Tablero.Marca.O, 0.8);
             //Partidas
             int cantIteraciones = 0;
-            int entrenamiento = 3;            
+            int entrenamiento = 1;            
             for(int i=0;i<entrenamiento;i++)
-            {/*
-	            //Tablero1
-	            Tablero tablero1 = new Tablero(SIZE);
-	            jugador1.tablero = tablero1;
-	            jugador2.tablero = tablero1;
-	            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(1, 1, Tablero.Marca.O, false, false);
-	            tablerosEnt.add(tablero1);
-	            tablero1.imprimir();	
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero1, jugador1, jugador2);
-	            
-	            //Tablero2
-	            Tablero tablero2 = new Tablero(SIZE);
-	            jugador1.tablero = tablero2;
-	            jugador2.tablero = tablero2;
-	            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(0, 2, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(2, 0, Tablero.Marca.O, false, false);
-	            tablerosEnt.add(tablero2);
-	            tablero2.imprimir();
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero2, jugador1, jugador2);
-	            
-	            //Tablero3
-	            Tablero tablero3 = new Tablero(SIZE);
-	            jugador1.tablero = tablero3;
-	            jugador2.tablero = tablero3;
-	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-	            tablerosEnt.add(tablero3);
-	            tablero3.imprimir();
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero3, jugador1, jugador2);
-	            
-	            //Tablero4
-	            Tablero tablero4 = new Tablero(SIZE);
-	            jugador1.tablero = tablero4;
-	            jugador2.tablero = tablero4;
-	            jugador2.setMarca(0, 0, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
-	            tablero4.imprimir();
-	            tablerosEnt.add(tablero4);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero4, jugador1, jugador2);
-	            
-	            //Tablero5
-	            Tablero tablero5 = new Tablero(SIZE);
-	            jugador1.tablero = tablero5;
-	            jugador2.tablero = tablero5;
-	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
-	            tablero5.imprimir();
-	            tablerosEnt.add(tablero5);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero5, jugador1, jugador2);
-	            
-	            //Tablero6
-	            Tablero tablero6 = new Tablero(SIZE);
-	            jugador1.tablero = tablero6;
-	            jugador2.tablero = tablero6;
-	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
-	            jugador1.setMarca(1, 0, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-	            tablero6.imprimir();
-	            tablerosEnt.add(tablero6);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero6, jugador1, jugador2);
-	            
-	            //Tablero7
-	            Tablero tablero7 = new Tablero(SIZE);
-	            jugador1.tablero = tablero7;
-	            jugador2.tablero = tablero7;
-	            jugador1.setMarca(1, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(2, 1, Tablero.Marca.O, false, false);
-	            tablero7.imprimir();
-	            tablerosEnt.add(tablero7);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero7, jugador1, jugador2);
-	            
-	            //Tablero8
-	            Tablero tablero8 = new Tablero(SIZE);
-	            jugador1.tablero = tablero8;
-	            jugador2.tablero = tablero8;
-	            jugador1.setMarca(0, 1, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(1, 2, Tablero.Marca.O, false, false);
-	            tablero8.imprimir();
-	            tablerosEnt.add(tablero8);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero8, jugador1, jugador2);
-	            
-	            //Tablero9
-	            Tablero tablero9 = new Tablero(SIZE);
-	            jugador1.tablero = tablero9;
-	            jugador2.tablero = tablero9;
-	            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(0, 2, Tablero.Marca.O, false, false);
-	            tablero9.imprimir();
-	            tablerosEnt.add(tablero9);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero9, jugador1, jugador2);
-	            
-	            //Tablero10
-	            Tablero tablero10 = new Tablero(SIZE);
-	            jugador1.tablero = tablero10;
-	            jugador2.tablero = tablero10;
-	            jugador1.setMarca(0, 0, Tablero.Marca.X, false, false);
-	            jugador2.setMarca(1, 0, Tablero.Marca.O, false, false);
-	            tablero10.imprimir();
-	            tablerosEnt.add(tablero10);
-	            imprimirVop(jugador1,jugador2);
-	            jugar(tablero10, jugador1, jugador2);*/
+            {
             	List<Tablero> tablerosEnt = generarTableros(jugador1, jugador2);
                 for (Tablero tablero : tablerosEnt) {
     				jugador1.tablero = tablero;
@@ -188,11 +67,18 @@ public class Main {
                 Tablero tablero = new Tablero(SIZE);
                 jugador1.tablero = tablero;
                 jugador2.tablero = tablero;                
-                jugar(tablero,jugador1,jugador2);                
+                jugar(tablero,jugador1,jugador2); 
+                imprimirVop(jugador1, jugador2);
                 cantIteraciones++;
 
             }
-            
+            List<Tablero> tablerosEnt2 = generarTableros(jugador1, jugador2);
+            for (Tablero tablero : tablerosEnt2) {
+				jugador1.tablero = tablero;
+				jugador2.tablero = tablero;
+	            //tablero.imprimir();
+	            imprimirVop(jugador1,jugador2);
+			}
             System.out.println("########################");
             int cant = countGanoO + countGanoX + countEmpate;
             System.out.println("Cantidad de juegos: " + cant);
@@ -257,7 +143,7 @@ public class Main {
             }
 
             //imprimir ta-te-ti
-            tablero.imprimir();
+            //tablero.imprimir();
 
             //Guardo un ejemplo para que el jugador con red neuronal entrene al terminar la partida
             List<Double> inputs = new ArrayList();
@@ -327,7 +213,7 @@ public class Main {
                 }
 
                 //imprimir ta-te-ti
-                tablero.imprimir();
+               // tablero.imprimir();
 
 
             }
@@ -367,11 +253,11 @@ public class Main {
     public static void imprimirVop(JugadorP1 jugador1, JugadorRefuerzo jugador2)
     {        
         double VopJ1 = jugador1.tablero.getEstadoTablero(Tablero.Marca.X, jugador1.coeficientes).VOp;
-        //Estimo el valor de V
+        //Estimo el valor de Vjugador1
         double VJ2 = jugador2.V().get(0);
         //Determino la recompensa                
         double recompensa = jugador2.recompensa(Tablero.Marca.O);
-        double VopJ2 = recompensa+gamma*VJ2;	         
+        double VopJ2 = recompensa+gamma*VJ2;//Math.pow(gamma, jugador2.tablero.cantFichasO+jugador2.tablero.cantFichasX)*VJ2;	         
         System.out.println("Vop JugadorLineal: "+VopJ1+"Vop JugadorRN: "+VopJ2);
     }   
     

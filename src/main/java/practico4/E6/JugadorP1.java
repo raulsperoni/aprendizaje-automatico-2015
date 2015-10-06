@@ -92,9 +92,9 @@ public class JugadorP1 {
     public double getVopTablero(Tablero.Marca m) {
         if(m == Tablero.Marca.X){
             if(tablero.cantMinimaRestanteParaGanarX==0){
-                return 100;
+                return 1;
             }else if(tablero.cantMinimaRestanteParaGanarO==0){
-                return -100;
+                return -1;
             }else if(tablero.cantFichasO+tablero.cantFichasX == tablero.SIZE*tablero.SIZE){
                 return 0;
             }else{
@@ -107,9 +107,9 @@ public class JugadorP1 {
             }
         }else{
             if(tablero.cantMinimaRestanteParaGanarO==0){
-                return 100;
+                return 1;
             }else if(tablero.cantMinimaRestanteParaGanarX==0){
-                return -100;
+                return -1;
             }else if(tablero.cantFichasX+tablero.cantFichasO == tablero.SIZE*tablero.SIZE){
                 return 0;
             }else{

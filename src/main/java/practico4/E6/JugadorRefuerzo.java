@@ -71,7 +71,7 @@ public class JugadorRefuerzo {
                     tablero.setMarca(i, j, Tablero.Marca.N);
                 }
 
-                return recompensa+gamma*Vop.get(0);
+                return recompensa+gamma*Vop.get(0);//Math.pow(gamma, tablero.cantFichasO+tablero.cantFichasX)*Vop.get(0);
             }
         }else{
             throw new Exception("Jugada prohibida");
@@ -96,17 +96,17 @@ public class JugadorRefuerzo {
         double recompensa;
         if(m == Tablero.Marca.O){
             if(tablero.cantMinimaRestanteParaGanarO == 0){
-                recompensa = 100;
+                recompensa = 1;
             }else if(tablero.cantMinimaRestanteParaGanarX <= 1){
-                recompensa = -100;
+                recompensa = -1;
             }else{
                 recompensa = 0;
             }
         }else{
             if(tablero.cantMinimaRestanteParaGanarX == 0){
-                recompensa = 100;
+                recompensa = 1;
             }else if(tablero.cantMinimaRestanteParaGanarO <= 1){
-                recompensa = -100;
+                recompensa = -1;
             }else{
                 recompensa = 0;
             }

@@ -36,3 +36,11 @@ Comienzo, Iteraciones=10 Unidades Hidden=1 Funcion(es): TODAS
 ... Menor error: 13,621
 ... Entrenando para Coseno ...
 ... Menor error: 31,020
+
+##Ejecucion del Ejercicio 6.
+
+Para ejecutar el ejercicio se debe hacer lo siguiente:
+
+java practico4.E6.Main
+
+Por defecto se corren 200 iteraciones y sin entrenamiento de los 10 tableros elegidos.

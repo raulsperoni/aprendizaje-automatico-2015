@@ -96,7 +96,7 @@ public class Main {
             System.out.println("Coeficientes del jugador del practico 1: ");
             jugador1.coeficientes.imprimir();
             System.out.println("########################");
-            System.out.println(cant+","+ countGanoX +","+ countGanoO +","+ countEmpate);
+            //System.out.println(cant+","+ countGanoX +","+ countGanoO +","+ countEmpate);
 
 
         }catch(Exception e){

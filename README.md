@@ -7,14 +7,14 @@ http://ipython.org/install.html
 
 ## Dependencias 
 ### python-dev
-´´´
+``
 sudo apt-get install python-dev
-´´´
+``
 
 ### markupsafe
-´´´
+``
 sudo pip install markupsafe
-´´´
+``
 
 ejecuten ipython notebook desde la linea de comandos parados en el repo.
 http://localhost:8888/tree

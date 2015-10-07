@@ -30,7 +30,10 @@ sudo apt-get install python-dev
 ``
 sudo pip install markupsafe
 ``
-
+### pyzmq
+``
+sudo pip install pyzmq
+``
 
 
 

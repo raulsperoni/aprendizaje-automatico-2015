@@ -5,8 +5,16 @@ Repo para métodos de aprendizaje automático, 2015.
 Si no tienen python sigan las instrucciones despues de "I am getting started with Python"
 http://ipython.org/install.html
 
-Una de las dependencias es python-dev. Para instalar en Ubuntu ejecutar:
+## Dependencias 
+### python-dev
+´´´
 sudo apt-get install python-dev
+´´´
+
+### markupsafe
+´´´
+sudo pip install markupsafe
+´´´
 
 ejecuten ipython notebook desde la linea de comandos parados en el repo.
 http://localhost:8888/tree

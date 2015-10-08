@@ -21,11 +21,15 @@ pip install pandas
 http://pandas.pydata.org/pandas-docs/stable/install.html
 
 ## Dependencias 
+Instalar todas las dependencias juntas
+``
+sudo apt-get install python-dev markupsafe pyzmq certifi jsonschema
+``
+
 ### python-dev
 ``
 sudo apt-get install python-dev
 ``
-
 ### markupsafe
 ``
 sudo pip install markupsafe
@@ -34,7 +38,11 @@ sudo pip install markupsafe
 ``
 sudo pip install pyzmq
 ``
-
-
-
-
+### certifi
+``
+ sudo pip install certifi
+``
+### jsonschema
+``
+ sudo pip install jsonschema
+``

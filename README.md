@@ -23,8 +23,7 @@ http://pandas.pydata.org/pandas-docs/stable/install.html
 ## Dependencias 
 ### Instalar todas las dependencias juntas
 ``
-sudo apt-get install python-dev 
-sudo pip install markupsafe pyzmq certifi jsonschema numpy  scipy  matplotlib ipython[all] pandas scikit-learn 
+sudo apt-get install python-dev && sudo pip install markupsafe pyzmq certifi jsonschema numpy  scipy  matplotlib ipython[all] pandas scikit-learn 
 ``
 
 ### Otras que pueden servir

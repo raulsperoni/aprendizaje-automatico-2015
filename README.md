@@ -23,7 +23,7 @@ http://pandas.pydata.org/pandas-docs/stable/install.html
 ## Dependencias 
 ### Instalar todas las dependencias juntas
 ``
-sudo apt-get install python-dev python-matplotlib ipython[all] python-numpy python-sklearn && sudo pip install "ipython[notebook]" scikit-learn markupsafe pyzmq certifi jsonschema numpy scipy pandas 
+sudo apt-get install python-dev python-matplotlib python-numpy python-sklearn python-pip && sudo pip install ipython[all] scikit-learn markupsafe pyzmq certifi jsonschema numpy scipy pandas 
 ``
 
 ### Otras que pueden servir
